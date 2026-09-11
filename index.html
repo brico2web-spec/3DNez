@@ -11,6 +11,9 @@
     <!-- Google Fonts Cairo -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Cairo', sans-serif;
             background-color: #f1f5f9;
@@ -23,17 +26,9 @@
         .tab-content.active {
             display: block;
         }
-        /* Ensure all tables are explicitly aligned to the right */
-        table {
-            direction: rtl !important;
-            text-align: right !important;
-        }
-        th, td {
-            text-align: right !important;
-        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col text-right">
 
     <!-- Top Header & Navigation Bar -->
     <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
@@ -56,7 +51,7 @@
                     <button onclick="toggleMenu()" id="menu-toggle-btn" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2.5 shadow border border-slate-700 transition">
                         <i class="fa-solid fa-bars text-emerald-400"></i> 
                         <span id="current-tab-title">لوحة المؤشرات</span> 
-                        <i class="fa-solid fa-chevron-down text-xs text-slate-400 mr-1"></i>
+                        <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
                     </button>
                     
                     <!-- Dropdown Menu List -->
@@ -199,14 +194,14 @@
                 <form id="production-form" onsubmit="handleProductionSubmit(event)" class="space-y-4">
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-1">اسم العامل</label>
-                        <select id="worker-name" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <select id="worker-name" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
                             <option value="">-- اختر العامل --</option>
                         </select>
                     </div>
 
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-1">ابحث واختار المنتج (أو اكتب الكود مثل D402)</label>
-                        <input type="text" id="product-search-input" list="products-datalist" placeholder="اكتب كود المنتج أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <input type="text" id="product-search-input" list="products-datalist" placeholder="اكتب كود المنتج أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
                         <datalist id="products-datalist">
                             <!-- Populated by JS -->
                         </datalist>
@@ -215,17 +210,17 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">الكمية المنتجة اليوم</label>
-                            <input type="number" id="prod-quantity" min="1" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <input type="number" id="prod-quantity" min="1" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">التاريخ</label>
-                            <input type="date" id="prod-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <input type="date" id="prod-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-1">ملاحظات (اختياري)</label>
-                        <input type="text" id="prod-notes" placeholder="ورشة رقم 1..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <input type="text" id="prod-notes" placeholder="ورشة رقم 1..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
                     </div>
 
                     <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold p-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2">
@@ -248,7 +243,7 @@
                     <div class="flex items-center gap-3 flex-wrap">
                         <div class="flex items-center gap-2">
                             <label class="text-sm font-semibold text-slate-700">تاريخ الحضور:</label>
-                            <input type="date" id="attendance-date" onchange="renderAttendanceTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <input type="date" id="attendance-date" onchange="renderAttendanceTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none text-right">
                         </div>
                         <button type="button" onclick="exportAttendanceExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
                             <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
@@ -279,7 +274,7 @@
                     </div>
                 </form>
 
-                <!-- Saved Attendance Date Buttons (Appears below on save) -->
+                <!-- Saved Attendance Date Buttons -->
                 <div id="saved-attendance-section" class="mt-8 pt-6 border-t border-slate-200">
                     <h3 class="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
                         <i class="fa-solid fa-clock-rotate-left text-indigo-600"></i> تواريخ الحضور المحفوظة (اضغط على التاريخ لعرض التفاصيل):
@@ -302,7 +297,7 @@
                     <form id="stockout-form" onsubmit="handleStockOutSubmit(event)" class="space-y-4">
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">ابحث واختار المنتج</label>
-                            <input type="text" id="out-product-search-input" list="out-products-datalist" placeholder="اكتب الكود أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm">
+                            <input type="text" id="out-product-search-input" list="out-products-datalist" placeholder="اكتب الكود أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm text-right">
                             <datalist id="out-products-datalist">
                                 <!-- Populated by JS -->
                             </datalist>
@@ -310,17 +305,17 @@
 
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">الكمية الخارجة</label>
-                            <input type="number" id="out-quantity" min="1" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none">
+                            <input type="number" id="out-quantity" min="1" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-right">
                         </div>
 
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">التاريخ</label>
-                            <input type="date" id="out-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none">
+                            <input type="date" id="out-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-right">
                         </div>
 
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">الملاحظات / تاريخ الوارد الخام</label>
-                            <input type="text" id="out-notes" placeholder="مثال: دفعة خام واردة بتاريخ..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm">
+                            <input type="text" id="out-notes" placeholder="مثال: دفعة خام واردة بتاريخ..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm text-right">
                         </div>
 
                         <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold p-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2">
@@ -374,7 +369,7 @@
                         <p class="text-xs text-slate-500">تفاصيل ما أنتجه كل عامل</p>
                     </div>
                     <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
-                        <input type="date" id="filter-date" onchange="renderProductionTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm">
+                        <input type="date" id="filter-date" onchange="renderProductionTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm text-right">
                         <button onclick="exportProductionExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
                             <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
                         </button>
@@ -416,7 +411,7 @@
                     </div>
                     <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
                         <div class="w-full sm:w-72">
-                            <input type="text" id="search-product" onkeyup="filterInventory()" placeholder="ابحث برمز المنتج أو الوصف..." class="w-full p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <input type="text" id="search-product" onkeyup="filterInventory()" placeholder="ابحث برمز المنتج أو الوصف..." class="w-full p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
                         </div>
                         <button onclick="exportInventoryExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
                             <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
@@ -446,7 +441,7 @@
             </div>
         </div>
 
-        <!-- NEW TAB: Analytics Weekly/Monthly (التحليل المبياني الأسبوعي والشهري) -->
+        <!-- NEW TAB: Analytics Weekly/Monthly -->
         <div id="analytics" class="tab-content space-y-6">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                 <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 border-b pb-4">
@@ -459,7 +454,7 @@
                     <div class="flex gap-2 flex-wrap items-center">
                         <button onclick="setAnalyticsView('weekly')" id="btn-view-weekly" class="px-4 py-2 rounded-xl text-sm font-bold bg-teal-600 text-white transition shadow">العرض الأسبوعي</button>
                         <button onclick="setAnalyticsView('monthly')" id="btn-view-monthly" class="px-4 py-2 rounded-xl text-sm font-bold bg-slate-200 text-slate-700 transition">العرض الشهري</button>
-                        <button onclick="exportAnalyticsExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
+                        <button onclick="exportAnalyticsExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
                             <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
                         </button>
                     </div>
@@ -514,17 +509,17 @@
 
     <!-- Modal for Adding/Editing Worker Phone -->
     <div id="worker-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 text-right">
             <h3 class="text-lg font-bold text-slate-800 mb-4" id="modal-title">إضافة عامل جديد</h3>
             <form id="worker-modal-form" onsubmit="handleWorkerSave(event)" class="space-y-4">
                 <input type="hidden" id="worker-edit-index" value="-1">
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1">اسم العامل</label>
-                    <input type="text" id="modal-worker-name" required placeholder="اسم العامل الكامل..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                    <input type="text" id="modal-worker-name" required placeholder="اسم العامل الكامل..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none text-right">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1">رقم الهاتف</label>
-                    <input type="text" id="modal-worker-phone" required placeholder="06xxxxxxxx" class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                    <input type="text" id="modal-worker-phone" required placeholder="06xxxxxxxx" class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none text-right" dir="ltr">
                 </div>
                 <div class="flex justify-end gap-3 pt-3">
                     <button type="button" onclick="closeWorkerModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-sm font-semibold transition">إلغاء</button>
@@ -536,7 +531,7 @@
 
     <!-- Modal for Viewing Attendance Details by Date -->
     <div id="attendance-detail-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-slate-200 max-h-[85vh] flex flex-col">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-slate-200 max-h-[85vh] flex flex-col text-right">
             <div class="flex justify-between items-center mb-4 border-b pb-3">
                 <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2" id="attendance-modal-title">
                     <i class="fa-solid fa-calendar-day text-indigo-600"></i> تفاصيل الحضور
@@ -823,7 +818,7 @@
                         <td class="p-3 font-bold text-slate-800 text-right">${w.name}</td>
                         <td class="p-3 font-mono text-emerald-700 font-semibold text-right" dir="ltr">${w.phone}</td>
                         <td class="p-3 text-right">
-                            <select id="attendance_select_${index}" class="p-2.5 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-indigo-500 focus:outline-none w-full sm:w-48 bg-white">
+                            <select id="attendance_select_${index}" class="p-2.5 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-indigo-500 focus:outline-none w-full sm:w-48 bg-white text-right">
                                 <option value="حاضر" ${currentStatus === 'حاضر' ? 'selected' : ''} class="text-emerald-700 font-semibold">حاضر</option>
                                 <option value="مريض" ${currentStatus === 'مريض' ? 'selected' : ''} class="text-rose-600 font-semibold">مريض</option>
                                 <option value="غير مبرر" ${currentStatus === 'غير مبرر' ? 'selected' : ''} class="text-amber-600 font-semibold">غير مبرر</option>
@@ -1126,7 +1121,7 @@
                 if(consumedHtml === '') consumedHtml = `<tr><td colspan="4" class="p-3 text-center text-xs text-slate-400">لا توجد منتجات مستهلكة/مصروفة في هذه الفترة</td></tr>`;
 
                 container.innerHTML += `
-                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4 shadow-sm">
+                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4 shadow-sm text-right">
                         <div class="flex justify-between items-center bg-teal-900 text-white px-4 py-3 rounded-xl flex-wrap gap-2">
                             <h3 class="font-bold text-sm sm:text-base flex items-center gap-2">
                                 <i class="fa-solid fa-calendar-days text-teal-400"></i> فترة التقرير: ${period}
@@ -1221,6 +1216,8 @@
             }
         }
 
+        /* الجدول المعدل بحسب الترتيب المطلوب من اليمين إلى الأيسر: 
+           الكود - وصف المنتج - الوحدة - المخزون الحالي */
         function renderLowStockTable() {
             const tbody = document.getElementById('low-stock-table');
             tbody.innerHTML = '';
@@ -1305,7 +1302,6 @@
             });
         }
 
-        /* UPDATED TABLE: Inventory columns rendered Right-to-Left correctly */
         function renderInventoryTable() {
             const tbody = document.getElementById('inventory-tbody');
             tbody.innerHTML = '';
@@ -1388,7 +1384,7 @@
             });
         }
 
-        // EXCEL EXPORT FUNCTIONS
+        // ================= EXCEL EXPORT FUNCTIONS =================
         function downloadCSV(csvContent, filename) {
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
