@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام تسيير الإنتاج والتخزين - المصنع</title>
+    <title>نظام تسيير الإنتاج والتخزين - المصنع (Firebase)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -11,14 +11,9 @@
     <!-- Google Fonts Cairo -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-        }
         body {
             font-family: 'Cairo', sans-serif;
             background-color: #f1f5f9;
-            direction: rtl;
-            text-align: right;
         }
         .tab-content {
             display: none;
@@ -26,23 +21,26 @@
         .tab-content.active {
             display: block;
         }
+        th, td {
+            text-align: right !important;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col text-right">
+<body class="min-h-screen flex flex-col text-right" dir="rtl">
 
     <!-- Top Header & Navigation Bar -->
     <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
             
             <!-- Logo, Title & Dropdown Menu Side-by-Side -->
-            <div class="flex items-center space-x-4 space-x-reverse flex-wrap gap-3">
-                <div class="flex items-center space-x-3 space-x-reverse">
+            <div class="flex items-center gap-4 flex-wrap">
+                <div class="flex items-center gap-3">
                     <div class="bg-emerald-500 p-2 rounded-xl text-slate-900 font-bold text-xl shadow">
                         <i class="fa-solid fa-industry"></i>
                     </div>
                     <div>
                         <h1 class="text-base sm:text-lg font-bold tracking-wide">نظام تسيير الإنتاج والتخزين</h1>
-                        <p class="text-xs text-slate-400">إدارة المخزون ومتابعة إنتاج الحضور والعمال</p>
+                        <p class="text-xs text-slate-400">إدارة المخزون ومتابعة إنتاج الحضور والعمال (Firebase Cloud)</p>
                     </div>
                 </div>
 
@@ -51,7 +49,7 @@
                     <button onclick="toggleMenu()" id="menu-toggle-btn" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2.5 shadow border border-slate-700 transition">
                         <i class="fa-solid fa-bars text-emerald-400"></i> 
                         <span id="current-tab-title">لوحة المؤشرات</span> 
-                        <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                        <i class="fa-solid fa-chevron-down text-xs text-slate-400 ml-1"></i>
                     </button>
                     
                     <!-- Dropdown Menu List -->
@@ -85,7 +83,7 @@
             </div>
 
             <!-- Date & Export Actions -->
-            <div class="flex items-center space-x-3 space-x-reverse">
+            <div class="flex items-center gap-3">
                 <span id="current-date" class="text-xs sm:text-sm bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-300"></span>
                 <button onclick="exportData()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-sm font-semibold transition flex items-center gap-1.5 shadow">
                     <i class="fa-solid fa-file-excel"></i> تصدير الشامل
@@ -99,7 +97,6 @@
 
         <!-- TAB 1: Dashboard -->
         <div id="dashboard" class="tab-content active space-y-6">
-            
             <!-- Quick Action Bar -->
             <div class="flex flex-wrap gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200 items-center justify-between">
                 <div class="flex items-center gap-2 text-slate-700 font-bold">
@@ -135,7 +132,7 @@
                     </div>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-right text-sm">
+                    <table class="w-full text-right text-sm" dir="rtl">
                         <thead class="bg-rose-50 text-rose-900 border-b border-rose-100">
                             <tr>
                                 <th class="p-3 text-right">الكود</th>
@@ -144,9 +141,7 @@
                                 <th class="p-3 text-right">المخزون الحالي</th>
                             </tr>
                         </thead>
-                        <tbody id="low-stock-table" class="divide-y divide-rose-50">
-                            <!-- Populated by JS -->
-                        </tbody>
+                        <tbody id="low-stock-table" class="divide-y divide-rose-50"></tbody>
                     </table>
                 </div>
             </div>
@@ -158,7 +153,7 @@
                         <i class="fa-solid fa-clock-rotate-left text-blue-500"></i> آخر عمليات خروج المنتجات
                     </h3>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-right text-sm">
+                        <table class="w-full text-right text-sm" dir="rtl">
                             <thead class="bg-slate-50 text-slate-600 border-b">
                                 <tr>
                                     <th class="p-3 text-right">المنتج</th>
@@ -166,9 +161,7 @@
                                     <th class="p-3 text-right">التاريخ</th>
                                 </tr>
                             </thead>
-                            <tbody id="recent-out-table" class="divide-y divide-slate-100">
-                                <!-- Populated by JS -->
-                            </tbody>
+                            <tbody id="recent-out-table" class="divide-y divide-slate-100"></tbody>
                         </table>
                     </div>
                 </div>
@@ -177,9 +170,7 @@
                     <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
                         <i class="fa-solid fa-chart-column text-emerald-500"></i> ملخص إنتاج العمال اليوم
                     </h3>
-                    <div id="workers-summary-dash" class="space-y-3">
-                        <!-- Populated by JS -->
-                    </div>
+                    <div id="workers-summary-dash" class="space-y-3"></div>
                 </div>
             </div>
         </div>
@@ -189,38 +180,36 @@
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 max-w-2xl mx-auto">
                 <div class="border-b pb-4 mb-5">
                     <h2 class="text-xl font-bold text-slate-800">تسجيل إنتاج عامل جديد</h2>
-                    <p class="text-xs text-slate-500 mt-1">اختر العامل والمنتج وحدد الكمية لترتفع تلقائياً في المخزون</p>
+                    <p class="text-xs text-slate-500 mt-1">اختر العامل والمنتج وحدد الكمية لترتفع تلقائياً في المخزون السحابي</p>
                 </div>
                 <form id="production-form" onsubmit="handleProductionSubmit(event)" class="space-y-4">
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-1">اسم العامل</label>
-                        <select id="worker-name" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
+                        <select id="worker-name" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                             <option value="">-- اختر العامل --</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">ابحث واختار المنتج (أو اكتب الكود مثل D402)</label>
-                        <input type="text" id="product-search-input" list="products-datalist" placeholder="اكتب كود المنتج أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
-                        <datalist id="products-datalist">
-                            <!-- Populated by JS -->
-                        </datalist>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1">ابحث واختار المنتج</label>
+                        <input type="text" id="product-search-input" list="products-datalist" placeholder="اكتب كود المنتج أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <datalist id="products-datalist"></datalist>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">الكمية المنتجة اليوم</label>
-                            <input type="number" id="prod-quantity" min="1" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
+                            <input type="number" id="prod-quantity" min="1" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">التاريخ</label>
-                            <input type="date" id="prod-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
+                            <input type="date" id="prod-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-1">ملاحظات (اختياري)</label>
-                        <input type="text" id="prod-notes" placeholder="ورشة رقم 1..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
+                        <input type="text" id="prod-notes" placeholder="ورشة رقم 1..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                     </div>
 
                     <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold p-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2">
@@ -230,7 +219,7 @@
             </div>
         </div>
 
-        <!-- NEW TAB: Workers Daily Attendance (حضور العمال اليومي) -->
+        <!-- TAB: Workers Daily Attendance -->
         <div id="attendance" class="tab-content space-y-6">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                 <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 border-b pb-4">
@@ -238,12 +227,12 @@
                         <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
                             <i class="fa-solid fa-calendar-check text-indigo-600"></i> سجل حضور وغياب العمال اليومي
                         </h2>
-                        <p class="text-xs text-slate-500 mt-1">حدد الحالة اليومية لكل عامل من القائمة المنسدلة (حاضر، مريض، غير مبرر، مسألة خاصة، إستقل)</p>
+                        <p class="text-xs text-slate-500 mt-1">حدد الحالة اليومية لكل عامل لحفظها سحابياً</p>
                     </div>
                     <div class="flex items-center gap-3 flex-wrap">
                         <div class="flex items-center gap-2">
                             <label class="text-sm font-semibold text-slate-700">تاريخ الحضور:</label>
-                            <input type="date" id="attendance-date" onchange="renderAttendanceTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none text-right">
+                            <input type="date" id="attendance-date" onchange="renderAttendanceTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                         </div>
                         <button type="button" onclick="exportAttendanceExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
                             <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
@@ -253,7 +242,7 @@
 
                 <form id="attendance-form" onsubmit="handleAttendanceSubmit(event)">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-right border-collapse text-sm">
+                        <table class="w-full text-right border-collapse text-sm" dir="rtl">
                             <thead class="bg-slate-100 text-slate-700 border-b">
                                 <tr>
                                     <th class="p-3 text-right">#</th>
@@ -262,26 +251,21 @@
                                     <th class="p-3 text-right">الحالة اليومية</th>
                                 </tr>
                             </thead>
-                            <tbody id="attendance-tbody" class="divide-y divide-slate-200">
-                                <!-- Populated by JS -->
-                            </tbody>
+                            <tbody id="attendance-tbody" class="divide-y divide-slate-200"></tbody>
                         </table>
                     </div>
-                    <div class="mt-6 flex justify-end">
+                    <div class="mt-6 flex justify-start">
                         <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl transition shadow flex items-center gap-2">
                             <i class="fa-solid fa-floppy-disk"></i> حفظ سجل الحضور لهذا اليوم
                         </button>
                     </div>
                 </form>
 
-                <!-- Saved Attendance Date Buttons -->
                 <div id="saved-attendance-section" class="mt-8 pt-6 border-t border-slate-200">
                     <h3 class="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-clock-rotate-left text-indigo-600"></i> تواريخ الحضور المحفوظة (اضغط على التاريخ لعرض التفاصيل):
+                        <i class="fa-solid fa-clock-rotate-left text-indigo-600"></i> تواريخ الحضور المحفوظة:
                     </h3>
-                    <div id="saved-attendance-buttons" class="flex flex-wrap gap-2.5">
-                        <!-- Populated by JS -->
-                    </div>
+                    <div id="saved-attendance-buttons" class="flex flex-wrap gap-2.5"></div>
                 </div>
             </div>
         </div>
@@ -292,30 +276,28 @@
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 lg:col-span-1">
                     <div class="border-b pb-4 mb-5">
                         <h2 class="text-lg font-bold text-slate-800">إخراج منتجات من المخزون</h2>
-                        <p class="text-xs text-slate-500 mt-1">تسجيل صرف بضاعة مع الملاحظات وتاريخ الوارد الخام</p>
+                        <p class="text-xs text-slate-500 mt-1">تسجيل صرف بضاعة مع الملاحظات</p>
                     </div>
                     <form id="stockout-form" onsubmit="handleStockOutSubmit(event)" class="space-y-4">
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">ابحث واختار المنتج</label>
-                            <input type="text" id="out-product-search-input" list="out-products-datalist" placeholder="اكتب الكود أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm text-right">
-                            <datalist id="out-products-datalist">
-                                <!-- Populated by JS -->
-                            </datalist>
+                            <input type="text" id="out-product-search-input" list="out-products-datalist" placeholder="اكتب الكود أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm">
+                            <datalist id="out-products-datalist"></datalist>
                         </div>
 
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">الكمية الخارجة</label>
-                            <input type="number" id="out-quantity" min="1" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-right">
+                            <input type="number" id="out-quantity" min="1" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none">
                         </div>
 
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">التاريخ</label>
-                            <input type="date" id="out-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-right">
+                            <input type="date" id="out-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none">
                         </div>
 
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">الملاحظات / تاريخ الوارد الخام</label>
-                            <input type="text" id="out-notes" placeholder="مثال: دفعة خام واردة بتاريخ..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm text-right">
+                            <input type="text" id="out-notes" placeholder="مثال: دفعة خام واردة بتاريخ..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm">
                         </div>
 
                         <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold p-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2">
@@ -328,32 +310,27 @@
                     <div class="flex justify-between items-center mb-6 flex-wrap gap-3">
                         <div>
                             <h2 class="text-lg font-bold text-slate-800">سجل حركات خروج المنتجات</h2>
-                            <p class="text-xs text-slate-500">جميع الكميات التي تم صرفها مع الملاحظات وتاريخ الوارد الخام</p>
+                            <p class="text-xs text-slate-500">جميع الكميات التي تم صرفها</p>
                         </div>
                         <div class="flex items-center gap-2">
                             <button onclick="exportStockOutExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow">
                                 <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
                             </button>
-                            <button onclick="clearAllStockOut()" class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2 rounded-xl text-xs font-semibold transition border border-red-200">
-                                <i class="fa-solid fa-trash-can"></i> مسح السجل
-                            </button>
                         </div>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-right border-collapse text-sm">
+                        <table class="w-full text-right border-collapse text-sm" dir="rtl">
                             <thead class="bg-slate-100 text-slate-700 border-b">
                                 <tr>
                                     <th class="p-3 text-right">التاريخ</th>
                                     <th class="p-3 text-right">الكود</th>
                                     <th class="p-3 text-right">المنتج</th>
                                     <th class="p-3 text-right">الكمية</th>
-                                    <th class="p-3 text-right">الملاحظات / الوارد الخام</th>
+                                    <th class="p-3 text-right">الملاحظات</th>
                                     <th class="p-3 text-center">إجراء</th>
                                 </tr>
                             </thead>
-                            <tbody id="full-stockout-table" class="divide-y divide-slate-200">
-                                <!-- Populated by JS -->
-                            </tbody>
+                            <tbody id="full-stockout-table" class="divide-y divide-slate-200"></tbody>
                         </table>
                     </div>
                 </div>
@@ -369,18 +346,15 @@
                         <p class="text-xs text-slate-500">تفاصيل ما أنتجه كل عامل</p>
                     </div>
                     <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
-                        <input type="date" id="filter-date" onchange="renderProductionTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm text-right">
+                        <input type="date" id="filter-date" onchange="renderProductionTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm">
                         <button onclick="exportProductionExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
                             <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
-                        </button>
-                        <button onclick="clearAllProduction()" class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2.5 rounded-xl text-sm font-semibold transition border border-red-200">
-                            <i class="fa-solid fa-trash-can"></i> مسح السجل
                         </button>
                     </div>
                 </div>
 
                 <div class="overflow-x-auto">
-                    <table class="w-full text-right border-collapse text-sm">
+                    <table class="w-full text-right border-collapse text-sm" dir="rtl">
                         <thead class="bg-slate-100 text-slate-700 border-b">
                             <tr>
                                 <th class="p-3 text-right">التاريخ</th>
@@ -393,9 +367,7 @@
                                 <th class="p-3 text-center">إجراء</th>
                             </tr>
                         </thead>
-                        <tbody id="full-production-table" class="divide-y divide-slate-200">
-                            <!-- Populated by JS -->
-                        </tbody>
+                        <tbody id="full-production-table" class="divide-y divide-slate-200"></tbody>
                     </table>
                 </div>
             </div>
@@ -407,11 +379,11 @@
                 <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
                     <div>
                         <h2 class="text-xl font-bold text-slate-800">مخزون المنتجات الكلي في المصنع</h2>
-                        <p class="text-xs text-slate-500">تتبع رصيد المخزون الفعلي بدقة</p>
+                        <p class="text-xs text-slate-500">تتبع رصيد المخزون الفعلي المحدث سحابياً</p>
                     </div>
                     <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
                         <div class="w-full sm:w-72">
-                            <input type="text" id="search-product" onkeyup="filterInventory()" placeholder="ابحث برمز المنتج أو الوصف..." class="w-full p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
+                            <input type="text" id="search-product" onkeyup="filterInventory()" placeholder="ابحث برمز المنتج أو الوصف..." class="w-full p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                         </div>
                         <button onclick="exportInventoryExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
                             <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
@@ -420,7 +392,7 @@
                 </div>
 
                 <div class="overflow-x-auto">
-                    <table class="w-full text-right border-collapse text-sm" id="inventory-table">
+                    <table class="w-full text-right border-collapse text-sm" id="inventory-table" dir="rtl">
                         <thead class="bg-slate-100 text-slate-700 border-b">
                             <tr>
                                 <th class="p-3 text-right">الكود #</th>
@@ -433,15 +405,13 @@
                                 <th class="p-3 text-right">الحالة</th>
                             </tr>
                         </thead>
-                        <tbody id="inventory-tbody" class="divide-y divide-slate-200">
-                            <!-- Populated by JS -->
-                        </tbody>
+                        <tbody id="inventory-tbody" class="divide-y divide-slate-200"></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- NEW TAB: Analytics Weekly/Monthly -->
+        <!-- TAB: Analytics Weekly/Monthly -->
         <div id="analytics" class="tab-content space-y-6">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                 <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 border-b pb-4">
@@ -449,21 +419,13 @@
                         <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
                             <i class="fa-solid fa-chart-line text-teal-600"></i> التحليل المبياني والإحصائيات (أسبوعي / شهري)
                         </h2>
-                        <p class="text-xs text-slate-500 mt-1">متابعة دقيقة لإنتاج العمال، إجمالي الإنتاج، واستهلاك/صرف المنتجات أسبوعياً وشهرياً</p>
                     </div>
                     <div class="flex gap-2 flex-wrap items-center">
                         <button onclick="setAnalyticsView('weekly')" id="btn-view-weekly" class="px-4 py-2 rounded-xl text-sm font-bold bg-teal-600 text-white transition shadow">العرض الأسبوعي</button>
                         <button onclick="setAnalyticsView('monthly')" id="btn-view-monthly" class="px-4 py-2 rounded-xl text-sm font-bold bg-slate-200 text-slate-700 transition">العرض الشهري</button>
-                        <button onclick="exportAnalyticsExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
-                            <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
-                        </button>
                     </div>
                 </div>
-
-                <!-- Analytics Content Container -->
-                <div id="analytics-content" class="space-y-8">
-                    <!-- Populated dynamically via JS -->
-                </div>
+                <div id="analytics-content" class="space-y-8"></div>
             </div>
         </div>
 
@@ -475,12 +437,8 @@
                         <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
                             <i class="fa-solid fa-address-book text-amber-600"></i> دليل معلومات وهواتف العمال
                         </h2>
-                        <p class="text-xs text-slate-500">إدارة وتعديل أرقام هواتف وأسماء العمال بالمصنع</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button onclick="exportWorkersExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow-sm flex items-center gap-2">
-                            <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
-                        </button>
                         <button onclick="openAddWorkerModal()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow-sm flex items-center gap-2">
                             <i class="fa-solid fa-user-plus"></i> إضافة عامل جديد
                         </button>
@@ -488,7 +446,7 @@
                 </div>
 
                 <div class="overflow-x-auto">
-                    <table class="w-full text-right border-collapse text-sm">
+                    <table class="w-full text-right border-collapse text-sm" dir="rtl">
                         <thead class="bg-slate-100 text-slate-700 border-b">
                             <tr>
                                 <th class="p-3 text-right">#</th>
@@ -497,9 +455,7 @@
                                 <th class="p-3 text-center">الإجراءات</th>
                             </tr>
                         </thead>
-                        <tbody id="workers-info-tbody" class="divide-y divide-slate-200">
-                            <!-- Populated by JS -->
-                        </tbody>
+                        <tbody id="workers-info-tbody" class="divide-y divide-slate-200"></tbody>
                     </table>
                 </div>
             </div>
@@ -507,29 +463,29 @@
 
     </main>
 
-    <!-- Modal for Adding/Editing Worker Phone -->
+    <!-- Modal Add/Edit Worker -->
     <div id="worker-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 text-right">
             <h3 class="text-lg font-bold text-slate-800 mb-4" id="modal-title">إضافة عامل جديد</h3>
             <form id="worker-modal-form" onsubmit="handleWorkerSave(event)" class="space-y-4">
-                <input type="hidden" id="worker-edit-index" value="-1">
+                <input type="hidden" id="worker-edit-id" value="">
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1">اسم العامل</label>
-                    <input type="text" id="modal-worker-name" required placeholder="اسم العامل الكامل..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none text-right">
+                    <input type="text" id="modal-worker-name" required placeholder="اسم العامل الكامل..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1">رقم الهاتف</label>
-                    <input type="text" id="modal-worker-phone" required placeholder="06xxxxxxxx" class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none text-right" dir="ltr">
+                    <input type="text" id="modal-worker-phone" required placeholder="06xxxxxxxx" class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
                 </div>
-                <div class="flex justify-end gap-3 pt-3">
-                    <button type="button" onclick="closeWorkerModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-sm font-semibold transition">إلغاء</button>
+                <div class="flex justify-start gap-3 pt-3">
                     <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition shadow">حفظ</button>
+                    <button type="button" onclick="closeWorkerModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-sm font-semibold transition">إلغاء</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal for Viewing Attendance Details by Date -->
+    <!-- Modal View Attendance Details -->
     <div id="attendance-detail-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-slate-200 max-h-[85vh] flex flex-col text-right">
             <div class="flex justify-between items-center mb-4 border-b pb-3">
@@ -539,7 +495,7 @@
                 <button onclick="closeAttendanceModal()" class="text-slate-400 hover:text-slate-600 text-2xl font-bold">&times;</button>
             </div>
             <div class="overflow-y-auto flex-grow">
-                <table class="w-full text-right text-sm">
+                <table class="w-full text-right text-sm" dir="rtl">
                     <thead class="bg-slate-100 text-slate-700 sticky top-0">
                         <tr>
                             <th class="p-3 text-right">اسم العامل</th>
@@ -547,12 +503,10 @@
                             <th class="p-3 text-right">الحالة</th>
                         </tr>
                     </thead>
-                    <tbody id="attendance-modal-tbody" class="divide-y divide-slate-100">
-                        <!-- Populated by JS -->
-                    </tbody>
+                    <tbody id="attendance-modal-tbody" class="divide-y divide-slate-100"></tbody>
                 </table>
             </div>
-            <div class="mt-4 pt-3 border-t flex justify-end">
+            <div class="mt-4 pt-3 border-t flex justify-start">
                 <button onclick="closeAttendanceModal()" class="bg-slate-800 hover:bg-slate-900 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition shadow">إغلاق</button>
             </div>
         </div>
@@ -560,13 +514,31 @@
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 py-4 text-center text-xs mt-auto">
-        <p>نظام إدارة الإنتاج والتخزين الصناعي &copy; 2026 - جميع الحقوق محفوظة</p>
+        <p>نظام إدارة الإنتاج والتخزين الصناعي &copy; 2026 - مدمج مع Firebase Cloud</p>
     </footer>
 
-    <!-- JavaScript Logic -->
-    <script>
-        // Product Catalog
-        const productsCatalog = [
+    <!-- Firebase SDK Scripts Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { 
+            getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, setDoc 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // 🔥 إعدادات مشروع Firebase (يمكنك استبدال الكائنات بإعدادات مشروعك الخاص من Firebase Console)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDemoKeyReplaceWithYourOwnIfNeed",
+            authDomain: "factory-system-demo.firebaseapp.com",
+            projectId: "factory-system-demo",
+            storageBucket: "factory-system-demo.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Global State variables
+        window.productsCatalog = [
             { code: "AC55", desc: "Acide Chlorithrique 17°", unit: "550 ml", qty: 30 },
             { code: "AC75", desc: "Acide Chlorithrique 17°", unit: "750 ml", qty: 20 },
             { code: "AC90", desc: "Acide Chlorithrique 17°", unit: "900 ml", qty: 20 },
@@ -661,27 +633,164 @@
             { code: "AFR5000", desc: "LANTIROUI", unit: "5Kg", qty: 1 }
         ];
 
-        let productionLogs = JSON.parse(localStorage.getItem('factory_production')) || [
-            { id: 1, date: new Date().toISOString().split('T')[0], worker: "أحمد العمراني", code: "AC55", desc: "Acide Chlorithrique 17°", unit: "550 ml", qty: 30, notes: "دفعة الصباح" },
-            { id: 2, date: new Date().toISOString().split('T')[0], worker: "محمد العلوي", code: "W252", desc: "Essence SP 25 Cc", unit: "250 ml", qty: 60, notes: "ممتاز" }
-        ];
+        window.productionLogs = [];
+        window.stockOutLogs = [];
+        window.workersList = [];
+        window.attendanceLogs = {};
+        window.currentAnalyticsMode = 'weekly';
 
-        let stockOutLogs = JSON.parse(localStorage.getItem('factory_stock_out')) || [
-            { id: 1, date: new Date().toISOString().split('T')[0], code: "AC55", desc: "Acide Chlorithrique 17°", unit: "550 ml", qty: 10, notes: "دفعة خام واردة بتاريخ اليوم" }
-        ];
+        // 🟢 Realtime Sync Listeners from Firestore
+        onSnapshot(collection(db, "production"), (snapshot) => {
+            window.productionLogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderAll();
+        });
 
-        let workersList = JSON.parse(localStorage.getItem('factory_workers_list')) || [
-            { name: "أحمد العمراني", phone: "0612345678" },
-            { name: "محمد العلوي", phone: "0623456789" },
-            { name: "يوسف بنصالح", phone: "0634567890" },
-            { name: "كريم الإدريسي", phone: "0645678901" },
-            { name: "رشيد التازي", phone: "0656789012" },
-            { name: "مصطفى بوكري", phone: "0667890123" }
-        ];
+        onSnapshot(collection(db, "stockout"), (snapshot) => {
+            window.stockOutLogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderAll();
+        });
 
-        let attendanceLogs = JSON.parse(localStorage.getItem('factory_attendance_logs')) || {};
-        let currentAnalyticsMode = 'weekly';
+        onSnapshot(collection(db, "workers"), (snapshot) => {
+            window.workersList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            updateWorkersDropdown();
+            renderWorkersInfoTable();
+            renderAttendanceTable();
+        });
 
+        onSnapshot(collection(db, "attendance"), (snapshot) => {
+            window.attendanceLogs = {};
+            snapshot.docs.forEach(doc => {
+                window.attendanceLogs[doc.id] = doc.data();
+            });
+            renderSavedAttendanceButtons();
+            renderAttendanceTable();
+        });
+
+        // 🔴 Handlers for Adding & Deleting using Firestore
+        window.handleProductionSubmit = async function(event) {
+            event.preventDefault();
+            const worker = document.getElementById('worker-name').value;
+            const rawProductVal = document.getElementById('product-search-input').value;
+            const code = rawProductVal.split(' - ')[0].trim();
+            const quantity = parseInt(document.getElementById('prod-quantity').value);
+            const date = document.getElementById('prod-date').value;
+            const notes = document.getElementById('prod-notes').value;
+
+            const productObj = window.productsCatalog.find(p => p.code === code);
+            if (!productObj) {
+                alert('الرجاء اختيار منتج صحيح من القائمة المقترحة!');
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "production"), {
+                    date, worker, code: productObj.code, desc: productObj.desc,
+                    unit: productObj.unit, qty: quantity, notes, createdAt: new Date()
+                });
+                document.getElementById('production-form').reset();
+                document.getElementById('prod-date').value = new Date().toISOString().split('T')[0];
+                selectTab('workers', 'تقارير العمال اليومية');
+                alert('تم تسجيل الإنتاج بنجاح ورُفع إلى Cloud Firebase!');
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+        };
+
+        window.handleStockOutSubmit = async function(event) {
+            event.preventDefault();
+            const rawProductVal = document.getElementById('out-product-search-input').value;
+            const code = rawProductVal.split(' - ')[0].trim();
+            const quantity = parseInt(document.getElementById('out-quantity').value);
+            const date = document.getElementById('out-date').value;
+            const notes = document.getElementById('out-notes').value;
+
+            const productObj = window.productsCatalog.find(p => p.code === code);
+            if (!productObj) {
+                alert('الرجاء اختيار منتج صحيح من القائمة!');
+                return;
+            }
+
+            const currentStock = getCurrentStock(code);
+            if (quantity > currentStock) {
+                alert(`تنبيه: الكمية المطلوبة (${quantity}) أكبر من المخزون المتاح (${currentStock})!`);
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "stockout"), {
+                    date, code: productObj.code, desc: productObj.desc,
+                    unit: productObj.unit, qty: quantity, notes, createdAt: new Date()
+                });
+                document.getElementById('stockout-form').reset();
+                document.getElementById('out-date').value = new Date().toISOString().split('T')[0];
+                alert('تم تسجيل خروج المنتجات بنجاح في Firebase!');
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+        };
+
+        window.handleAttendanceSubmit = async function(event) {
+            event.preventDefault();
+            const dateStr = document.getElementById('attendance-date').value;
+            if(!dateStr) {
+                alert('الرجاء تحديد تاريخ الحضور!');
+                return;
+            }
+
+            const attendanceData = {};
+            window.workersList.forEach((w, index) => {
+                const selectElem = document.getElementById(`attendance_select_${index}`);
+                if (selectElem) {
+                    attendanceData[w.name] = selectElem.value;
+                }
+            });
+
+            try {
+                await setDoc(doc(db, "attendance", dateStr), attendanceData);
+                alert('تم حفظ سجل حضور العمال بنجاح في Firebase لتاريخ: ' + dateStr);
+            } catch (e) {
+                console.error("Error saving attendance: ", e);
+            }
+        };
+
+        window.handleWorkerSave = async function(event) {
+            event.preventDefault();
+            const docId = document.getElementById('worker-edit-id').value;
+            const name = document.getElementById('modal-worker-name').value.trim();
+            const phone = document.getElementById('modal-worker-phone').value.trim();
+
+            try {
+                if (!docId) {
+                    await addDoc(collection(db, "workers"), { name, phone });
+                } else {
+                    await updateDoc(doc(db, "workers", docId), { name, phone });
+                }
+                closeWorkerModal();
+                alert('تم حفظ بيانات العامل سحابياً!');
+            } catch(e) {
+                console.error("Error saving worker: ", e);
+            }
+        };
+
+        window.deleteEntry = async function(id) {
+            if (confirm('هل أنت متأكد من حذف هذا السجل من السحابة؟')) {
+                await deleteDoc(doc(db, "production", id));
+            }
+        };
+
+        window.deleteStockOutEntry = async function(id) {
+            if (confirm('هل أنت متأكد من حذف سجل الخروج هذا؟')) {
+                await deleteDoc(doc(db, "stockout", id));
+            }
+        };
+
+        window.deleteWorker = async function(id) {
+            if (confirm('هل أنت متأكد من حذف هذا العامل من Firebase؟')) {
+                await deleteDoc(doc(db, "workers", id));
+            }
+        };
+
+        // Window Load Functions
         window.onload = function() {
             const todayStr = new Date().toISOString().split('T')[0];
             document.getElementById('current-date').innerText = "التاريخ: " + todayStr;
@@ -691,25 +800,13 @@
             document.getElementById('attendance-date').value = todayStr;
 
             populateProductDropdowns();
-            updateWorkersDropdown();
-            renderSavedAttendanceButtons();
-            renderAll();
         };
 
-        function toggleMenu() {
-            const menu = document.getElementById('dropdown-menu');
-            menu.classList.toggle('hidden');
-        }
+        window.toggleMenu = function() {
+            document.getElementById('dropdown-menu').classList.toggle('hidden');
+        };
 
-        window.addEventListener('click', function(e) {
-            const btn = document.getElementById('menu-toggle-btn');
-            const menu = document.getElementById('dropdown-menu');
-            if (!btn.contains(e.target) && !menu.contains(e.target)) {
-                menu.classList.add('hidden');
-            }
-        });
-
-        function selectTab(tabId, title) {
+        window.selectTab = function(tabId, title) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             document.getElementById('current-tab-title').innerText = title;
@@ -723,16 +820,15 @@
             if(tabId === 'analytics') {
                 renderAnalytics();
             }
-        }
+        };
 
         function populateProductDropdowns() {
             const list1 = document.getElementById('products-datalist');
             const list2 = document.getElementById('out-products-datalist');
-            
             list1.innerHTML = '';
             list2.innerHTML = '';
 
-            productsCatalog.forEach(p => {
+            window.productsCatalog.forEach(p => {
                 const optText = `${p.code} - ${p.desc} (${p.unit})`;
                 
                 const opt1 = document.createElement('option');
@@ -748,54 +844,17 @@
         function updateWorkersDropdown() {
             const select = document.getElementById('worker-name');
             select.innerHTML = '<option value="">-- اختر العامل --</option>';
-            workersList.forEach(w => {
+            window.workersList.forEach(w => {
                 select.innerHTML += `<option value="${w.name}">${w.name}</option>`;
             });
         }
 
         function getCurrentStock(code) {
-            const product = productsCatalog.find(p => p.code === code);
+            const product = window.productsCatalog.find(p => p.code === code);
             const initial = product ? product.qty : 0;
-            const produced = productionLogs.filter(item => item.code === code).reduce((sum, item) => sum + item.qty, 0);
-            const out = stockOutLogs.filter(item => item.code === code).reduce((sum, item) => sum + item.qty, 0);
+            const produced = window.productionLogs.filter(item => item.code === code).reduce((sum, item) => sum + item.qty, 0);
+            const out = window.stockOutLogs.filter(item => item.code === code).reduce((sum, item) => sum + item.qty, 0);
             return initial + produced - out;
-        }
-
-        function handleProductionSubmit(event) {
-            event.preventDefault();
-            const worker = document.getElementById('worker-name').value;
-            const rawProductVal = document.getElementById('product-search-input').value;
-            const code = rawProductVal.split(' - ')[0].trim();
-            const quantity = parseInt(document.getElementById('prod-quantity').value);
-            const date = document.getElementById('prod-date').value;
-            const notes = document.getElementById('prod-notes').value;
-
-            const productObj = productsCatalog.find(p => p.code === code);
-            if (!productObj) {
-                alert('الرجاء اختيار منتج صحيح من القائمة المقترحة!');
-                return;
-            }
-
-            const newEntry = {
-                id: Date.now(),
-                date: date,
-                worker: worker,
-                code: productObj.code,
-                desc: productObj.desc,
-                unit: productObj.unit,
-                qty: quantity,
-                notes: notes
-            };
-
-            productionLogs.unshift(newEntry);
-            localStorage.setItem('factory_production', JSON.stringify(productionLogs));
-
-            document.getElementById('production-form').reset();
-            document.getElementById('prod-date').value = new Date().toISOString().split('T')[0];
-
-            renderAll();
-            selectTab('workers', 'تقارير العمال اليومية');
-            alert('تم تسجيل الإنتاج بنجاح وإضافته للمخزون!');
         }
 
         function renderAttendanceTable() {
@@ -803,14 +862,14 @@
             const tbody = document.getElementById('attendance-tbody');
             tbody.innerHTML = '';
 
-            if (workersList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">لا يوجد عمال مسجلين بدليل العمال</td></tr>`;
+            if (window.workersList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">لا يوجد عمال مسجلين</td></tr>`;
                 return;
             }
 
-            const dayRecords = attendanceLogs[dateStr] || {};
+            const dayRecords = window.attendanceLogs[dateStr] || {};
 
-            workersList.forEach((w, index) => {
+            window.workersList.forEach((w, index) => {
                 const currentStatus = dayRecords[w.name] || 'حاضر';
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
@@ -818,7 +877,7 @@
                         <td class="p-3 font-bold text-slate-800 text-right">${w.name}</td>
                         <td class="p-3 font-mono text-emerald-700 font-semibold text-right" dir="ltr">${w.phone}</td>
                         <td class="p-3 text-right">
-                            <select id="attendance_select_${index}" class="p-2.5 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-indigo-500 focus:outline-none w-full sm:w-48 bg-white text-right">
+                            <select id="attendance_select_${index}" class="p-2.5 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-indigo-500 focus:outline-none w-full sm:w-48 bg-white">
                                 <option value="حاضر" ${currentStatus === 'حاضر' ? 'selected' : ''} class="text-emerald-700 font-semibold">حاضر</option>
                                 <option value="مريض" ${currentStatus === 'مريض' ? 'selected' : ''} class="text-rose-600 font-semibold">مريض</option>
                                 <option value="غير مبرر" ${currentStatus === 'غير مبرر' ? 'selected' : ''} class="text-amber-600 font-semibold">غير مبرر</option>
@@ -831,36 +890,12 @@
             });
         }
 
-        function handleAttendanceSubmit(event) {
-            event.preventDefault();
-            const dateStr = document.getElementById('attendance-date').value;
-            if(!dateStr) {
-                alert('الرجاء تحديد تاريخ الحضور!');
-                return;
-            }
-
-            if(!attendanceLogs[dateStr]) {
-                attendanceLogs[dateStr] = {};
-            }
-
-            workersList.forEach((w, index) => {
-                const selectElem = document.getElementById(`attendance_select_${index}`);
-                if (selectElem) {
-                    attendanceLogs[dateStr][w.name] = selectElem.value;
-                }
-            });
-
-            localStorage.setItem('factory_attendance_logs', JSON.stringify(attendanceLogs));
-            renderSavedAttendanceButtons();
-            alert('تم حفظ سجل حضور العمال بنجاح لتاريخ: ' + dateStr);
-        }
-
         function renderSavedAttendanceButtons() {
             const container = document.getElementById('saved-attendance-buttons');
             if (!container) return;
             container.innerHTML = '';
 
-            const savedDates = Object.keys(attendanceLogs).sort().reverse();
+            const savedDates = Object.keys(window.attendanceLogs).sort().reverse();
             if (savedDates.length === 0) {
                 container.innerHTML = `<p class="text-xs text-slate-400">لا توجد تواريخ حضور محفوظة بعد.</p>`;
                 return;
@@ -876,16 +911,16 @@
             });
         }
 
-        function openAttendanceModal(dateStr) {
+        window.openAttendanceModal = function(dateStr) {
             document.getElementById('attendance-modal-title').innerHTML = `<i class="fa-solid fa-calendar-day text-indigo-600"></i> تفاصيل الحضور ليوم: ${dateStr}`;
             const tbody = document.getElementById('attendance-modal-tbody');
             tbody.innerHTML = '';
 
-            const dayRecords = attendanceLogs[dateStr] || {};
-            if (workersList.length === 0) {
+            const dayRecords = window.attendanceLogs[dateStr] || {};
+            if (window.workersList.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="3" class="p-6 text-center text-slate-400">لا يوجد عمال مسجلين</td></tr>`;
             } else {
-                workersList.forEach(w => {
+                window.workersList.forEach(w => {
                     const status = dayRecords[w.name] || 'غير مسجل';
                     let statusBadgeClass = 'bg-slate-100 text-slate-700';
                     if (status === 'حاضر') statusBadgeClass = 'bg-emerald-100 text-emerald-800 font-bold';
@@ -905,132 +940,47 @@
             }
 
             document.getElementById('attendance-detail-modal').classList.remove('hidden');
-        }
+        };
 
-        function closeAttendanceModal() {
+        window.closeAttendanceModal = function() {
             document.getElementById('attendance-detail-modal').classList.add('hidden');
-        }
+        };
 
-        function handleStockOutSubmit(event) {
-            event.preventDefault();
-            const rawProductVal = document.getElementById('out-product-search-input').value;
-            const code = rawProductVal.split(' - ')[0].trim();
-            const quantity = parseInt(document.getElementById('out-quantity').value);
-            const date = document.getElementById('out-date').value;
-            const notes = document.getElementById('out-notes').value;
-
-            const productObj = productsCatalog.find(p => p.code === code);
-            if (!productObj) {
-                alert('الرجاء اختيار منتج صحيح من القائمة المقترحة!');
-                return;
-            }
-
-            const currentStock = getCurrentStock(code);
-            if (quantity > currentStock) {
-                alert(`تنبيه: الكمية المطلوبة (${quantity}) أكبر من المخزون الحالي المتاح (${currentStock})!`);
-                return;
-            }
-
-            const newOutEntry = {
-                id: Date.now(),
-                date: date,
-                code: productObj.code,
-                desc: productObj.desc,
-                unit: productObj.unit,
-                qty: quantity,
-                notes: notes
-            };
-
-            stockOutLogs.unshift(newOutEntry);
-            localStorage.setItem('factory_stock_out', JSON.stringify(stockOutLogs));
-
-            document.getElementById('stockout-form').reset();
-            document.getElementById('out-date').value = new Date().toISOString().split('T')[0];
-
-            renderAll();
-            alert('تم تسجيل خروج المنتجات وتحديث المخزون بنجاح!');
-        }
-
-        function deleteEntry(id) {
-            if (confirm('هل أنت متأكد من حذف هذا السجل؟')) {
-                productionLogs = productionLogs.filter(item => item.id !== id);
-                localStorage.setItem('factory_production', JSON.stringify(productionLogs));
-                renderAll();
-            }
-        }
-
-        function deleteStockOutEntry(id) {
-            if (confirm('هل أنت متأكد من حذف سجل الخروج هذا؟')) {
-                stockOutLogs = stockOutLogs.filter(item => item.id !== id);
-                localStorage.setItem('factory_stock_out', JSON.stringify(stockOutLogs));
-                renderAll();
-            }
-        }
-
-        function clearAllProduction() {
-            if (confirm('تحذير: سيتم مسح جميع سجلات الإنتاج!')) {
-                productionLogs = [];
-                localStorage.setItem('factory_production', JSON.stringify(productionLogs));
-                renderAll();
-            }
-        }
-
-        function clearAllStockOut() {
-            if (confirm('تحذير: سيتم مسح جميع سجلات خروج المنتجات!')) {
-                stockOutLogs = [];
-                localStorage.setItem('factory_stock_out', JSON.stringify(stockOutLogs));
-                renderAll();
-            }
-        }
-
-        function openAddWorkerModal() {
+        window.openAddWorkerModal = function() {
             document.getElementById('modal-title').innerText = "إضافة عامل جديد";
-            document.getElementById('worker-edit-index').value = "-1";
+            document.getElementById('worker-edit-id').value = "";
             document.getElementById('modal-worker-name').value = "";
             document.getElementById('modal-worker-phone').value = "";
             document.getElementById('worker-modal').classList.remove('hidden');
-        }
+        };
 
-        function editWorker(index) {
-            const worker = workersList[index];
+        window.editWorker = function(id) {
+            const worker = window.workersList.find(w => w.id === id);
+            if (!worker) return;
             document.getElementById('modal-title').innerText = "تعديل بيانات العامل";
-            document.getElementById('worker-edit-index').value = index;
+            document.getElementById('worker-edit-id').value = id;
             document.getElementById('modal-worker-name').value = worker.name;
             document.getElementById('modal-worker-phone').value = worker.phone;
             document.getElementById('worker-modal').classList.remove('hidden');
-        }
+        };
 
-        function closeWorkerModal() {
+        window.closeWorkerModal = function() {
             document.getElementById('worker-modal').classList.add('hidden');
-        }
+        };
 
-        function handleWorkerSave(event) {
-            event.preventDefault();
-            const index = parseInt(document.getElementById('worker-edit-index').value);
-            const name = document.getElementById('modal-worker-name').value.trim();
-            const phone = document.getElementById('modal-worker-phone').value.trim();
-
-            if (index === -1) {
-                workersList.push({ name, phone });
+        window.setAnalyticsView = function(mode) {
+            window.currentAnalyticsMode = mode;
+            const btnW = document.getElementById('btn-view-weekly');
+            const btnM = document.getElementById('btn-view-monthly');
+            if (mode === 'weekly') {
+                btnW.className = "px-4 py-2 rounded-xl text-sm font-bold bg-teal-600 text-white transition shadow";
+                btnM.className = "px-4 py-2 rounded-xl text-sm font-bold bg-slate-200 text-slate-700 transition";
             } else {
-                workersList[index] = { name, phone };
+                btnM.className = "px-4 py-2 rounded-xl text-sm font-bold bg-teal-600 text-white transition shadow";
+                btnW.className = "px-4 py-2 rounded-xl text-sm font-bold bg-slate-200 text-slate-700 transition";
             }
-
-            localStorage.setItem('factory_workers_list', JSON.stringify(workersList));
-            updateWorkersDropdown();
-            renderWorkersInfoTable();
-            closeWorkerModal();
-            alert('تم حفظ بيانات العامل بنجاح!');
-        }
-
-        function deleteWorker(index) {
-            if (confirm('هل أنت متأكد من حذف هذا العامل من الدليل؟')) {
-                workersList.splice(index, 1);
-                localStorage.setItem('factory_workers_list', JSON.stringify(workersList));
-                updateWorkersDropdown();
-                renderWorkersInfoTable();
-            }
-        }
+            renderAnalytics();
+        };
 
         function getWeekIdentifier(dateStr) {
             const d = new Date(dateStr);
@@ -1046,20 +996,6 @@
             return dateStr.substring(0, 7);
         }
 
-        function setAnalyticsView(mode) {
-            currentAnalyticsMode = mode;
-            const btnW = document.getElementById('btn-view-weekly');
-            const btnM = document.getElementById('btn-view-monthly');
-            if (mode === 'weekly') {
-                btnW.className = "px-4 py-2 rounded-xl text-sm font-bold bg-teal-600 text-white transition shadow";
-                btnM.className = "px-4 py-2 rounded-xl text-sm font-bold bg-slate-200 text-slate-700 transition";
-            } else {
-                btnM.className = "px-4 py-2 rounded-xl text-sm font-bold bg-teal-600 text-white transition shadow";
-                btnW.className = "px-4 py-2 rounded-xl text-sm font-bold bg-slate-200 text-slate-700 transition";
-            }
-            renderAnalytics();
-        }
-
         function renderAnalytics() {
             const container = document.getElementById('analytics-content');
             container.innerHTML = '';
@@ -1067,8 +1003,8 @@
             const prodGroups = {};
             const stockOutGroups = {};
 
-            productionLogs.forEach(item => {
-                const key = currentAnalyticsMode === 'weekly' ? getWeekIdentifier(item.date) : getMonthIdentifier(item.date);
+            window.productionLogs.forEach(item => {
+                const key = window.currentAnalyticsMode === 'weekly' ? getWeekIdentifier(item.date) : getMonthIdentifier(item.date);
                 if (!prodGroups[key]) prodGroups[key] = { totalQty: 0, workers: {}, products: {} };
                 prodGroups[key].totalQty += item.qty;
 
@@ -1081,8 +1017,8 @@
                 prodGroups[key].products[item.code].qty += item.qty;
             });
 
-            stockOutLogs.forEach(item => {
-                const key = currentAnalyticsMode === 'weekly' ? getWeekIdentifier(item.date) : getMonthIdentifier(item.date);
+            window.stockOutLogs.forEach(item => {
+                const key = window.currentAnalyticsMode === 'weekly' ? getWeekIdentifier(item.date) : getMonthIdentifier(item.date);
                 if (!stockOutGroups[key]) stockOutGroups[key] = {};
                 if (!stockOutGroups[key][item.code]) {
                     stockOutGroups[key][item.code] = { desc: item.desc, unit: item.unit, qty: 0 };
@@ -1121,7 +1057,7 @@
                 if(consumedHtml === '') consumedHtml = `<tr><td colspan="4" class="p-3 text-center text-xs text-slate-400">لا توجد منتجات مستهلكة/مصروفة في هذه الفترة</td></tr>`;
 
                 container.innerHTML += `
-                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4 shadow-sm text-right">
+                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4 shadow-sm">
                         <div class="flex justify-between items-center bg-teal-900 text-white px-4 py-3 rounded-xl flex-wrap gap-2">
                             <h3 class="font-bold text-sm sm:text-base flex items-center gap-2">
                                 <i class="fa-solid fa-calendar-days text-teal-400"></i> فترة التقرير: ${period}
@@ -1134,17 +1070,15 @@
                                 <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b pb-2">
                                     <i class="fa-solid fa-users text-emerald-600"></i> إنتاج العمال خلال هذه الفترة
                                 </h4>
-                                <ul class="space-y-1 max-h-48 overflow-y-auto">
-                                    ${workersHtml}
-                                </ul>
+                                <ul class="space-y-1 max-h-48 overflow-y-auto">${workersHtml}</ul>
                             </div>
 
                             <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
                                 <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b pb-2">
-                                    <i class="fa-solid fa-box-open text-rose-600"></i> المنتجات المستهلكة/المصروفة وكمياتها
+                                    <i class="fa-solid fa-box-open text-rose-600"></i> المنتجات المستهلكة/المصروفة
                                 </h4>
                                 <div class="overflow-x-auto max-h-48 overflow-y-auto">
-                                    <table class="w-full text-right">
+                                    <table class="w-full text-right" dir="rtl">
                                         <thead class="bg-slate-100 text-slate-600 text-xs">
                                             <tr>
                                                 <th class="p-2 text-right">الكود</th>
@@ -1153,9 +1087,7 @@
                                                 <th class="p-2 text-right">كمية الاستهلاك</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="divide-y divide-slate-100">
-                                            ${consumedHtml}
-                                        </tbody>
+                                        <tbody class="divide-y divide-slate-100">${consumedHtml}</tbody>
                                     </table>
                                 </div>
                             </div>
@@ -1177,10 +1109,10 @@
         function renderDashboardStats() {
             const recentOutTbody = document.getElementById('recent-out-table');
             recentOutTbody.innerHTML = '';
-            if (stockOutLogs.length === 0) {
+            if (window.stockOutLogs.length === 0) {
                 recentOutTbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">لا توجد عمليات خروج مسجلة بعد</td></tr>`;
             } else {
-                stockOutLogs.slice(0, 5).forEach(item => {
+                window.stockOutLogs.slice(0, 5).forEach(item => {
                     recentOutTbody.innerHTML += `
                         <tr class="hover:bg-slate-50">
                             <td class="p-3 text-slate-700 font-medium text-right">${item.code} - ${item.desc}</td>
@@ -1195,7 +1127,7 @@
             summaryDiv.innerHTML = '';
             
             const todayStr = new Date().toISOString().split('T')[0];
-            const todayLogs = productionLogs.filter(item => item.date === todayStr);
+            const todayLogs = window.productionLogs.filter(item => item.date === todayStr);
             const workerMap = {};
             todayLogs.forEach(item => {
                 if (!workerMap[item.worker]) workerMap[item.worker] = 0;
@@ -1216,13 +1148,11 @@
             }
         }
 
-        /* الجدول المعدل بحسب الترتيب المطلوب من اليمين إلى الأيسر: 
-           الكود - وصف المنتج - الوحدة - المخزون الحالي */
         function renderLowStockTable() {
             const tbody = document.getElementById('low-stock-table');
             tbody.innerHTML = '';
 
-            const lowStockItems = productsCatalog.filter(p => getCurrentStock(p.code) <= 5);
+            const lowStockItems = window.productsCatalog.filter(p => getCurrentStock(p.code) <= 5);
             document.getElementById('low-stock-count').innerText = `${lowStockItems.length} منتج`;
 
             if (lowStockItems.length === 0) {
@@ -1248,7 +1178,7 @@
             const tbody = document.getElementById('full-production-table');
             tbody.innerHTML = '';
 
-            const filteredLogs = filterDate ? productionLogs.filter(item => item.date === filterDate) : productionLogs;
+            const filteredLogs = filterDate ? window.productionLogs.filter(item => item.date === filterDate) : window.productionLogs;
 
             if (filteredLogs.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">لا توجد سجلات إنتاج مطابقة لتاريخ اليوم المحدد</td></tr>`;
@@ -1266,7 +1196,7 @@
                         <td class="p-3 text-right"><span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-lg font-bold">${item.qty}</span></td>
                         <td class="p-3 text-slate-500 text-xs text-right">${item.notes || '-'}</td>
                         <td class="p-3 text-center">
-                            <button onclick="deleteEntry(${item.id})" class="text-red-500 hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition" title="حذف">
+                            <button onclick="deleteEntry('${item.id}')" class="text-red-500 hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition" title="حذف">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </td>
@@ -1279,12 +1209,12 @@
             const tbody = document.getElementById('full-stockout-table');
             tbody.innerHTML = '';
 
-            if (stockOutLogs.length === 0) {
+            if (window.stockOutLogs.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">لا توجد حركات خروج مسجلة حتى الآن</td></tr>`;
                 return;
             }
 
-            stockOutLogs.forEach(item => {
+            window.stockOutLogs.forEach(item => {
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
                         <td class="p-3 text-slate-600 font-mono text-right">${item.date}</td>
@@ -1293,7 +1223,7 @@
                         <td class="p-3 text-right"><span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-lg font-bold">${item.qty}</span></td>
                         <td class="p-3 text-slate-600 text-xs font-medium text-right">${item.notes || '-'}</td>
                         <td class="p-3 text-center">
-                            <button onclick="deleteStockOutEntry(${item.id})" class="text-red-500 hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition" title="حذف">
+                            <button onclick="deleteStockOutEntry('${item.id}')" class="text-red-500 hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition" title="حذف">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </td>
@@ -1307,18 +1237,18 @@
             tbody.innerHTML = '';
 
             const prodTotals = {};
-            productionLogs.forEach(item => {
+            window.productionLogs.forEach(item => {
                 if (!prodTotals[item.code]) prodTotals[item.code] = 0;
                 prodTotals[item.code] += item.qty;
             });
 
             const outTotals = {};
-            stockOutLogs.forEach(item => {
+            window.stockOutLogs.forEach(item => {
                 if (!outTotals[item.code]) outTotals[item.code] = 0;
                 outTotals[item.code] += item.qty;
             });
 
-            productsCatalog.forEach(p => {
+            window.productsCatalog.forEach(p => {
                 const produced = prodTotals[p.code] || 0;
                 const out = outTotals[p.code] || 0;
                 const currentStock = p.qty + produced - out;
@@ -1347,22 +1277,22 @@
             const tbody = document.getElementById('workers-info-tbody');
             tbody.innerHTML = '';
 
-            if (workersList.length === 0) {
+            if (window.workersList.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">لا يوجد عمال مسجلين حالياً</td></tr>`;
                 return;
             }
 
-            workersList.forEach((w, index) => {
+            window.workersList.forEach((w, index) => {
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
                         <td class="p-3 text-slate-500 font-mono text-right">${index + 1}</td>
                         <td class="p-3 font-bold text-slate-800 text-right">${w.name}</td>
                         <td class="p-3 font-mono text-emerald-700 font-semibold text-right" dir="ltr">${w.phone}</td>
                         <td class="p-3 text-center space-x-2 space-x-reverse">
-                            <button onclick="editWorker(${index})" class="text-blue-500 hover:text-blue-700 p-1.5 rounded-lg hover:bg-blue-50 transition" title="تعديل">
+                            <button onclick="editWorker('${w.id}')" class="text-blue-500 hover:text-blue-700 p-1.5 rounded-lg hover:bg-blue-50 transition" title="تعديل">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
-                            <button onclick="deleteWorker(${index})" class="text-red-500 hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition" title="حذف">
+                            <button onclick="deleteWorker('${w.id}')" class="text-red-500 hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition" title="حذف">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </td>
@@ -1371,7 +1301,7 @@
             });
         }
 
-        function filterInventory() {
+        window.filterInventory = function() {
             const query = document.getElementById('search-product').value.toLowerCase();
             const rows = document.querySelectorAll('.inventory-row');
             rows.forEach(row => {
@@ -1382,9 +1312,9 @@
                     row.style.display = 'none';
                 }
             });
-        }
+        };
 
-        // ================= EXCEL EXPORT FUNCTIONS =================
+        // Export Functions
         function downloadCSV(csvContent, filename) {
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
@@ -1397,98 +1327,61 @@
             URL.revokeObjectURL(url);
         }
 
-        function exportData() {
+        window.exportData = function() {
             let csvContent = "\uFEFFType,Date,Code,Description,Unit,Quantity,Notes\n";
-            productionLogs.forEach(row => {
+            window.productionLogs.forEach(row => {
                 csvContent += `Production,${row.date},"${row.code}","${row.desc}","${row.unit}",${row.qty},"${row.notes || ''}"\n`;
             });
-            stockOutLogs.forEach(row => {
+            window.stockOutLogs.forEach(row => {
                 csvContent += `StockOut,${row.date},"${row.code}","${row.desc}","${row.unit}",${row.qty},"${row.notes || ''}"\n`;
             });
             downloadCSV(csvContent, "factory_complete_report.csv");
-        }
+        };
 
-        function exportLowStockExcel() {
+        window.exportLowStockExcel = function() {
             let csvContent = "\uFEFFالكود,وصف المنتج,الوحدة,المخزون الحالي\n";
-            const lowStockItems = productsCatalog.filter(p => getCurrentStock(p.code) <= 5);
+            const lowStockItems = window.productsCatalog.filter(p => getCurrentStock(p.code) <= 5);
             lowStockItems.forEach(p => {
                 csvContent += `"${p.code}","${p.desc}","${p.unit}",${getCurrentStock(p.code)}\n`;
             });
             downloadCSV(csvContent, "low_stock_report.csv");
-        }
+        };
 
-        function exportAttendanceExcel() {
+        window.exportAttendanceExcel = function() {
             const dateStr = document.getElementById('attendance-date').value;
-            const dayRecords = attendanceLogs[dateStr] || {};
+            const dayRecords = window.attendanceLogs[dateStr] || {};
             let csvContent = "\uFEFFرقم,اسم العامل,رقم الهاتف,الحالة اليومية\n";
-            workersList.forEach((w, index) => {
+            window.workersList.forEach((w, index) => {
                 const status = dayRecords[w.name] || 'حاضر';
                 csvContent += `${index + 1},"${w.name}","${w.phone}","${status}"\n`;
             });
             downloadCSV(csvContent, `attendance_${dateStr}.csv`);
-        }
+        };
 
-        function exportStockOutExcel() {
-            let csvContent = "\uFEFFالتاريخ,كود المنتج,الوصف,الوحدة,الكمية,الملاحظات / الوارد الخام\n";
-            stockOutLogs.forEach(item => {
+        window.exportStockOutExcel = function() {
+            let csvContent = "\uFEFFالتاريخ,كود المنتج,الوصف,الوحدة,الكمية,الملاحظات\n";
+            window.stockOutLogs.forEach(item => {
                 csvContent += `${item.date},"${item.code}","${item.desc}","${item.unit}",${item.qty},"${item.notes || ''}"\n`;
             });
-            downloadCSV(csvContent, "stock_out_report.csv");
-        }
+            downloadCSV(csvContent, "stockout_report.csv");
+        };
 
-        function exportProductionExcel() {
-            const filterDate = document.getElementById('filter-date').value;
-            const filteredLogs = filterDate ? productionLogs.filter(item => item.date === filterDate) : productionLogs;
-            let csvContent = "\uFEFFالتاريخ,اسم العامل,كود المنتج,الوصف,الوحدة,الكمية,ملاحظات\n";
-            filteredLogs.forEach(item => {
+        window.exportProductionExcel = function() {
+            let csvContent = "\uFEFFالتاريخ,العامل,كود المنتج,الوصف,الوحدة,الكمية,الملاحظات\n";
+            window.productionLogs.forEach(item => {
                 csvContent += `${item.date},"${item.worker}","${item.code}","${item.desc}","${item.unit}",${item.qty},"${item.notes || ''}"\n`;
             });
-            downloadCSV(csvContent, `workers_production_${filterDate || 'all'}.csv`);
-        }
+            downloadCSV(csvContent, "production_report.csv");
+        };
 
-        function exportInventoryExcel() {
-            let csvContent = "\uFEFFالكود,وصف المنتج,الوحدة,الافتراضي,المُنتَج,المُصَرَف,المخزون الحالي,الحالة\n";
-            const prodTotals = {};
-            productionLogs.forEach(item => {
-                if (!prodTotals[item.code]) prodTotals[item.code] = 0;
-                prodTotals[item.code] += item.qty;
-            });
-            const outTotals = {};
-            stockOutLogs.forEach(item => {
-                if (!outTotals[item.code]) outTotals[item.code] = 0;
-                outTotals[item.code] += item.qty;
-            });
-            productsCatalog.forEach(p => {
-                const produced = prodTotals[p.code] || 0;
-                const out = outTotals[p.code] || 0;
-                const currentStock = p.qty + produced - out;
-                const status = currentStock <= 5 ? "منخفض جداً" : "متوفر";
-                csvContent += `"${p.code}","${p.desc}","${p.unit}",${p.qty},${produced},${out},${currentStock},"${status}"\n`;
+        window.exportInventoryExcel = function() {
+            let csvContent = "\uFEFFالكود,وصف المنتج,الوحدة,الافتراضي,المصنوع,المصروف,المخزون الحالي\n";
+            window.productsCatalog.forEach(p => {
+                const currentStock = getCurrentStock(p.code);
+                csvContent += `"${p.code}","${p.desc}","${p.unit}",${p.qty},${currentStock}\n`;
             });
             downloadCSV(csvContent, "inventory_report.csv");
-        }
-
-        function exportAnalyticsExcel() {
-            let csvContent = `\uFEFFفترة التقرير (${currentAnalyticsMode === 'weekly' ? 'أسبوعي' : 'شهري'}),إجمالي الإنتاج\n`;
-            const prodGroups = {};
-            productionLogs.forEach(item => {
-                const key = currentAnalyticsMode === 'weekly' ? getWeekIdentifier(item.date) : getMonthIdentifier(item.date);
-                if (!prodGroups[key]) prodGroups[key] = 0;
-                prodGroups[key] += item.qty;
-            });
-            for (const [period, total] of Object.entries(prodGroups)) {
-                csvContent += `"${period}",${total}\n`;
-            }
-            downloadCSV(csvContent, `analytics_report_${currentAnalyticsMode}.csv`);
-        }
-
-        function exportWorkersExcel() {
-            let csvContent = "\uFEFFرقم,اسم العامل,رقم الهاتف\n";
-            workersList.forEach((w, index) => {
-                csvContent += `${index + 1},"${w.name}","${w.phone}"\n`;
-            });
-            downloadCSV(csvContent, "workers_directory.csv");
-        }
+        };
     </script>
 </body>
 </html>
