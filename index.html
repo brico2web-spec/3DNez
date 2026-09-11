@@ -72,7 +72,7 @@
                         </div>
                         <div>
                             <h1 class="text-base sm:text-lg font-bold tracking-wide">نظام تسيير الإنتاج والتخزين</h1>
-                            <p class="text-xs text-blue-300">إدارة المخزون ومتابعة إنتاج الحضور والعمال (Firebase Cloud)</p>
+                            <p class="text-xs text-blue-300">إدارة المخزون ومتابعة إنتاج الحضور والعمال (مربوط سحابياً مع Firebase)</p>
                         </div>
                     </div>
 
@@ -369,7 +369,7 @@
                     <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
                         <div>
                             <h2 class="text-xl font-bold text-slate-800">مخزون المنتجات الكلي في المصنع</h2>
-                            <p class="text-xs text-slate-500">تتبع رصيد المخزون الفعلي المحدث سحابياً</p>
+                            <p class="text-xs text-slate-500">تتبع رصيد المخزون الفعلي المحدث سحابياً فورياً عبر جميع الأجهزة</p>
                         </div>
                         <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
                             <input type="text" id="search-product" onkeyup="filterInventory()" placeholder="ابحث برمز المنتج أو الوصف..." class="w-full sm:w-60 p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
@@ -489,7 +489,7 @@
         </div>
     </div>
 
-    <!-- Product Modal (Updated with Boxes & Items Per Box fields) -->
+    <!-- Product Modal -->
     <div id="product-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 text-right overflow-y-auto max-h-[90vh]">
             <h3 class="text-lg font-bold text-slate-800 mb-4" id="product-modal-title">إضافة منتج جديد</h3>
@@ -508,7 +508,6 @@
                     <input type="text" id="modal-product-unit" required placeholder="1 L / 500 ml / 4 Kg..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
 
-                <!-- الخانات الجديدة -->
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-1">عدد العلب</label>
@@ -586,8 +585,9 @@
     <!-- Firebase SDK Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, setDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+        // 🟢 إعدادات Firebase الخاصة بك
         const firebaseConfig = {
             apiKey: "AIzaSyDemoKeyReplaceWithYourOwnIfNeed",
             authDomain: "factory-system-demo.firebaseapp.com",
@@ -599,6 +599,24 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+
+        // المنتوجات المأخوذة مباشرة من الصورة المرفقة
+        const initialImageProducts = [
+            { code: "AC55", desc: "Acide Chlorhydrique 17°", unit: "550 ml", boxes: 0, itemsPerBox: 1, qty: 0 },
+            { code: "AC75", desc: "Acide Chlorhydrique 17°", unit: "750 ml", boxes: 0, itemsPerBox: 1, qty: 0 },
+            { code: "AC90", desc: "Acide Chlorhydrique 17°", unit: "900 ml", boxes: 0, itemsPerBox: 1, qty: 0 },
+            { code: "AC40", desc: "Acide Chlorhydrique 17°", unit: "4 L", boxes: 0, itemsPerBox: 1, qty: 0 },
+            { code: "S1000", desc: "Détartrant Surpuissant FOX 90 CL", unit: "90 CL", boxes: 0, itemsPerBox: 1, qty: 0 },
+            { code: "Z1000", desc: "Grezyl 5%", unit: "1L", boxes: 0, itemsPerBox: 1, qty: 0 },
+            { code: "CL1000", desc: "Soude Caustique Liquide 1L", unit: "1L", boxes: 0, itemsPerBox: 1, qty: 0 },
+            { code: "D1000", desc: "Eau Déminéralisée - Spécial Batterie", unit: "1L", boxes: 0, itemsPerBox: 1, qty: 0 },
+            { code: "S1000-28", desc: "Acide Chlorhydrique 28°", unit: "1 L", boxes: 0, itemsPerBox: 1, qty: 0 },
+            { code: "L1000", desc: "Déboucheur Liquide 1L", unit: "1L", boxes: 0, itemsPerBox: 1, qty: 0 },
+            { code: "GR200", desc: "Graisse industrielle", unit: "200 gm", boxes: 0, itemsPerBox: 1, qty: 0 },
+            { code: "GR2500", desc: "Graisse industrielle", unit: "2500 gm", boxes: 0, itemsPerBox: 1, qty: 0 },
+            { code: "HL60", desc: "Huile de Lin", unit: "600 ml", boxes: 0, itemsPerBox: 1, qty: 0 },
+            { code: "VB600", desc: "Vaseline de bois", unit: "600 ml", boxes: 0, itemsPerBox: 1, qty: 0 }
+        ];
 
         // --- AUTHENTICATION ---
         let systemUsername = localStorage.getItem('sys_username') || "admin";
@@ -675,11 +693,21 @@
         window.attendanceLogs = {};
         window.currentAnalyticsMode = 'weekly';
 
-        // 🟢 Realtime Sync Listeners
-        onSnapshot(collection(db, "products"), (snapshot) => {
-            window.productsCatalog = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            populateProductDropdowns();
-            renderAll();
+        // 🟢 Realtime Sync Listeners (مزامنة فورية حية سحابية)
+        onSnapshot(collection(db, "products"), async (snapshot) => {
+            if (snapshot.empty) {
+                // إذا كان المخزن فارغاً في قاعدة البيانات، رفع المنتجات الأولية تلقائياً
+                const batch = writeBatch(db);
+                initialImageProducts.forEach(prod => {
+                    const docRef = doc(collection(db, "products"));
+                    batch.set(docRef, prod);
+                });
+                await batch.commit();
+            } else {
+                window.productsCatalog = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                populateProductDropdowns();
+                renderAll();
+            }
         });
 
         onSnapshot(collection(db, "production"), (snapshot) => {
@@ -769,7 +797,7 @@
                     await updateDoc(doc(db, "products", docId), { desc, unit, boxes, itemsPerBox, qty });
                 }
                 closeProductModal();
-                alert('تم حفظ بيانات المنتج بنجاح!');
+                alert('تم حفظ بيانات المنتج بنجاح وتحديثها على السحابة!');
             } catch (e) {
                 console.error("Error saving product: ", e);
                 alert("حدث خطأ أثناء حفظ المنتج: " + e.message);
@@ -795,11 +823,10 @@
                         return;
                     }
 
-                    // المعالجة للأسطر (تخطي العناوين بالسطر الأول)
                     let addedCount = 0;
                     for (let i = 1; i < jsonData.length; i++) {
                         const row = jsonData[i];
-                        if (!row[0]) continue; // كود المنتج إجباري
+                        if (!row[0]) continue;
 
                         const code = String(row[0]).trim().toUpperCase();
                         const desc = row[1] ? String(row[1]).trim() : "بدون وصف";
@@ -815,7 +842,7 @@
                         }
                     }
 
-                    alert(`تم استيراد ${addedCount} منتج بنجاح من ملف الإكسيل!`);
+                    alert(`تم استيراد ${addedCount} منتج بنجاح إلى Firebase!`);
                     document.getElementById('excel-file-input').value = "";
                 } catch (err) {
                     console.error("Error reading excel: ", err);
@@ -826,7 +853,7 @@
         };
 
         window.deleteProduct = async function(docId) {
-            if (confirm(`هل أنت متأكد من حذف هذا المنتج نهائياً من المخزون؟`)) {
+            if (confirm(`هل أنت متأكد من حذف هذا المنتج نهائياً من المخزون السحابي؟`)) {
                 try {
                     await deleteDoc(doc(db, "products", docId));
                     alert('تم حذف المنتج بنجاح.');
@@ -860,7 +887,7 @@
                 document.getElementById('production-form').reset();
                 document.getElementById('prod-date').value = new Date().toISOString().split('T')[0];
                 selectTab('workers', 'تقارير العمال اليومية');
-                alert('تم تسجيل الإنتاج بنجاح!');
+                alert('تم تسجيل الإنتاج بنجاح وتحديث المخزون عند جميع المستخدمين!');
             } catch (e) {
                 console.error("Error adding document: ", e);
             }
@@ -892,7 +919,7 @@
                 });
                 document.getElementById('stockout-form').reset();
                 document.getElementById('out-date').value = new Date().toISOString().split('T')[0];
-                alert('تم تسجيل خروج المنتجات بنجاح!');
+                alert('تم تسجيل خروج المنتجات بنجاح وتحديث المخزون فورياً!');
             } catch (e) {
                 console.error("Error adding document: ", e);
             }
@@ -982,6 +1009,7 @@
         function populateProductDropdowns() {
             const list1 = document.getElementById('products-datalist');
             const list2 = document.getElementById('out-products-datalist');
+            if(!list1 || !list2) return;
             list1.innerHTML = ''; list2.innerHTML = '';
             window.productsCatalog.forEach(p => {
                 const optText = `${p.code} - ${p.desc} (${p.unit})`;
@@ -992,6 +1020,7 @@
 
         function updateWorkersDropdown() {
             const select = document.getElementById('worker-name');
+            if(!select) return;
             select.innerHTML = '<option value="">-- اختر العامل --</option>';
             window.workersList.forEach(w => {
                 select.innerHTML += `<option value="${w.name}">${w.name}</option>`;
@@ -1009,6 +1038,7 @@
         function renderAttendanceTable() {
             const dateStr = document.getElementById('attendance-date').value;
             const tbody = document.getElementById('attendance-tbody');
+            if(!tbody) return;
             tbody.innerHTML = '';
             if (window.workersList.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">لا يوجد عمال مسجلين</td></tr>`;
@@ -1140,6 +1170,7 @@
 
         function renderAnalytics() {
             const container = document.getElementById('analytics-content');
+            if(!container) return;
             container.innerHTML = '';
             const prodGroups = {};
             const stockOutGroups = {};
@@ -1240,6 +1271,7 @@
 
         function renderDashboardStats() {
             const recentOutTbody = document.getElementById('recent-out-table');
+            if(!recentOutTbody) return;
             recentOutTbody.innerHTML = '';
             if (window.stockOutLogs.length === 0) {
                 recentOutTbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">لا توجد عمليات خروج مسجلة بعد</td></tr>`;
@@ -1256,6 +1288,7 @@
             }
 
             const summaryDiv = document.getElementById('workers-summary-dash');
+            if(!summaryDiv) return;
             summaryDiv.innerHTML = '';
             const todayStr = new Date().toISOString().split('T')[0];
             const todayLogs = window.productionLogs.filter(item => item.date === todayStr);
@@ -1281,6 +1314,7 @@
 
         function renderLowStockTable() {
             const tbody = document.getElementById('low-stock-table');
+            if(!tbody) return;
             tbody.innerHTML = '';
             const lowStockItems = window.productsCatalog.filter(p => getCurrentStock(p.code) <= 5);
             document.getElementById('low-stock-count').innerText = `${lowStockItems.length} منتج`;
@@ -1306,6 +1340,7 @@
         function renderProductionTable() {
             const filterDate = document.getElementById('filter-date').value;
             const tbody = document.getElementById('full-production-table');
+            if(!tbody) return;
             tbody.innerHTML = '';
             const filteredLogs = filterDate ? window.productionLogs.filter(item => item.date === filterDate) : window.productionLogs;
 
@@ -1336,6 +1371,7 @@
 
         function renderStockOutTable() {
             const tbody = document.getElementById('full-stockout-table');
+            if(!tbody) return;
             tbody.innerHTML = '';
             if (window.stockOutLogs.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">لا توجد حركات خروج مسجلة حتى الآن</td></tr>`;
@@ -1362,6 +1398,7 @@
 
         function renderInventoryTable() {
             const tbody = document.getElementById('inventory-tbody');
+            if(!tbody) return;
             tbody.innerHTML = '';
 
             const prodTotals = {};
@@ -1413,6 +1450,7 @@
 
         function renderWorkersInfoTable() {
             const tbody = document.getElementById('workers-info-tbody');
+            if(!tbody) return;
             tbody.innerHTML = '';
             if (window.workersList.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">لا يوجد عمال مسجلين بعد</td></tr>`;
