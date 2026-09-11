@@ -751,10 +751,12 @@
             document.getElementById('product-modal').classList.add('hidden');
         };
 
+        // 🟢 إصلاح حفظ المنتج ومزامنة التحديث على السحابة
         window.handleProductSave = async function(event) {
             event.preventDefault();
             const docId = document.getElementById('product-edit-id').value;
-            const code = document.getElementById('modal-product-code').value.trim().toUpperCase();
+            const codeInput = document.getElementById('modal-product-code');
+            const code = codeInput.value.trim().toUpperCase();
             const desc = document.getElementById('modal-product-desc').value.trim();
             const unit = document.getElementById('modal-product-unit').value.trim();
             const boxes = parseInt(document.getElementById('modal-product-boxes').value) || 0;
@@ -769,11 +771,12 @@
                         return;
                     }
                     await addDoc(collection(db, "products"), { code, desc, unit, boxes, itemsPerBox, qty });
+                    alert(`تم إضافة المنتج الجديد (${code}) وتحديث المخزون السحابي بنجاح!`);
                 } else {
                     await updateDoc(doc(db, "products", docId), { desc, unit, boxes, itemsPerBox, qty });
+                    alert(`تم حفظ وتحديث تعديلات المنتج (${code}) بنجاح!`);
                 }
                 closeProductModal();
-                alert('تم حفظ بيانات المنتج بنجاح وتحديثها على السحابة!');
             } catch (e) {
                 console.error("Error saving product: ", e);
                 alert("حدث خطأ أثناء حفظ المنتج: " + e.message);
@@ -798,7 +801,7 @@
             }
         };
 
-        // 🟢 Excel File Parser & Bulk Upload (معدلة لرفع جميع الـ 89 منتج بدون استثناء)
+        // 🟢 Excel File Parser & Bulk Upload
         window.handleExcelUpload = function(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -849,7 +852,7 @@
                     alert("حدث خطأ أثناء قراءة ملف الإكسيل، يرجى التأكد من التنسيق.");
                 }
             };
-            reader.readAsArrayBuffer(file);
+            reader.readAsBuffer(file);
         };
 
         window.deleteProduct = async function(docId) {
