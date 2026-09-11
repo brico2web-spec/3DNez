@@ -28,440 +28,531 @@
 </head>
 <body class="min-h-screen flex flex-col text-left" dir="ltr">
 
-    <!-- Top Header & Navigation Bar -->
-    <header class="bg-blue-950 text-white shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
-            
-            <!-- Logo, Title & Dropdown Menu Side-by-Side -->
-            <div class="flex items-center gap-4 flex-wrap">
-                <div class="flex items-center gap-3">
-                    <div class="bg-blue-600 p-2 rounded-xl text-white font-bold text-xl shadow">
-                        <i class="fa-solid fa-industry"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-base sm:text-lg font-bold tracking-wide">نظام تسيير الإنتاج والتخزين</h1>
-                        <p class="text-xs text-blue-300">إدارة المخزون ومتابعة إنتاج الحضور والعمال (Firebase Cloud)</p>
-                    </div>
+    <!-- 🔒 LOGIN OVERLAY SECTION -->
+    <div id="login-overlay" class="fixed inset-0 bg-blue-950/90 backdrop-blur-md z-[100] flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-100 text-left">
+            <div class="text-center mb-6">
+                <div class="bg-blue-600 text-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-lg">
+                    <i class="fa-solid fa-lock"></i>
                 </div>
-
-                <!-- Dropdown Menu Integrated in Top Header -->
-                <div class="relative">
-                    <button onclick="toggleMenu()" id="menu-toggle-btn" class="bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2.5 shadow border border-blue-800 transition">
-                        <i class="fa-solid fa-bars text-blue-400"></i> 
-                        <span id="current-tab-title">لوحة المؤشرات</span> 
-                        <i class="fa-solid fa-chevron-down text-xs text-blue-300 mr-1"></i>
-                    </button>
-                    
-                    <!-- Dropdown Menu List -->
-                    <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden py-2 z-50 text-slate-800">
-                        <button onclick="selectTab('dashboard', 'لوحة المؤشرات')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
-                            <i class="fa-solid fa-chart-pie text-blue-600 w-5"></i> لوحة المؤشرات
-                        </button>
-                        <button onclick="selectTab('production', 'تسجيل إنتاج العمال')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
-                            <i class="fa-solid fa-clipboard-user text-blue-600 w-5"></i> تسجيل إنتاج العمال
-                        </button>
-                        <button onclick="selectTab('attendance', 'حضور وغياب العمال اليومي')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
-                            <i class="fa-solid fa-calendar-check text-sky-600 w-5"></i> الحضور اليومي للعمال
-                        </button>
-                        <button onclick="selectTab('stockout', 'خروج المنتوجات (الصرف)')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
-                            <i class="fa-solid fa-truck-fast text-rose-600 w-5"></i> خروج المنتوجات (الصرف)
-                        </button>
-                        <button onclick="selectTab('workers', 'تقارير العمال اليومية')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
-                            <i class="fa-solid fa-users-gear text-indigo-600 w-5"></i> تقارير العمال اليومية
-                        </button>
-                        <button onclick="selectTab('inventory', 'مخزون المنتجات الكلي')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
-                            <i class="fa-solid fa-boxes-stacked text-cyan-600 w-5"></i> مخزون المنتجات الكلي
-                        </button>
-                        <button onclick="selectTab('analytics', 'التحليل المبياني (أسبوعي / شهري)')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
-                            <i class="fa-solid fa-chart-line text-blue-500 w-5"></i> التحليل المبياني والتقارير
-                        </button>
-                        <button onclick="selectTab('workers-info', 'معلومات العمال (هواتف)')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition">
-                            <i class="fa-solid fa-address-book text-amber-600 w-5"></i> معلومات العمال (هواتف)
-                        </button>
-                    </div>
-                </div>
+                <h2 class="text-2xl font-black text-slate-800">تسجيل الدخول للنظام</h2>
+                <p class="text-xs text-slate-500 mt-1">أدخل اسم المستخدم وكلمة المرور للوصول للمخزون والإنتاج</p>
             </div>
-
-            <!-- Date & Export Actions -->
-            <div class="flex items-center gap-3">
-                <span id="current-date" class="text-xs sm:text-sm bg-blue-900 px-3 py-1.5 rounded-lg border border-blue-800 text-blue-200"></span>
-                <button onclick="exportData()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-sm font-semibold transition flex items-center gap-1.5 shadow">
-                    <i class="fa-solid fa-file-excel"></i> تصدير الشامل
+            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">اسم المستخدم</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-user absolute left-3.5 top-3.5 text-slate-400"></i>
+                        <input type="text" id="login-username" required placeholder="admin" class="w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">كلمة المرور</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-key absolute left-3.5 top-3.5 text-slate-400"></i>
+                        <input type="password" id="login-password" required placeholder="••••••••" class="w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none text-sm">
+                    </div>
+                </div>
+                <p id="login-error" class="text-xs text-rose-600 font-bold hidden text-center"><i class="fa-solid fa-circle-exclamation mr-1"></i> اسم المستخدم أو كلمة المرور غير صحيحة!</p>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i> دخول للنظام
                 </button>
-            </div>
+            </form>
         </div>
-    </header>
+    </div>
 
-    <!-- Main Container -->
-    <main class="container mx-auto px-4 py-6 flex-grow">
-
-        <!-- TAB 1: Dashboard -->
-        <div id="dashboard" class="tab-content active space-y-6">
-            <!-- Quick Action Bar -->
-            <div class="flex flex-wrap gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200 items-center justify-between">
-                <div class="flex items-center gap-2 text-slate-700 font-bold">
-                    <i class="fa-solid fa-bolt text-amber-500"></i> اختصارات سريعة:
-                </div>
-                <div class="flex flex-wrap gap-2">
-                    <button onclick="selectTab('attendance', 'حضور وغياب العمال اليومي')" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-sm">
-                        <i class="fa-solid fa-calendar-check"></i> تسجيل الحضور اليومي
-                    </button>
-                    <button onclick="selectTab('production', 'تسجيل إنتاج العمال')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-sm">
-                        <i class="fa-solid fa-plus"></i> تسجيل إنتاج جديد
-                    </button>
-                    <button onclick="selectTab('analytics', 'التحليل المبياني (أسبوعي / شهري)')" class="bg-blue-800 hover:bg-blue-900 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-sm">
-                        <i class="fa-solid fa-chart-line"></i> التحليل الأسبوعي والشهري
-                    </button>
-                    <button onclick="selectTab('inventory', 'مخزون المنتجات الكلي')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-sm">
-                        <i class="fa-solid fa-warehouse"></i> المخزون الكلي
-                    </button>
-                </div>
-            </div>
-
-            <!-- Low Stock Alerts Section -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-200">
-                <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
-                    <h3 class="text-lg font-bold text-rose-700 flex items-center gap-2">
-                        <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> تنبيه المنتجات قليلة المخزون
-                    </h3>
+    <!-- MAIN SYSTEM CONTENT (Hidden by default until logged in) -->
+    <div id="main-system-content" class="hidden flex-col min-h-screen">
+        <!-- Top Header & Navigation Bar -->
+        <header class="bg-blue-950 text-white shadow-lg sticky top-0 z-50">
+            <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+                
+                <!-- Logo, Title & Dropdown Menu Side-by-Side -->
+                <div class="flex items-center gap-4 flex-wrap">
                     <div class="flex items-center gap-3">
-                        <button onclick="exportLowStockExcel()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow">
-                            <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
+                        <div class="bg-blue-600 p-2 rounded-xl text-white font-bold text-xl shadow">
+                            <i class="fa-solid fa-industry"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-base sm:text-lg font-bold tracking-wide">نظام تسيير الإنتاج والتخزين</h1>
+                            <p class="text-xs text-blue-300">إدارة المخزون ومتابعة إنتاج الحضور والعمال (Firebase Cloud)</p>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown Menu Integrated in Top Header -->
+                    <div class="relative">
+                        <button onclick="toggleMenu()" id="menu-toggle-btn" class="bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2.5 shadow border border-blue-800 transition">
+                            <i class="fa-solid fa-bars text-blue-400"></i> 
+                            <span id="current-tab-title">لوحة المؤشرات</span> 
+                            <i class="fa-solid fa-chevron-down text-xs text-blue-300 mr-1"></i>
                         </button>
-                        <span id="low-stock-count" class="bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1 rounded-full">0 منتج</span>
+                        
+                        <!-- Dropdown Menu List -->
+                        <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden py-2 z-50 text-slate-800">
+                            <button onclick="selectTab('dashboard', 'لوحة المؤشرات')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                                <i class="fa-solid fa-chart-pie text-blue-600 w-5"></i> لوحة المؤشرات
+                            </button>
+                            <button onclick="selectTab('production', 'تسجيل إنتاج العمال')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                                <i class="fa-solid fa-clipboard-user text-blue-600 w-5"></i> تسجيل إنتاج العمال
+                            </button>
+                            <button onclick="selectTab('attendance', 'حضور وغياب العمال اليومي')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                                <i class="fa-solid fa-calendar-check text-sky-600 w-5"></i> الحضور اليومي للعمال
+                            </button>
+                            <button onclick="selectTab('stockout', 'خروج المنتوجات (الصرف)')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                                <i class="fa-solid fa-truck-fast text-rose-600 w-5"></i> خروج المنتوجات (الصرف)
+                            </button>
+                            <button onclick="selectTab('workers', 'تقارير العمال اليومية')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                                <i class="fa-solid fa-users-gear text-indigo-600 w-5"></i> تقارير العمال اليومية
+                            </button>
+                            <button onclick="selectTab('inventory', 'مخزون المنتجات الكلي')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                                <i class="fa-solid fa-boxes-stacked text-cyan-600 w-5"></i> مخزون المنتجات الكلي
+                            </button>
+                            <button onclick="selectTab('analytics', 'التحليل المبياني (أسبوعي / شهري)')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                                <i class="fa-solid fa-chart-line text-blue-500 w-5"></i> التحليل المبياني والتقارير
+                            </button>
+                            <button onclick="selectTab('workers-info', 'معلومات العمال (هواتف)')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition">
+                                <i class="fa-solid fa-address-book text-amber-600 w-5"></i> معلومات العمال (هواتف)
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm" dir="ltr">
-                        <thead class="bg-rose-50 text-rose-900 border-b border-rose-100">
-                            <tr>
-                                <th class="p-3 text-left">الكود</th>
-                                <th class="p-3 text-left">وصف المنتج</th>
-                                <th class="p-3 text-left">الوحدة</th>
-                                <th class="p-3 text-left">المخزون الحالي</th>
-                            </tr>
-                        </thead>
-                        <tbody id="low-stock-table" class="divide-y divide-rose-50"></tbody>
-                    </table>
+
+                <!-- User Controls, Date & Export Actions -->
+                <div class="flex items-center gap-3 flex-wrap">
+                    <span id="current-date" class="text-xs sm:text-sm bg-blue-900 px-3 py-1.5 rounded-lg border border-blue-800 text-blue-200"></span>
+                    <button onclick="openChangePasswordModal()" class="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow">
+                        <i class="fa-solid fa-key"></i> تغيير كلمة المرور
+                    </button>
+                    <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow">
+                        <i class="fa-solid fa-right-from-bracket"></i> خروج
+                    </button>
                 </div>
             </div>
+        </header>
 
-            <!-- Quick Recent Activity & Summary -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                    <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-clock-rotate-left text-blue-500"></i> آخر عمليات خروج المنتجات
-                    </h3>
+        <!-- Main Container -->
+        <main class="container mx-auto px-4 py-6 flex-grow">
+
+            <!-- TAB 1: Dashboard -->
+            <div id="dashboard" class="tab-content active space-y-6">
+                <!-- Quick Action Bar -->
+                <div class="flex flex-wrap gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200 items-center justify-between">
+                    <div class="flex items-center gap-2 text-slate-700 font-bold">
+                        <i class="fa-solid fa-bolt text-amber-500"></i> اختصارات سريعة:
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="selectTab('attendance', 'حضور وغياب العمال اليومي')" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-calendar-check"></i> تسجيل الحضور اليومي
+                        </button>
+                        <button onclick="selectTab('production', 'تسجيل إنتاج العمال')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-plus"></i> تسجيل إنتاج جديد
+                        </button>
+                        <button onclick="selectTab('analytics', 'التحليل المبياني (أسبوعي / شهري)')" class="bg-blue-800 hover:bg-blue-900 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-chart-line"></i> التحليل الأسبوعي والشهري
+                        </button>
+                        <button onclick="selectTab('inventory', 'مخزون المنتجات الكلي')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-warehouse"></i> المخزون الكلي
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Low Stock Alerts Section -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-200">
+                    <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+                        <h3 class="text-lg font-bold text-rose-700 flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> تنبيه المنتجات قليلة المخزون
+                        </h3>
+                        <div class="flex items-center gap-3">
+                            <span id="low-stock-count" class="bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1 rounded-full">0 منتج</span>
+                        </div>
+                    </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm" dir="ltr">
-                            <thead class="bg-slate-50 text-slate-600 border-b">
+                            <thead class="bg-rose-50 text-rose-900 border-b border-rose-100">
                                 <tr>
-                                    <th class="p-3 text-left">المنتج</th>
-                                    <th class="p-3 text-left">الكمية</th>
-                                    <th class="p-3 text-left">التاريخ</th>
+                                    <th class="p-3 text-left">الكود</th>
+                                    <th class="p-3 text-left">وصف المنتج</th>
+                                    <th class="p-3 text-left">الوحدة</th>
+                                    <th class="p-3 text-left">المخزون الحالي</th>
                                 </tr>
                             </thead>
-                            <tbody id="recent-out-table" class="divide-y divide-slate-100"></tbody>
+                            <tbody id="low-stock-table" class="divide-y divide-rose-50"></tbody>
                         </table>
                     </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                    <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-chart-column text-blue-600"></i> ملخص إنتاج العمال اليوم
-                    </h3>
-                    <div id="workers-summary-dash" class="space-y-3"></div>
+                <!-- Quick Recent Activity & Summary -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-clock-rotate-left text-blue-500"></i> آخر عمليات خروج المنتجات
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm" dir="ltr">
+                                <thead class="bg-slate-50 text-slate-600 border-b">
+                                    <tr>
+                                        <th class="p-3 text-left">المنتج</th>
+                                        <th class="p-3 text-left">الكمية</th>
+                                        <th class="p-3 text-left">التاريخ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-out-table" class="divide-y divide-slate-100"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-column text-blue-600"></i> ملخص إنتاج العمال اليوم
+                        </h3>
+                        <div id="workers-summary-dash" class="space-y-3"></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- TAB 2: Record Production -->
-        <div id="production" class="tab-content space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 max-w-2xl mx-auto">
-                <div class="border-b pb-4 mb-5">
-                    <h2 class="text-xl font-bold text-slate-800">تسجيل إنتاج عامل جديد</h2>
-                    <p class="text-xs text-slate-500 mt-1">اختر العامل والمنتج وحدد الكمية لترتفع تلقائياً في المخزون السحابي</p>
-                </div>
-                <form id="production-form" onsubmit="handleProductionSubmit(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">اسم العامل</label>
-                        <select id="worker-name" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <option value="">-- اختر العامل --</option>
-                        </select>
+            <!-- TAB 2: Record Production -->
+            <div id="production" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 max-w-2xl mx-auto">
+                    <div class="border-b pb-4 mb-5">
+                        <h2 class="text-xl font-bold text-slate-800">تسجيل إنتاج عامل جديد</h2>
+                        <p class="text-xs text-slate-500 mt-1">اختر العامل والمنتج وحدد الكمية لترتفع تلقائياً في المخزون السحابي</p>
                     </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">ابحث واختار المنتج</label>
-                        <input type="text" id="product-search-input" list="products-datalist" placeholder="اكتب كود المنتج أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                        <datalist id="products-datalist"></datalist>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <form id="production-form" onsubmit="handleProductionSubmit(event)" class="space-y-4">
                         <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1">الكمية المنتجة اليوم</label>
-                            <input type="number" id="prod-quantity" min="1" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">اسم العامل</label>
+                            <select id="worker-name" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                <option value="">-- اختر العامل --</option>
+                            </select>
                         </div>
+
                         <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1">التاريخ</label>
-                            <input type="date" id="prod-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">ابحث واختار المنتج</label>
+                            <input type="text" id="product-search-input" list="products-datalist" placeholder="اكتب كود المنتج أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <datalist id="products-datalist"></datalist>
                         </div>
-                    </div>
 
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">ملاحظات (اختياري)</label>
-                        <input type="text" id="prod-notes" placeholder="ورشة رقم 1..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                    </div>
-
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold p-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-plus-circle"></i> حفظ وتسجيل الإنتاج بالمخزون
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- TAB: Workers Daily Attendance -->
-        <div id="attendance" class="tab-content space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 border-b pb-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                            <i class="fa-solid fa-calendar-check text-blue-600"></i> سجل حضور وغياب العمال اليومي
-                        </h2>
-                        <p class="text-xs text-slate-500 mt-1">حدد الحالة اليومية لكل عامل لحفظها سحابياً</p>
-                    </div>
-                    <div class="flex items-center gap-3 flex-wrap">
-                        <div class="flex items-center gap-2">
-                            <label class="text-sm font-semibold text-slate-700">تاريخ الحضور:</label>
-                            <input type="date" id="attendance-date" onchange="renderAttendanceTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">الكمية المنتجة اليوم</label>
+                                <input type="number" id="prod-quantity" min="1" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">التاريخ</label>
+                                <input type="date" id="prod-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            </div>
                         </div>
-                        <button type="button" onclick="exportAttendanceExcel()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
-                            <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">ملاحظات (اختياري)</label>
+                            <input type="text" id="prod-notes" placeholder="ورشة رقم 1..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold p-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus-circle"></i> حفظ وتسجيل الإنتاج بالمخزون
                         </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- TAB: Workers Daily Attendance -->
+            <div id="attendance" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 border-b pb-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-calendar-check text-blue-600"></i> سجل حضور وغياب العمال اليومي
+                            </h2>
+                            <p class="text-xs text-slate-500 mt-1">حدد الحالة اليومية لكل عامل لحفظها سحابياً</p>
+                        </div>
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <div class="flex items-center gap-2">
+                                <label class="text-sm font-semibold text-slate-700">تاريخ الحضور:</label>
+                                <input type="date" id="attendance-date" onchange="renderAttendanceTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="attendance-form" onsubmit="handleAttendanceSubmit(event)">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-sm" dir="ltr">
+                                <thead class="bg-slate-100 text-slate-700 border-b">
+                                    <tr>
+                                        <th class="p-3 text-left">#</th>
+                                        <th class="p-3 text-left">اسم العامل</th>
+                                        <th class="p-3 text-left">رقم الهاتف</th>
+                                        <th class="p-3 text-left">الحالة اليومية</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendance-tbody" class="divide-y divide-slate-200"></tbody>
+                            </table>
+                        </div>
+                        <div class="mt-6 flex justify-start">
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl transition shadow flex items-center gap-2">
+                                <i class="fa-solid fa-floppy-disk"></i> حفظ سجل الحضور لهذا اليوم
+                            </button>
+                        </div>
+                    </form>
+
+                    <div id="saved-attendance-section" class="mt-8 pt-6 border-t border-slate-200">
+                        <h3 class="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-clock-rotate-left text-blue-600"></i> تواريخ الحضور المحفوظة:
+                        </h3>
+                        <div id="saved-attendance-buttons" class="flex flex-wrap gap-2.5"></div>
                     </div>
                 </div>
+            </div>
 
-                <form id="attendance-form" onsubmit="handleAttendanceSubmit(event)">
+            <!-- TAB 3: Stock Out -->
+            <div id="stockout" class="tab-content space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 lg:col-span-1">
+                        <div class="border-b pb-4 mb-5">
+                            <h2 class="text-lg font-bold text-slate-800">إخراج منتجات من المخزون</h2>
+                            <p class="text-xs text-slate-500 mt-1">تسجيل صرف بضاعة مع الملاحظات</p>
+                        </div>
+                        <form id="stockout-form" onsubmit="handleStockOutSubmit(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">ابحث واختار المنتج</label>
+                                <input type="text" id="out-product-search-input" list="out-products-datalist" placeholder="اكتب الكود أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm">
+                                <datalist id="out-products-datalist"></datalist>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">الكمية الخارجة</label>
+                                <input type="number" id="out-quantity" min="1" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">التاريخ</label>
+                                <input type="date" id="out-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">الملاحظات / تاريخ الوارد الخام</label>
+                                <input type="text" id="out-notes" placeholder="مثال: دفعة خام واردة بتاريخ..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm">
+                            </div>
+
+                            <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold p-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-truck-ramp-box"></i> تأكيد خروج البضاعة
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 lg:col-span-2">
+                        <div class="flex justify-between items-center mb-6 flex-wrap gap-3">
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-800">سجل حركات خروج المنتجات</h2>
+                                <p class="text-xs text-slate-500">جميع الكميات التي تم صرفها</p>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-sm" dir="ltr">
+                                <thead class="bg-slate-100 text-slate-700 border-b">
+                                    <tr>
+                                        <th class="p-3 text-left">التاريخ</th>
+                                        <th class="p-3 text-left">الكود</th>
+                                        <th class="p-3 text-left">المنتج</th>
+                                        <th class="p-3 text-left">الكمية</th>
+                                        <th class="p-3 text-left">الملاحظات</th>
+                                        <th class="p-3 text-center">إجراء</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="full-stockout-table" class="divide-y divide-slate-200"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: Workers Daily Report -->
+            <div id="workers" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800">سجل إنتاج العمال اليومي</h2>
+                            <p class="text-xs text-slate-500">تفاصيل ما أنتجه كل عامل</p>
+                        </div>
+                        <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
+                            <input type="date" id="filter-date" onchange="renderProductionTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm">
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm" dir="ltr">
+                            <thead class="bg-slate-100 text-slate-700 border-b">
+                                <tr>
+                                    <th class="p-3 text-left">التاريخ</th>
+                                    <th class="p-3 text-left">اسم العامل</th>
+                                    <th class="p-3 text-left">كود المنتج</th>
+                                    <th class="p-3 text-left">وصف المنتج</th>
+                                    <th class="p-3 text-left">الوحدة</th>
+                                    <th class="p-3 text-left">الكمية</th>
+                                    <th class="p-3 text-left">ملاحظات</th>
+                                    <th class="p-3 text-center">إجراء</th>
+                                </tr>
+                            </thead>
+                            <tbody id="full-production-table" class="divide-y divide-slate-200"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: Inventory -->
+            <div id="inventory" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800">مخزون المنتجات الكلي في المصنع</h2>
+                            <p class="text-xs text-slate-500">تتبع رصيد المخزون الفعلي المحدث سحابياً</p>
+                        </div>
+                        <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
+                            <div class="w-full sm:w-72">
+                                <input type="text" id="search-product" onkeyup="filterInventory()" placeholder="ابحث برمز المنتج أو الوصف..." class="w-full p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            </div>
+                            <button onclick="openAddProductModal()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
+                                <i class="fa-solid fa-plus-circle"></i> إضافة منتج جديد
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm" id="inventory-table" dir="ltr">
+                            <thead class="bg-slate-100 text-slate-700 border-b">
+                                <tr>
+                                    <th class="p-3 text-left">الكود #</th>
+                                    <th class="p-3 text-left">وصف المنتج</th>
+                                    <th class="p-3 text-left">الوحدة</th>
+                                    <th class="p-3 text-left">الافتراضي</th>
+                                    <th class="p-3 text-left">المُنتَج</th>
+                                    <th class="p-3 text-left">المُصَرَف</th>
+                                    <th class="p-3 text-left">المخزون الحالي</th>
+                                    <th class="p-3 text-left">الحالة</th>
+                                    <th class="p-3 text-center">الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventory-tbody" class="divide-y divide-slate-200"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: Analytics Weekly/Monthly -->
+            <div id="analytics" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 border-b pb-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-chart-line text-blue-600"></i> التحليل المبياني والإحصائيات (أسبوعي / شهري)
+                            </h2>
+                        </div>
+                        <div class="flex gap-2 flex-wrap items-center">
+                            <button onclick="setAnalyticsView('weekly')" id="btn-view-weekly" class="px-4 py-2 rounded-xl text-sm font-bold bg-blue-600 text-white transition shadow">العرض الأسبوعي</button>
+                            <button onclick="setAnalyticsView('monthly')" id="btn-view-monthly" class="px-4 py-2 rounded-xl text-sm font-bold bg-slate-200 text-slate-700 transition">العرض الشهري</button>
+                        </div>
+                    </div>
+                    <div id="analytics-content" class="space-y-8"></div>
+                </div>
+            </div>
+
+            <!-- TAB 6: Workers Info & Phone Numbers -->
+            <div id="workers-info" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-address-book text-blue-600"></i> دليل معلومات وهواتف العمال
+                            </h2>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openAddWorkerModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow-sm flex items-center gap-2">
+                                <i class="fa-solid fa-user-plus"></i> إضافة عامل جديد
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse text-sm" dir="ltr">
                             <thead class="bg-slate-100 text-slate-700 border-b">
                                 <tr>
                                     <th class="p-3 text-left">#</th>
                                     <th class="p-3 text-left">اسم العامل</th>
-                                    <th class="p-3 text-left">رقم الهاتف</th>
-                                    <th class="p-3 text-left">الحالة اليومية</th>
+                                    <th class="p-3 text-left">رقم الهاتـف</th>
+                                    <th class="p-3 text-center">الإجراءات</th>
                                 </tr>
                             </thead>
-                            <tbody id="attendance-tbody" class="divide-y divide-slate-200"></tbody>
-                        </table>
-                    </div>
-                    <div class="mt-6 flex justify-start">
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl transition shadow flex items-center gap-2">
-                            <i class="fa-solid fa-floppy-disk"></i> حفظ سجل الحضور لهذا اليوم
-                        </button>
-                    </div>
-                </form>
-
-                <div id="saved-attendance-section" class="mt-8 pt-6 border-t border-slate-200">
-                    <h3 class="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-clock-rotate-left text-blue-600"></i> تواريخ الحضور المحفوظة:
-                    </h3>
-                    <div id="saved-attendance-buttons" class="flex flex-wrap gap-2.5"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: Stock Out -->
-        <div id="stockout" class="tab-content space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 lg:col-span-1">
-                    <div class="border-b pb-4 mb-5">
-                        <h2 class="text-lg font-bold text-slate-800">إخراج منتجات من المخزون</h2>
-                        <p class="text-xs text-slate-500 mt-1">تسجيل صرف بضاعة مع الملاحظات</p>
-                    </div>
-                    <form id="stockout-form" onsubmit="handleStockOutSubmit(event)" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1">ابحث واختار المنتج</label>
-                            <input type="text" id="out-product-search-input" list="out-products-datalist" placeholder="اكتب الكود أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm">
-                            <datalist id="out-products-datalist"></datalist>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1">الكمية الخارجة</label>
-                            <input type="number" id="out-quantity" min="1" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1">التاريخ</label>
-                            <input type="date" id="out-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1">الملاحظات / تاريخ الوارد الخام</label>
-                            <input type="text" id="out-notes" placeholder="مثال: دفعة خام واردة بتاريخ..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm">
-                        </div>
-
-                        <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold p-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-truck-ramp-box"></i> تأكيد خروج البضاعة
-                        </button>
-                    </form>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 lg:col-span-2">
-                    <div class="flex justify-between items-center mb-6 flex-wrap gap-3">
-                        <div>
-                            <h2 class="text-lg font-bold text-slate-800">سجل حركات خروج المنتجات</h2>
-                            <p class="text-xs text-slate-500">جميع الكميات التي تم صرفها</p>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="exportStockOutExcel()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow">
-                                <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
-                            </button>
-                        </div>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-sm" dir="ltr">
-                            <thead class="bg-slate-100 text-slate-700 border-b">
-                                <tr>
-                                    <th class="p-3 text-left">التاريخ</th>
-                                    <th class="p-3 text-left">الكود</th>
-                                    <th class="p-3 text-left">المنتج</th>
-                                    <th class="p-3 text-left">الكمية</th>
-                                    <th class="p-3 text-left">الملاحظات</th>
-                                    <th class="p-3 text-center">إجراء</th>
-                                </tr>
-                            </thead>
-                            <tbody id="full-stockout-table" class="divide-y divide-slate-200"></tbody>
+                            <tbody id="workers-info-tbody" class="divide-y divide-slate-200"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- TAB 4: Workers Daily Report -->
-        <div id="workers" class="tab-content space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-800">سجل إنتاج العمال اليومي</h2>
-                        <p class="text-xs text-slate-500">تفاصيل ما أنتجه كل عامل</p>
-                    </div>
-                    <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
-                        <input type="date" id="filter-date" onchange="renderProductionTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm">
-                        <button onclick="exportProductionExcel()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
-                            <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
-                        </button>
-                    </div>
-                </div>
+        </main>
 
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-sm" dir="ltr">
-                        <thead class="bg-slate-100 text-slate-700 border-b">
-                            <tr>
-                                <th class="p-3 text-left">التاريخ</th>
-                                <th class="p-3 text-left">اسم العامل</th>
-                                <th class="p-3 text-left">كود المنتج</th>
-                                <th class="p-3 text-left">وصف المنتج</th>
-                                <th class="p-3 text-left">الوحدة</th>
-                                <th class="p-3 text-left">الكمية</th>
-                                <th class="p-3 text-left">ملاحظات</th>
-                                <th class="p-3 text-center">إجراء</th>
-                            </tr>
-                        </thead>
-                        <tbody id="full-production-table" class="divide-y divide-slate-200"></tbody>
-                    </table>
-                </div>
+        <!-- Footer -->
+        <footer class="bg-blue-950 text-blue-300 py-4 text-center text-xs mt-auto">
+            <p>نظام إدارة الإنتاج والتخزين الصناعي &copy; 2026 - مدمج مع Firebase Cloud</p>
+        </footer>
+    </div>
+
+    <!-- 🔐 CHANGE PASSWORD MODAL -->
+    <div id="password-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 border border-slate-100 text-left">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-amber-500"></i> تغيير كلمة المرور
+                </h3>
+                <button onclick="closeChangePasswordModal()" class="text-slate-400 hover:text-slate-600 text-2xl font-bold">&times;</button>
             </div>
+            <form id="change-pass-form" onsubmit="handleChangePassword(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">كلمة المرور الحالية</label>
+                    <input type="password" id="current-pass" required placeholder="••••••••" class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">كلمة المرور الجديدة</label>
+                    <input type="password" id="new-pass" required placeholder="••••••••" class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">تأكيد كلمة المرور الجديدة</label>
+                    <input type="password" id="confirm-new-pass" required placeholder="••••••••" class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none text-sm">
+                </div>
+                <div class="flex justify-start gap-3 pt-3">
+                    <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition shadow">حفظ كلمة المرور</button>
+                    <button type="button" onclick="closeChangePasswordModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-sm font-semibold transition">إلغاء</button>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <!-- TAB 5: Inventory -->
-        <div id="inventory" class="tab-content space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-800">مخزون المنتجات الكلي في المصنع</h2>
-                        <p class="text-xs text-slate-500">تتبع رصيد المخزون الفعلي المحدث سحابياً</p>
-                    </div>
-                    <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
-                        <div class="w-full sm:w-72">
-                            <input type="text" id="search-product" onkeyup="filterInventory()" placeholder="ابحث برمز المنتج أو الوصف..." class="w-full p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                        </div>
-                        <button onclick="exportInventoryExcel()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
-                            <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
-                        </button>
-                    </div>
+    <!-- Modal Add/Edit Product -->
+    <div id="product-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 text-left">
+            <h3 class="text-lg font-bold text-slate-800 mb-4" id="product-modal-title">إضافة منتج جديد</h3>
+            <form id="product-modal-form" onsubmit="handleProductSave(event)" class="space-y-4">
+                <input type="hidden" id="product-edit-code" value="">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">كود المنتج (Code)</label>
+                    <input type="text" id="modal-product-code" required placeholder="مثال: AC100" class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
                 </div>
-
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-sm" id="inventory-table" dir="ltr">
-                        <thead class="bg-slate-100 text-slate-700 border-b">
-                            <tr>
-                                <th class="p-3 text-left">الكود #</th>
-                                <th class="p-3 text-left">وصف المنتج</th>
-                                <th class="p-3 text-left">الوحدة</th>
-                                <th class="p-3 text-left">الافتراضي</th>
-                                <th class="p-3 text-left">المُنتَج</th>
-                                <th class="p-3 text-left">المُصَرَف</th>
-                                <th class="p-3 text-left">المخزون الحالي</th>
-                                <th class="p-3 text-left">الحالة</th>
-                            </tr>
-                        </thead>
-                        <tbody id="inventory-tbody" class="divide-y divide-slate-200"></tbody>
-                    </table>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">وصف المنتج</label>
+                    <input type="text" id="modal-product-desc" required placeholder="اسم ووصف المنتج..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
-            </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">الوحدة (Unit)</label>
+                    <input type="text" id="modal-product-unit" required placeholder="1 L / 500 ml / 4 Kg..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">الكمية الافتراضية بالمخزون</label>
+                    <input type="number" id="modal-product-qty" required min="0" value="0" class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
+                </div>
+                <div class="flex justify-start gap-3 pt-3">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition shadow">حفظ المنتج</button>
+                    <button type="button" onclick="closeProductModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-sm font-semibold transition">إلغاء</button>
+                </div>
+            </form>
         </div>
-
-        <!-- TAB: Analytics Weekly/Monthly -->
-        <div id="analytics" class="tab-content space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 border-b pb-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                            <i class="fa-solid fa-chart-line text-blue-600"></i> التحليل المبياني والإحصائيات (أسبوعي / شهري)
-                        </h2>
-                    </div>
-                    <div class="flex gap-2 flex-wrap items-center">
-                        <button onclick="setAnalyticsView('weekly')" id="btn-view-weekly" class="px-4 py-2 rounded-xl text-sm font-bold bg-blue-600 text-white transition shadow">العرض الأسبوعي</button>
-                        <button onclick="setAnalyticsView('monthly')" id="btn-view-monthly" class="px-4 py-2 rounded-xl text-sm font-bold bg-slate-200 text-slate-700 transition">العرض الشهري</button>
-                    </div>
-                </div>
-                <div id="analytics-content" class="space-y-8"></div>
-            </div>
-        </div>
-
-        <!-- TAB 6: Workers Info & Phone Numbers -->
-        <div id="workers-info" class="tab-content space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                            <i class="fa-solid fa-address-book text-blue-600"></i> دليل معلومات وهواتف العمال
-                        </h2>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="openAddWorkerModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow-sm flex items-center gap-2">
-                            <i class="fa-solid fa-user-plus"></i> إضافة عامل جديد
-                        </button>
-                    </div>
-                </div>
-
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-sm" dir="ltr">
-                        <thead class="bg-slate-100 text-slate-700 border-b">
-                            <tr>
-                                <th class="p-3 text-left">#</th>
-                                <th class="p-3 text-left">اسم العامل</th>
-                                <th class="p-3 text-left">رقم الهاتـف</th>
-                                <th class="p-3 text-center">الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="workers-info-tbody" class="divide-y divide-slate-200"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-    </main>
+    </div>
 
     <!-- Modal Add/Edit Worker -->
     <div id="worker-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -512,11 +603,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-blue-950 text-blue-300 py-4 text-center text-xs mt-auto">
-        <p>نظام إدارة الإنتاج والتخزين الصناعي &copy; 2026 - مدمج مع Firebase Cloud</p>
-    </footer>
-
     <!-- Firebase SDK Scripts Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -524,7 +610,6 @@
             getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, setDoc 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // 🔥 إعدادات مشروع Firebase (يمكنك استبدال الكائنات بإعدادات مشروعك الخاص من Firebase Console)
         const firebaseConfig = {
             apiKey: "AIzaSyDemoKeyReplaceWithYourOwnIfNeed",
             authDomain: "factory-system-demo.firebaseapp.com",
@@ -537,8 +622,72 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Global State variables
-        window.productsCatalog = [
+        // --- AUTHENTICATION STATE & CREDENTIALS ---
+        let systemUsername = localStorage.getItem('sys_username') || "admin";
+        let systemPassword = localStorage.getItem('sys_password') || "admin123";
+
+        window.handleLogin = function(event) {
+            event.preventDefault();
+            const userIn = document.getElementById('login-username').value.trim();
+            const passIn = document.getElementById('login-password').value.trim();
+
+            if (userIn === systemUsername && passIn === systemPassword) {
+                sessionStorage.setItem('isLoggedIn', 'true');
+                document.getElementById('login-overlay').classList.add('hidden');
+                document.getElementById('main-system-content').classList.remove('hidden');
+                document.getElementById('login-error').classList.add('hidden');
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+        };
+
+        window.handleLogout = function() {
+            sessionStorage.removeItem('isLoggedIn');
+            location.reload();
+        };
+
+        window.openChangePasswordModal = function() {
+            document.getElementById('password-modal').classList.remove('hidden');
+        };
+
+        window.closeChangePasswordModal = function() {
+            document.getElementById('password-modal').classList.add('hidden');
+            document.getElementById('change-pass-form').reset();
+        };
+
+        window.handleChangePassword = function(event) {
+            event.preventDefault();
+            const current = document.getElementById('current-pass').value;
+            const newP = document.getElementById('new-pass').value;
+            const confirmP = document.getElementById('confirm-new-pass').value;
+
+            if (current !== systemPassword) {
+                alert('كلمة المرور الحالية غير صحيحة!');
+                return;
+            }
+            if (newP !== confirmP) {
+                alert('كلمتا المرور الجديدتان غير متطابقتين!');
+                return;
+            }
+            if (newP.length < 4) {
+                alert('يرجى اختيار كلمة مرور تتكون من 4 أحرف/أرقام على الأقل.');
+                return;
+            }
+
+            systemPassword = newP;
+            localStorage.setItem('sys_password', newP);
+            alert('تم تغيير كلمة المرور بنجاح!');
+            closeChangePasswordModal();
+        };
+
+        // Check login on load
+        if (sessionStorage.getItem('isLoggedIn') === 'true') {
+            document.getElementById('login-overlay').classList.add('hidden');
+            document.getElementById('main-system-content').classList.remove('hidden');
+        }
+
+        // Initial default products catalog
+        const defaultProductsCatalog = [
             { code: "AC55", desc: "Acide Chlorithrique 17°", unit: "550 ml", qty: 30 },
             { code: "AC75", desc: "Acide Chlorithrique 17°", unit: "750 ml", qty: 20 },
             { code: "AC90", desc: "Acide Chlorithrique 17°", unit: "900 ml", qty: 20 },
@@ -553,7 +702,6 @@
             { code: "GR2500", desc: "Garisse industriel", unit: "2500 gm", qty: 1 },
             { code: "HL60", desc: "Huile de L'in", unit: "600 ml", qty: 30 },
             { code: "VB600", desc: "Vaseline de bois", unit: "600 ml", qty: 30 },
-
             { code: "W252", desc: "Essence SP 25 Cc", unit: "250 ml", qty: 60 },
             { code: "W552", desc: "Essence SP 55 Cc", unit: "550 ml", qty: 30 },
             { code: "W102", desc: "Essence AXA 90 Cc", unit: "1 L", qty: 20 },
@@ -566,7 +714,6 @@
             { code: "W401", desc: "Essence City 4L", unit: "4 L", qty: 5 },
             { code: "J25", desc: "Jupiter 25 Cc", unit: "250 ml", qty: 60 },
             { code: "J55", desc: "Jupiter 55 Cc", unit: "550 ml", qty: 30 },
-
             { code: "D252", desc: "Diluant SP 25 Cc", unit: "250 ml", qty: 60 },
             { code: "D552", desc: "Diluant SP 55 Cc", unit: "550 ml", qty: 30 },
             { code: "D602", desc: "Diluant SP 60 CL", unit: "600 ml", qty: 30 },
@@ -591,7 +738,6 @@
             { code: "D751-Z", desc: "Diluant CITY 75 Cc Z", unit: "75 ml", qty: 25 },
             { code: "D751-P", desc: "Diluant CITY 75 Cc P", unit: "75 ml", qty: 25 },
             { code: "D405", desc: "Diluant VOX Paint 4L", unit: "4 L", qty: 1 },
-
             { code: "CB250", desc: "Colle a Bois", unit: "250 gm", qty: 24 },
             { code: "CB500", desc: "Colle a Bois", unit: "550 gm", qty: 24 },
             { code: "CB4000", desc: "Colle a Bois", unit: "4 Kg", qty: 1 },
@@ -608,7 +754,6 @@
             { code: "CC500", desc: "Colle Grifi Sofalit", unit: "500 gm", qty: 1 },
             { code: "CC1000", desc: "Colle Grifi Sofalit", unit: "1 Kg", qty: 1 },
             { code: "VF500", desc: "Colle Vit Fit", unit: "500 gm", qty: 24 },
-
             { code: "AP1000", desc: "Vinylique AXA Plast", unit: "1 Kg", qty: 24 },
             { code: "PVP1", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24 },
             { code: "PVP10", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24 },
@@ -633,6 +778,8 @@
             { code: "AFR5000", desc: "LANTIROUI", unit: "5Kg", qty: 1 }
         ];
 
+        // Global State variables
+        window.productsCatalog = [...defaultProductsCatalog];
         window.productionLogs = [];
         window.stockOutLogs = [];
         window.workersList = [];
@@ -640,6 +787,16 @@
         window.currentAnalyticsMode = 'weekly';
 
         // 🟢 Realtime Sync Listeners from Firestore
+        onSnapshot(collection(db, "products"), (snapshot) => {
+            if (!snapshot.empty) {
+                window.productsCatalog = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } else {
+                window.productsCatalog = [...defaultProductsCatalog];
+            }
+            populateProductDropdowns();
+            renderAll();
+        });
+
         onSnapshot(collection(db, "production"), (snapshot) => {
             window.productionLogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             renderAll();
@@ -666,7 +823,85 @@
             renderAttendanceTable();
         });
 
-        // 🔴 Handlers for Adding & Deleting using Firestore
+        // 🔴 Handlers for Adding, Editing & Deleting Products
+        window.openAddProductModal = function() {
+            document.getElementById('product-modal-title').innerText = "إضافة منتج جديد للمخزون";
+            document.getElementById('product-edit-code').value = "";
+            document.getElementById('modal-product-code').value = "";
+            document.getElementById('modal-product-code').disabled = false;
+            document.getElementById('modal-product-desc').value = "";
+            document.getElementById('modal-product-unit').value = "";
+            document.getElementById('modal-product-qty').value = "0";
+            document.getElementById('product-modal').classList.remove('hidden');
+        };
+
+        window.editProduct = function(code) {
+            const product = window.productsCatalog.find(p => p.code === code);
+            if (!product) return;
+            document.getElementById('product-modal-title').innerText = "تعديل بيانات المنتج";
+            document.getElementById('product-edit-code').value = product.code;
+            document.getElementById('modal-product-code').value = product.code;
+            document.getElementById('modal-product-code').disabled = true;
+            document.getElementById('modal-product-desc').value = product.desc;
+            document.getElementById('modal-product-unit').value = product.unit;
+            document.getElementById('modal-product-qty').value = product.qty;
+            document.getElementById('product-modal').classList.remove('hidden');
+        };
+
+        window.closeProductModal = function() {
+            document.getElementById('product-modal').classList.add('hidden');
+        };
+
+        window.handleProductSave = async function(event) {
+            event.preventDefault();
+            const editCode = document.getElementById('product-edit-code').value;
+            const code = document.getElementById('modal-product-code').value.trim().toUpperCase();
+            const desc = document.getElementById('modal-product-desc').value.trim();
+            const unit = document.getElementById('modal-product-unit').value.trim();
+            const qty = parseInt(document.getElementById('modal-product-qty').value) || 0;
+
+            try {
+                if (!editCode) {
+                    const existing = window.productsCatalog.find(p => p.code === code);
+                    if (existing) {
+                        alert('كود هذا المنتج موجود بالفعل! يرجى استخدام كود آخر.');
+                        return;
+                    }
+                    await setDoc(doc(db, "products", code), { code, desc, unit, qty });
+                } else {
+                    const productObj = window.productsCatalog.find(p => p.code === editCode);
+                    if (productObj && productObj.id) {
+                        await updateDoc(doc(db, "products", productObj.id), { desc, unit, qty });
+                    } else {
+                        await setDoc(doc(db, "products", editCode), { code: editCode, desc, unit, qty });
+                    }
+                }
+                closeProductModal();
+                alert('تم حفظ بيانات المنتج سحابياً بنجاح!');
+            } catch (e) {
+                console.error("Error saving product: ", e);
+                alert("حدث خطأ أثناء حفظ المنتج.");
+            }
+        };
+
+        window.deleteProduct = async function(code) {
+            if (confirm(`هل أنت متأكد من حذف المنتج (${code}) نهائياً من المخزون؟`)) {
+                try {
+                    const productObj = window.productsCatalog.find(p => p.code === code);
+                    if (productObj && productObj.id) {
+                        await deleteDoc(doc(db, "products", productObj.id));
+                    } else {
+                        await deleteDoc(doc(db, "products", code));
+                    }
+                    alert('تم حذف المنتج بنجاح.');
+                } catch (e) {
+                    console.error("Error deleting product: ", e);
+                    alert("حدث خطأ أثناء حذف المنتج.");
+                }
+            }
+        };
+
+        // Handlers for Record Submissions
         window.handleProductionSubmit = async function(event) {
             event.preventDefault();
             const worker = document.getElementById('worker-name').value;
@@ -1268,6 +1503,14 @@
                         <td class="p-3 text-left"><span class="bg-rose-50 text-rose-700 px-2.5 py-1 rounded-lg font-bold">${out}</span></td>
                         <td class="p-3 text-left"><span class="bg-blue-950 text-white px-3 py-1 rounded-lg font-black">${currentStock}</span></td>
                         <td class="p-3 text-left">${statusBadge}</td>
+                        <td class="p-3 text-center space-x-2">
+                            <button onclick="editProduct('${p.code}')" class="text-blue-500 hover:text-blue-700 p-1.5 rounded-lg hover:bg-blue-50 transition" title="تعديل">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteProduct('${p.code}')" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 transition" title="حذف">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
                     </tr>
                 `;
             });
@@ -1278,7 +1521,7 @@
             tbody.innerHTML = '';
 
             if (window.workersList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">لا يوجد عمال مسجلين حالياً</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">لا يوجد عمال مسجلين بعد</td></tr>`;
                 return;
             }
 
@@ -1290,9 +1533,9 @@
                         <td class="p-3 font-mono text-blue-700 font-semibold text-left" dir="ltr">${w.phone}</td>
                         <td class="p-3 text-center space-x-2">
                             <button onclick="editWorker('${w.id}')" class="text-blue-500 hover:text-blue-700 p-1.5 rounded-lg hover:bg-blue-50 transition" title="تعديل">
-                                <i class="fa-solid fa-pen-to-square"></i>
+                                <i class="fa-solid fa-user-pen"></i>
                             </button>
-                            <button onclick="deleteWorker('${w.id}')" class="text-red-500 hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition" title="حذف">
+                            <button onclick="deleteWorker('${w.id}')" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 transition" title="حذف">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </td>
@@ -1302,85 +1545,15 @@
         }
 
         window.filterInventory = function() {
-            const query = document.getElementById('search-product').value.toLowerCase();
-            const rows = document.querySelectorAll('.inventory-row');
-            rows.forEach(row => {
+            const q = document.getElementById('search-product').value.toLowerCase();
+            document.querySelectorAll('.inventory-row').forEach(row => {
                 const text = row.getAttribute('data-search');
-                if (text.includes(query)) {
+                if (text.includes(q)) {
                     row.style.display = '';
                 } else {
                     row.style.display = 'none';
                 }
             });
-        };
-
-        // Export Functions
-        function downloadCSV(csvContent, filename) {
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.setAttribute("href", url);
-            link.setAttribute("download", filename);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-        }
-
-        window.exportData = function() {
-            let csvContent = "\uFEFFType,Date,Code,Description,Unit,Quantity,Notes\n";
-            window.productionLogs.forEach(row => {
-                csvContent += `Production,${row.date},"${row.code}","${row.desc}","${row.unit}",${row.qty},"${row.notes || ''}"\n`;
-            });
-            window.stockOutLogs.forEach(row => {
-                csvContent += `StockOut,${row.date},"${row.code}","${row.desc}","${row.unit}",${row.qty},"${row.notes || ''}"\n`;
-            });
-            downloadCSV(csvContent, "factory_complete_report.csv");
-        };
-
-        window.exportLowStockExcel = function() {
-            let csvContent = "\uFEFFالكود,وصف المنتج,الوحدة,المخزون الحالي\n";
-            const lowStockItems = window.productsCatalog.filter(p => getCurrentStock(p.code) <= 5);
-            lowStockItems.forEach(p => {
-                csvContent += `"${p.code}","${p.desc}","${p.unit}",${getCurrentStock(p.code)}\n`;
-            });
-            downloadCSV(csvContent, "low_stock_report.csv");
-        };
-
-        window.exportAttendanceExcel = function() {
-            const dateStr = document.getElementById('attendance-date').value;
-            const dayRecords = window.attendanceLogs[dateStr] || {};
-            let csvContent = "\uFEFFرقم,اسم العامل,رقم الهاتف,الحالة اليومية\n";
-            window.workersList.forEach((w, index) => {
-                const status = dayRecords[w.name] || 'حاضر';
-                csvContent += `${index + 1},"${w.name}","${w.phone}","${status}"\n`;
-            });
-            downloadCSV(csvContent, `attendance_${dateStr}.csv`);
-        };
-
-        window.exportStockOutExcel = function() {
-            let csvContent = "\uFEFFالتاريخ,كود المنتج,الوصف,الوحدة,الكمية,الملاحظات\n";
-            window.stockOutLogs.forEach(item => {
-                csvContent += `${item.date},"${item.code}","${item.desc}","${item.unit}",${item.qty},"${item.notes || ''}"\n`;
-            });
-            downloadCSV(csvContent, "stockout_report.csv");
-        };
-
-        window.exportProductionExcel = function() {
-            let csvContent = "\uFEFFالتاريخ,العامل,كود المنتج,الوصف,الوحدة,الكمية,الملاحظات\n";
-            window.productionLogs.forEach(item => {
-                csvContent += `${item.date},"${item.worker}","${item.code}","${item.desc}","${item.unit}",${item.qty},"${item.notes || ''}"\n`;
-            });
-            downloadCSV(csvContent, "production_report.csv");
-        };
-
-        window.exportInventoryExcel = function() {
-            let csvContent = "\uFEFFالكود,وصف المنتج,الوحدة,الافتراضي,المصنوع,المصروف,المخزون الحالي\n";
-            window.productsCatalog.forEach(p => {
-                const currentStock = getCurrentStock(p.code);
-                csvContent += `"${p.code}","${p.desc}","${p.unit}",${p.qty},${currentStock}\n`;
-            });
-            downloadCSV(csvContent, "inventory_report.csv");
         };
     </script>
 </body>
