@@ -83,7 +83,7 @@
             <div class="flex items-center space-x-3 space-x-reverse">
                 <span id="current-date" class="text-xs sm:text-sm bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-300"></span>
                 <button onclick="exportData()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-sm font-semibold transition flex items-center gap-1.5 shadow">
-                    <i class="fa-solid fa-file-excel"></i> تصدير
+                    <i class="fa-solid fa-file-excel"></i> تصدير الشامل
                 </button>
             </div>
         </div>
@@ -118,11 +118,16 @@
 
             <!-- Low Stock Alerts Section -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-200">
-                <div class="flex justify-between items-center mb-4">
+                <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
                     <h3 class="text-lg font-bold text-rose-700 flex items-center gap-2">
                         <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> تنبيه المنتجات قليلة المخزون
                     </h3>
-                    <span id="low-stock-count" class="bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1 rounded-full">0 منتج</span>
+                    <div class="flex items-center gap-3">
+                        <button onclick="exportLowStockExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow">
+                            <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
+                        </button>
+                        <span id="low-stock-count" class="bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1 rounded-full">0 منتج</span>
+                    </div>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-right text-sm">
@@ -230,9 +235,14 @@
                         </h2>
                         <p class="text-xs text-slate-500 mt-1">حدد الحالة اليومية لكل عامل من القائمة المنسدلة (حاضر، مريض، غير مبرر، مسألة خاصة، إستقل)</p>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <label class="text-sm font-semibold text-slate-700">تاريخ الحضور:</label>
-                        <input type="date" id="attendance-date" onchange="renderAttendanceTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm font-semibold text-slate-700">تاريخ الحضور:</label>
+                            <input type="date" id="attendance-date" onchange="renderAttendanceTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <button type="button" onclick="exportAttendanceExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
+                            <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
+                        </button>
                     </div>
                 </div>
 
@@ -300,14 +310,19 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 lg:col-span-2">
-                    <div class="flex justify-between items-center mb-6">
+                    <div class="flex justify-between items-center mb-6 flex-wrap gap-3">
                         <div>
                             <h2 class="text-lg font-bold text-slate-800">سجل حركات خروج المنتجات</h2>
                             <p class="text-xs text-slate-500">جميع الكميات التي تم صرفها مع الملاحظات وتاريخ الوارد الخام</p>
                         </div>
-                        <button onclick="clearAllStockOut()" class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2 rounded-xl text-xs font-semibold transition border border-red-200">
-                            <i class="fa-solid fa-trash-can"></i> مسح السجل
-                        </button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="exportStockOutExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow">
+                                <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
+                            </button>
+                            <button onclick="clearAllStockOut()" class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2 rounded-xl text-xs font-semibold transition border border-red-200">
+                                <i class="fa-solid fa-trash-can"></i> مسح السجل
+                            </button>
+                        </div>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-right border-collapse text-sm">
@@ -338,8 +353,11 @@
                         <h2 class="text-xl font-bold text-slate-800">سجل إنتاج العمال اليومي</h2>
                         <p class="text-xs text-slate-500">تفاصيل ما أنتجه كل عامل</p>
                     </div>
-                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
                         <input type="date" id="filter-date" onchange="renderProductionTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm">
+                        <button onclick="exportProductionExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
+                            <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
+                        </button>
                         <button onclick="clearAllProduction()" class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2.5 rounded-xl text-sm font-semibold transition border border-red-200">
                             <i class="fa-solid fa-trash-can"></i> مسح السجل
                         </button>
@@ -376,8 +394,13 @@
                         <h2 class="text-xl font-bold text-slate-800">مخزون المنتجات الكلي في المصنع</h2>
                         <p class="text-xs text-slate-500">تتبع رصيد المخزون الفعلي بدقة</p>
                     </div>
-                    <div class="w-full sm:w-72">
-                        <input type="text" id="search-product" onkeyup="filterInventory()" placeholder="ابحث برمز المنتج أو الوصف..." class="w-full p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
+                        <div class="w-full sm:w-72">
+                            <input type="text" id="search-product" onkeyup="filterInventory()" placeholder="ابحث برمز المنتج أو الوصف..." class="w-full p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+                        <button onclick="exportInventoryExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
+                            <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
+                        </button>
                     </div>
                 </div>
 
@@ -413,9 +436,12 @@
                         </h2>
                         <p class="text-xs text-slate-500 mt-1">متابعة دقيقة لإنتاج العمال، إجمالي الإنتاج، واستهلاك/صرف المنتجات أسبوعياً وشهرياً</p>
                     </div>
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 flex-wrap items-center">
                         <button onclick="setAnalyticsView('weekly')" id="btn-view-weekly" class="px-4 py-2 rounded-xl text-sm font-bold bg-teal-600 text-white transition shadow">العرض الأسبوعي</button>
                         <button onclick="setAnalyticsView('monthly')" id="btn-view-monthly" class="px-4 py-2 rounded-xl text-sm font-bold bg-slate-200 text-slate-700 transition">العرض الشهري</button>
+                        <button onclick="exportAnalyticsExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
+                            <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
+                        </button>
                     </div>
                 </div>
 
@@ -436,9 +462,14 @@
                         </h2>
                         <p class="text-xs text-slate-500">إدارة وتعديل أرقام هواتف وأسماء العمال بالمصنع</p>
                     </div>
-                    <button onclick="openAddWorkerModal()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow-sm flex items-center gap-2">
-                        <i class="fa-solid fa-user-plus"></i> إضافة عامل جديد
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="exportWorkersExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow-sm flex items-center gap-2">
+                            <i class="fa-solid fa-file-excel"></i> تحميل إكسيل
+                        </button>
+                        <button onclick="openAddWorkerModal()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow-sm flex items-center gap-2">
+                            <i class="fa-solid fa-user-plus"></i> إضافة عامل جديد
+                        </button>
+                    </div>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -724,7 +755,7 @@
             alert('تم تسجيل الإنتاج بنجاح وإضافته للمخزون!');
         }
 
-        // Attendance Management Functions (Using single Select Dropdown)
+        // Attendance Management Functions
         function renderAttendanceTable() {
             const dateStr = document.getElementById('attendance-date').value;
             const tbody = document.getElementById('attendance-tbody');
@@ -738,7 +769,7 @@
             const dayRecords = attendanceLogs[dateStr] || {};
 
             workersList.forEach((w, index) => {
-                const currentStatus = dayRecords[w.name] || 'حاضر'; // Default to Present
+                const currentStatus = dayRecords[w.name] || 'حاضر';
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
                         <td class="p-3 text-slate-500 font-mono">${index + 1}</td>
@@ -916,7 +947,7 @@
 
         function getMonthIdentifier(dateStr) {
             if (!dateStr) return '';
-            return dateStr.substring(0, 7); // YYYY-MM
+            return dateStr.substring(0, 7);
         }
 
         function setAnalyticsView(mode) {
@@ -937,7 +968,6 @@
             const container = document.getElementById('analytics-content');
             container.innerHTML = '';
 
-            // Group production and stock out logs by period (Weekly or Monthly)
             const prodGroups = {};
             const stockOutGroups = {};
 
@@ -946,11 +976,9 @@
                 if (!prodGroups[key]) prodGroups[key] = { totalQty: 0, workers: {}, products: {} };
                 prodGroups[key].totalQty += item.qty;
 
-                // Worker breakdown
                 if (!prodGroups[key].workers[item.worker]) prodGroups[key].workers[item.worker] = 0;
                 prodGroups[key].workers[item.worker] += item.qty;
 
-                // Product breakdown
                 if (!prodGroups[key].products[item.code]) {
                     prodGroups[key].products[item.code] = { desc: item.desc, unit: item.unit, qty: 0 };
                 }
@@ -966,7 +994,6 @@
                 stockOutGroups[key][item.code].qty += item.qty;
             });
 
-            // Get all unique periods sorted descending
             const allPeriods = Array.from(new Set([...Object.keys(prodGroups), ...Object.keys(stockOutGroups)])).sort().reverse();
 
             if (allPeriods.length === 0) {
@@ -999,7 +1026,7 @@
 
                 container.innerHTML += `
                     <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4 shadow-sm">
-                        <div class="flex justify-between items-center bg-teal-900 text-white px-4 py-3 rounded-xl">
+                        <div class="flex justify-between items-center bg-teal-900 text-white px-4 py-3 rounded-xl flex-wrap gap-2">
                             <h3 class="font-bold text-sm sm:text-base flex items-center gap-2">
                                 <i class="fa-solid fa-calendar-days text-teal-400"></i> فترة التقرير: ${period}
                             </h3>
@@ -1262,21 +1289,118 @@
             });
         }
 
+        // ================= EXCEL EXPORT FUNCTIONS =================
+        function downloadCSV(csvContent, filename) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // 1. تصدير التقرير الشامل (من الأعلى)
         function exportData() {
-            let csvContent = "data:text/csv;charset=utf-8,Type,Date,Code,Description,Unit,Quantity,Notes\n";
+            let csvContent = "\uFEFFType,Date,Code,Description,Unit,Quantity,Notes\n";
             productionLogs.forEach(row => {
                 csvContent += `Production,${row.date},"${row.code}","${row.desc}","${row.unit}",${row.qty},"${row.notes || ''}"\n`;
             });
             stockOutLogs.forEach(row => {
                 csvContent += `StockOut,${row.date},"${row.code}","${row.desc}","${row.unit}",${row.qty},"${row.notes || ''}"\n`;
             });
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "factory_complete_report.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            downloadCSV(csvContent, "factory_complete_report.csv");
+        }
+
+        // 2. تصدير تنبيهات المخزون المنخفض
+        function exportLowStockExcel() {
+            let csvContent = "\uFEFFالكود,وصف المنتج,الوحدة,المخزون الحالي\n";
+            const lowStockItems = productsCatalog.filter(p => getCurrentStock(p.code) <= 5);
+            lowStockItems.forEach(p => {
+                csvContent += `"${p.code}","${p.desc}","${p.unit}",${getCurrentStock(p.code)}\n`;
+            });
+            downloadCSV(csvContent, "low_stock_report.csv");
+        }
+
+        // 3. تصدير الحضور اليومي
+        function exportAttendanceExcel() {
+            const dateStr = document.getElementById('attendance-date').value;
+            const dayRecords = attendanceLogs[dateStr] || {};
+            let csvContent = "\uFEFFرقم,اسم العامل,رقم الهاتف,الحالة اليومية\n";
+            workersList.forEach((w, index) => {
+                const status = dayRecords[w.name] || 'حاضر';
+                csvContent += `${index + 1},"${w.name}","${w.phone}","${status}"\n`;
+            });
+            downloadCSV(csvContent, `attendance_${dateStr}.csv`);
+        }
+
+        // 4. تصدير سجل خروج المنتجات (الصرف)
+        function exportStockOutExcel() {
+            let csvContent = "\uFEFFالتاريخ,كود المنتج,الوصف,الوحدة,الكمية,الملاحظات / الوارد الخام\n";
+            stockOutLogs.forEach(item => {
+                csvContent += `${item.date},"${item.code}","${item.desc}","${item.unit}",${item.qty},"${item.notes || ''}"\n`;
+            });
+            downloadCSV(csvContent, "stock_out_report.csv");
+        }
+
+        // 5. تصدير تقارير إنتاج العمال اليومية
+        function exportProductionExcel() {
+            const filterDate = document.getElementById('filter-date').value;
+            const filteredLogs = filterDate ? productionLogs.filter(item => item.date === filterDate) : productionLogs;
+            let csvContent = "\uFEFFالتاريخ,اسم العامل,كود المنتج,الوصف,الوحدة,الكمية,ملاحظات\n";
+            filteredLogs.forEach(item => {
+                csvContent += `${item.date},"${item.worker}","${item.code}","${item.desc}","${item.unit}",${item.qty},"${item.notes || ''}"\n`;
+            });
+            downloadCSV(csvContent, `workers_production_${filterDate || 'all'}.csv`);
+        }
+
+        // 6. تصدير المخزون الكلي للمنتجات
+        function exportInventoryExcel() {
+            let csvContent = "\uFEFFالكود,وصف المنتج,الوحدة,الافتراضي,المُنتَج,المُصَرَف,المخزون الحالي,الحالة\n";
+            const prodTotals = {};
+            productionLogs.forEach(item => {
+                if (!prodTotals[item.code]) prodTotals[item.code] = 0;
+                prodTotals[item.code] += item.qty;
+            });
+            const outTotals = {};
+            stockOutLogs.forEach(item => {
+                if (!outTotals[item.code]) outTotals[item.code] = 0;
+                outTotals[item.code] += item.qty;
+            });
+            productsCatalog.forEach(p => {
+                const produced = prodTotals[p.code] || 0;
+                const out = outTotals[p.code] || 0;
+                const currentStock = p.qty + produced - out;
+                const status = currentStock <= 5 ? "منخفض جداً" : "متوفر";
+                csvContent += `"${p.code}","${p.desc}","${p.unit}",${p.qty},${produced},${out},${currentStock},"${status}"\n`;
+            });
+            downloadCSV(csvContent, "inventory_report.csv");
+        }
+
+        // 7. تصدير التحليل المبياني (أسبوعي / شهري)
+        function exportAnalyticsExcel() {
+            let csvContent = `\uFEFFفترة التقرير (${currentAnalyticsMode === 'weekly' ? 'أسبوعي' : 'شهري'}),إجمالي الإنتاج\n`;
+            const prodGroups = {};
+            productionLogs.forEach(item => {
+                const key = currentAnalyticsMode === 'weekly' ? getWeekIdentifier(item.date) : getMonthIdentifier(item.date);
+                if (!prodGroups[key]) prodGroups[key] = 0;
+                prodGroups[key] += item.qty;
+            });
+            for (const [period, total] of Object.entries(prodGroups)) {
+                csvContent += `"${period}",${total}\n`;
+            }
+            downloadCSV(csvContent, `analytics_report_${currentAnalyticsMode}.csv`);
+        }
+
+        // 8. تصدير معلومات العمال وهواتفهم
+        function exportWorkersExcel() {
+            let csvContent = "\uFEFFرقم,اسم العامل,رقم الهاتف\n";
+            workersList.forEach((w, index) => {
+                csvContent += `${index + 1},"${w.name}","${w.phone}"\n`;
+            });
+            downloadCSV(csvContent, "workers_directory.csv");
         }
     </script>
 </body>
