@@ -14,12 +14,22 @@
         body {
             font-family: 'Cairo', sans-serif;
             background-color: #f1f5f9;
+            direction: rtl;
+            text-align: right;
         }
         .tab-content {
             display: none;
         }
         .tab-content.active {
             display: block;
+        }
+        /* Ensure all tables are explicitly aligned to the right */
+        table {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        th, td {
+            text-align: right !important;
         }
     </style>
 </head>
@@ -133,10 +143,10 @@
                     <table class="w-full text-right text-sm">
                         <thead class="bg-rose-50 text-rose-900 border-b border-rose-100">
                             <tr>
-                                <th class="p-3">الكود</th>
-                                <th class="p-3">وصف المنتج</th>
-                                <th class="p-3">الوحدة</th>
-                                <th class="p-3">المخزون الحالي</th>
+                                <th class="p-3 text-right">الكود</th>
+                                <th class="p-3 text-right">وصف المنتج</th>
+                                <th class="p-3 text-right">الوحدة</th>
+                                <th class="p-3 text-right">المخزون الحالي</th>
                             </tr>
                         </thead>
                         <tbody id="low-stock-table" class="divide-y divide-rose-50">
@@ -156,9 +166,9 @@
                         <table class="w-full text-right text-sm">
                             <thead class="bg-slate-50 text-slate-600 border-b">
                                 <tr>
-                                    <th class="p-3">المنتج</th>
-                                    <th class="p-3">الكمية</th>
-                                    <th class="p-3">التاريخ</th>
+                                    <th class="p-3 text-right">المنتج</th>
+                                    <th class="p-3 text-right">الكمية</th>
+                                    <th class="p-3 text-right">التاريخ</th>
                                 </tr>
                             </thead>
                             <tbody id="recent-out-table" class="divide-y divide-slate-100">
@@ -251,10 +261,10 @@
                         <table class="w-full text-right border-collapse text-sm">
                             <thead class="bg-slate-100 text-slate-700 border-b">
                                 <tr>
-                                    <th class="p-3">#</th>
-                                    <th class="p-3">اسم العامل</th>
-                                    <th class="p-3">رقم الهاتف</th>
-                                    <th class="p-3">الحالة اليومية</th>
+                                    <th class="p-3 text-right">#</th>
+                                    <th class="p-3 text-right">اسم العامل</th>
+                                    <th class="p-3 text-right">رقم الهاتف</th>
+                                    <th class="p-3 text-right">الحالة اليومية</th>
                                 </tr>
                             </thead>
                             <tbody id="attendance-tbody" class="divide-y divide-slate-200">
@@ -338,11 +348,11 @@
                         <table class="w-full text-right border-collapse text-sm">
                             <thead class="bg-slate-100 text-slate-700 border-b">
                                 <tr>
-                                    <th class="p-3">التاريخ</th>
-                                    <th class="p-3">الكود</th>
-                                    <th class="p-3">المنتج</th>
-                                    <th class="p-3">الكمية</th>
-                                    <th class="p-3">الملاحظات / الوارد الخام</th>
+                                    <th class="p-3 text-right">التاريخ</th>
+                                    <th class="p-3 text-right">الكود</th>
+                                    <th class="p-3 text-right">المنتج</th>
+                                    <th class="p-3 text-right">الكمية</th>
+                                    <th class="p-3 text-right">الملاحظات / الوارد الخام</th>
                                     <th class="p-3 text-center">إجراء</th>
                                 </tr>
                             </thead>
@@ -378,13 +388,13 @@
                     <table class="w-full text-right border-collapse text-sm">
                         <thead class="bg-slate-100 text-slate-700 border-b">
                             <tr>
-                                <th class="p-3">التاريخ</th>
-                                <th class="p-3">اسم العامل</th>
-                                <th class="p-3">كود المنتج</th>
-                                <th class="p-3">وصف المنتج</th>
-                                <th class="p-3">الوحدة</th>
-                                <th class="p-3">الكمية</th>
-                                <th class="p-3">ملاحظات</th>
+                                <th class="p-3 text-right">التاريخ</th>
+                                <th class="p-3 text-right">اسم العامل</th>
+                                <th class="p-3 text-right">كود المنتج</th>
+                                <th class="p-3 text-right">وصف المنتج</th>
+                                <th class="p-3 text-right">الوحدة</th>
+                                <th class="p-3 text-right">الكمية</th>
+                                <th class="p-3 text-right">ملاحظات</th>
                                 <th class="p-3 text-center">إجراء</th>
                             </tr>
                         </thead>
@@ -418,14 +428,14 @@
                     <table class="w-full text-right border-collapse text-sm" id="inventory-table">
                         <thead class="bg-slate-100 text-slate-700 border-b">
                             <tr>
-                                <th class="p-3">الكود #</th>
-                                <th class="p-3">وصف المنتج</th>
-                                <th class="p-3">الوحدة</th>
-                                <th class="p-3">الافتراضي</th>
-                                <th class="p-3">المُنتَج</th>
-                                <th class="p-3">المُصَرَف</th>
-                                <th class="p-3">المخزون الحالي</th>
-                                <th class="p-3">الحالة</th>
+                                <th class="p-3 text-right">الكود #</th>
+                                <th class="p-3 text-right">وصف المنتج</th>
+                                <th class="p-3 text-right">الوحدة</th>
+                                <th class="p-3 text-right">الافتراضي</th>
+                                <th class="p-3 text-right">المُنتَج</th>
+                                <th class="p-3 text-right">المُصَرَف</th>
+                                <th class="p-3 text-right">المخزون الحالي</th>
+                                <th class="p-3 text-right">الحالة</th>
                             </tr>
                         </thead>
                         <tbody id="inventory-tbody" class="divide-y divide-slate-200">
@@ -486,9 +496,9 @@
                     <table class="w-full text-right border-collapse text-sm">
                         <thead class="bg-slate-100 text-slate-700 border-b">
                             <tr>
-                                <th class="p-3">#</th>
-                                <th class="p-3">اسم العامل</th>
-                                <th class="p-3">رقم الهاتـف</th>
+                                <th class="p-3 text-right">#</th>
+                                <th class="p-3 text-right">اسم العامل</th>
+                                <th class="p-3 text-right">رقم الهاتـف</th>
                                 <th class="p-3 text-center">الإجراءات</th>
                             </tr>
                         </thead>
@@ -537,9 +547,9 @@
                 <table class="w-full text-right text-sm">
                     <thead class="bg-slate-100 text-slate-700 sticky top-0">
                         <tr>
-                            <th class="p-3">اسم العامل</th>
-                            <th class="p-3">رقم الهاتف</th>
-                            <th class="p-3">الحالة</th>
+                            <th class="p-3 text-right">اسم العامل</th>
+                            <th class="p-3 text-right">رقم الهاتف</th>
+                            <th class="p-3 text-right">الحالة</th>
                         </tr>
                     </thead>
                     <tbody id="attendance-modal-tbody" class="divide-y divide-slate-100">
@@ -674,7 +684,6 @@
             { name: "مصطفى بوكري", phone: "0667890123" }
         ];
 
-        // Attendance Logs Storage: { "YYYY-MM-DD": { "Worker Name": "حاضر" | "مريض" | ... } }
         let attendanceLogs = JSON.parse(localStorage.getItem('factory_attendance_logs')) || {};
         let currentAnalyticsMode = 'weekly';
 
@@ -692,7 +701,6 @@
             renderAll();
         };
 
-        // Dropdown Menu Functions
         function toggleMenu() {
             const menu = document.getElementById('dropdown-menu');
             menu.classList.toggle('hidden');
@@ -758,7 +766,6 @@
             return initial + produced - out;
         }
 
-        // Production Form Submit
         function handleProductionSubmit(event) {
             event.preventDefault();
             const worker = document.getElementById('worker-name').value;
@@ -796,7 +803,6 @@
             alert('تم تسجيل الإنتاج بنجاح وإضافته للمخزون!');
         }
 
-        // Attendance Management Functions
         function renderAttendanceTable() {
             const dateStr = document.getElementById('attendance-date').value;
             const tbody = document.getElementById('attendance-tbody');
@@ -813,10 +819,10 @@
                 const currentStatus = dayRecords[w.name] || 'حاضر';
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
-                        <td class="p-3 text-slate-500 font-mono">${index + 1}</td>
-                        <td class="p-3 font-bold text-slate-800">${w.name}</td>
-                        <td class="p-3 font-mono text-emerald-700 font-semibold" dir="ltr">${w.phone}</td>
-                        <td class="p-3">
+                        <td class="p-3 text-slate-500 font-mono text-right">${index + 1}</td>
+                        <td class="p-3 font-bold text-slate-800 text-right">${w.name}</td>
+                        <td class="p-3 font-mono text-emerald-700 font-semibold text-right" dir="ltr">${w.phone}</td>
+                        <td class="p-3 text-right">
                             <select id="attendance_select_${index}" class="p-2.5 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-indigo-500 focus:outline-none w-full sm:w-48 bg-white">
                                 <option value="حاضر" ${currentStatus === 'حاضر' ? 'selected' : ''} class="text-emerald-700 font-semibold">حاضر</option>
                                 <option value="مريض" ${currentStatus === 'مريض' ? 'selected' : ''} class="text-rose-600 font-semibold">مريض</option>
@@ -850,11 +856,10 @@
             });
 
             localStorage.setItem('factory_attendance_logs', JSON.stringify(attendanceLogs));
-            renderSavedAttendanceButtons(); // Render the date button below
+            renderSavedAttendanceButtons();
             alert('تم حفظ سجل حضور العمال بنجاح لتاريخ: ' + dateStr);
         }
 
-        // Render Saved Attendance Date Buttons
         function renderSavedAttendanceButtons() {
             const container = document.getElementById('saved-attendance-buttons');
             if (!container) return;
@@ -876,7 +881,6 @@
             });
         }
 
-        // Open Modal with Attendance Details for Specific Date
         function openAttendanceModal(dateStr) {
             document.getElementById('attendance-modal-title').innerHTML = `<i class="fa-solid fa-calendar-day text-indigo-600"></i> تفاصيل الحضور ليوم: ${dateStr}`;
             const tbody = document.getElementById('attendance-modal-tbody');
@@ -897,9 +901,9 @@
 
                     tbody.innerHTML += `
                         <tr class="hover:bg-slate-50 transition">
-                            <td class="p-3 font-bold text-slate-800">${w.name}</td>
-                            <td class="p-3 font-mono text-emerald-700 font-semibold" dir="ltr">${w.phone}</td>
-                            <td class="p-3"><span class="px-3 py-1 rounded-full text-xs ${statusBadgeClass}">${status}</span></td>
+                            <td class="p-3 font-bold text-slate-800 text-right">${w.name}</td>
+                            <td class="p-3 font-mono text-emerald-700 font-semibold text-right" dir="ltr">${w.phone}</td>
+                            <td class="p-3 text-right"><span class="px-3 py-1 rounded-full text-xs ${statusBadgeClass}">${status}</span></td>
                         </tr>
                     `;
                 });
@@ -912,7 +916,6 @@
             document.getElementById('attendance-detail-modal').classList.add('hidden');
         }
 
-        // Stock Out Submit
         function handleStockOutSubmit(event) {
             event.preventDefault();
             const rawProductVal = document.getElementById('out-product-search-input').value;
@@ -985,7 +988,6 @@
             }
         }
 
-        // Workers Directory Management Functions
         function openAddWorkerModal() {
             document.getElementById('modal-title').innerText = "إضافة عامل جديد";
             document.getElementById('worker-edit-index').value = "-1";
@@ -1035,7 +1037,6 @@
             }
         }
 
-        // Helper date grouping functions for Analytics
         function getWeekIdentifier(dateStr) {
             const d = new Date(dateStr);
             d.setHours(0, 0, 0, 0);
@@ -1115,10 +1116,10 @@
                 for (const [cCode, cObj] of Object.entries(sData)) {
                     consumedHtml += `
                         <tr class="hover:bg-slate-50 text-xs">
-                            <td class="p-2 font-mono font-bold text-rose-600">${cCode}</td>
-                            <td class="p-2 text-slate-700">${cObj.desc}</td>
-                            <td class="p-2 text-slate-500">${cObj.unit}</td>
-                            <td class="p-2"><span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">${cObj.qty}</span></td>
+                            <td class="p-2 font-mono font-bold text-rose-600 text-right">${cCode}</td>
+                            <td class="p-2 text-slate-700 text-right">${cObj.desc}</td>
+                            <td class="p-2 text-slate-500 text-right">${cObj.unit}</td>
+                            <td class="p-2 text-right"><span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">${cObj.qty}</span></td>
                         </tr>
                     `;
                 }
@@ -1134,7 +1135,6 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Workers Production Analysis -->
                             <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
                                 <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b pb-2">
                                     <i class="fa-solid fa-users text-emerald-600"></i> إنتاج العمال خلال هذه الفترة
@@ -1144,7 +1144,6 @@
                                 </ul>
                             </div>
 
-                            <!-- Consumed / Out Products Analysis -->
                             <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
                                 <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b pb-2">
                                     <i class="fa-solid fa-box-open text-rose-600"></i> المنتجات المستهلكة/المصروفة وكمياتها
@@ -1153,10 +1152,10 @@
                                     <table class="w-full text-right">
                                         <thead class="bg-slate-100 text-slate-600 text-xs">
                                             <tr>
-                                                <th class="p-2">الكود</th>
-                                                <th class="p-2">المنتج</th>
-                                                <th class="p-2">الوحدة</th>
-                                                <th class="p-2">كمية الاستهلاك</th>
+                                                <th class="p-2 text-right">الكود</th>
+                                                <th class="p-2 text-right">المنتج</th>
+                                                <th class="p-2 text-right">الوحدة</th>
+                                                <th class="p-2 text-right">كمية الاستهلاك</th>
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-slate-100">
@@ -1171,7 +1170,6 @@
             });
         }
 
-        // Render All Tables
         function renderAll() {
             renderDashboardStats();
             renderLowStockTable();
@@ -1190,9 +1188,9 @@
                 stockOutLogs.slice(0, 5).forEach(item => {
                     recentOutTbody.innerHTML += `
                         <tr class="hover:bg-slate-50">
-                            <td class="p-3 text-slate-700 font-medium">${item.code} - ${item.desc}</td>
-                            <td class="p-3"><span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">${item.qty} (${item.unit})</span></td>
-                            <td class="p-3 text-slate-400 text-xs">${item.date}</td>
+                            <td class="p-3 text-slate-700 font-medium text-right">${item.code} - ${item.desc}</td>
+                            <td class="p-3 text-right"><span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">${item.qty} (${item.unit})</span></td>
+                            <td class="p-3 text-slate-400 text-xs text-right">${item.date}</td>
                         </tr>
                     `;
                 });
@@ -1239,10 +1237,10 @@
                 const current = getCurrentStock(p.code);
                 tbody.innerHTML += `
                     <tr class="hover:bg-rose-50/50">
-                        <td class="p-3 font-mono font-bold text-slate-800">${p.code}</td>
-                        <td class="p-3 text-slate-700 font-medium">${p.desc}</td>
-                        <td class="p-3 text-slate-500">${p.unit}</td>
-                        <td class="p-3"><span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-lg font-bold">${current}</span></td>
+                        <td class="p-3 font-mono font-bold text-slate-800 text-right">${p.code}</td>
+                        <td class="p-3 text-slate-700 font-medium text-right">${p.desc}</td>
+                        <td class="p-3 text-slate-500 text-right">${p.unit}</td>
+                        <td class="p-3 text-right"><span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-lg font-bold">${current}</span></td>
                     </tr>
                 `;
             });
@@ -1263,13 +1261,13 @@
             filteredLogs.forEach(item => {
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
-                        <td class="p-3 text-slate-600 font-mono">${item.date}</td>
-                        <td class="p-3 font-bold text-slate-800">${item.worker}</td>
-                        <td class="p-3 font-mono font-semibold text-emerald-600">${item.code}</td>
-                        <td class="p-3 text-slate-700">${item.desc}</td>
-                        <td class="p-3 text-slate-500">${item.unit}</td>
-                        <td class="p-3"><span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-lg font-bold">${item.qty}</span></td>
-                        <td class="p-3 text-slate-500 text-xs">${item.notes || '-'}</td>
+                        <td class="p-3 text-slate-600 font-mono text-right">${item.date}</td>
+                        <td class="p-3 font-bold text-slate-800 text-right">${item.worker}</td>
+                        <td class="p-3 font-mono font-semibold text-emerald-600 text-right">${item.code}</td>
+                        <td class="p-3 text-slate-700 text-right">${item.desc}</td>
+                        <td class="p-3 text-slate-500 text-right">${item.unit}</td>
+                        <td class="p-3 text-right"><span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-lg font-bold">${item.qty}</span></td>
+                        <td class="p-3 text-slate-500 text-xs text-right">${item.notes || '-'}</td>
                         <td class="p-3 text-center">
                             <button onclick="deleteEntry(${item.id})" class="text-red-500 hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition" title="حذف">
                                 <i class="fa-solid fa-trash"></i>
@@ -1292,11 +1290,11 @@
             stockOutLogs.forEach(item => {
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
-                        <td class="p-3 text-slate-600 font-mono">${item.date}</td>
-                        <td class="p-3 font-mono font-semibold text-rose-600">${item.code}</td>
-                        <td class="p-3 text-slate-700">${item.desc} (${item.unit})</td>
-                        <td class="p-3"><span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-lg font-bold">${item.qty}</span></td>
-                        <td class="p-3 text-slate-600 text-xs font-medium">${item.notes || '-'}</td>
+                        <td class="p-3 text-slate-600 font-mono text-right">${item.date}</td>
+                        <td class="p-3 font-mono font-semibold text-rose-600 text-right">${item.code}</td>
+                        <td class="p-3 text-slate-700 text-right">${item.desc} (${item.unit})</td>
+                        <td class="p-3 text-right"><span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-lg font-bold">${item.qty}</span></td>
+                        <td class="p-3 text-slate-600 text-xs font-medium text-right">${item.notes || '-'}</td>
                         <td class="p-3 text-center">
                             <button onclick="deleteStockOutEntry(${item.id})" class="text-red-500 hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition" title="حذف">
                                 <i class="fa-solid fa-trash"></i>
@@ -1307,6 +1305,7 @@
             });
         }
 
+        /* UPDATED TABLE: Inventory columns rendered Right-to-Left correctly */
         function renderInventoryTable() {
             const tbody = document.getElementById('inventory-tbody');
             tbody.innerHTML = '';
@@ -1335,14 +1334,14 @@
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition inventory-row" data-search="${p.code.toLowerCase()} ${p.desc.toLowerCase()}">
-                        <td class="p-3 font-mono font-bold text-slate-800">${p.code}</td>
-                        <td class="p-3 text-slate-700 font-medium">${p.desc}</td>
-                        <td class="p-3 text-slate-500">${p.unit}</td>
-                        <td class="p-3 font-semibold text-slate-600">${p.qty}</td>
-                        <td class="p-3"><span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-lg font-bold">${produced}</span></td>
-                        <td class="p-3"><span class="bg-rose-50 text-rose-700 px-2.5 py-1 rounded-lg font-bold">${out}</span></td>
-                        <td class="p-3"><span class="bg-slate-900 text-white px-3 py-1 rounded-lg font-black">${currentStock}</span></td>
-                        <td class="p-3">${statusBadge}</td>
+                        <td class="p-3 font-mono font-bold text-slate-800 text-right">${p.code}</td>
+                        <td class="p-3 text-slate-700 font-medium text-right">${p.desc}</td>
+                        <td class="p-3 text-slate-500 text-right">${p.unit}</td>
+                        <td class="p-3 font-semibold text-slate-600 text-right">${p.qty}</td>
+                        <td class="p-3 text-right"><span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-lg font-bold">${produced}</span></td>
+                        <td class="p-3 text-right"><span class="bg-rose-50 text-rose-700 px-2.5 py-1 rounded-lg font-bold">${out}</span></td>
+                        <td class="p-3 text-right"><span class="bg-slate-900 text-white px-3 py-1 rounded-lg font-black">${currentStock}</span></td>
+                        <td class="p-3 text-right">${statusBadge}</td>
                     </tr>
                 `;
             });
@@ -1360,9 +1359,9 @@
             workersList.forEach((w, index) => {
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
-                        <td class="p-3 text-slate-500 font-mono">${index + 1}</td>
-                        <td class="p-3 font-bold text-slate-800">${w.name}</td>
-                        <td class="p-3 font-mono text-emerald-700 font-semibold" dir="ltr">${w.phone}</td>
+                        <td class="p-3 text-slate-500 font-mono text-right">${index + 1}</td>
+                        <td class="p-3 font-bold text-slate-800 text-right">${w.name}</td>
+                        <td class="p-3 font-mono text-emerald-700 font-semibold text-right" dir="ltr">${w.phone}</td>
                         <td class="p-3 text-center space-x-2 space-x-reverse">
                             <button onclick="editWorker(${index})" class="text-blue-500 hover:text-blue-700 p-1.5 rounded-lg hover:bg-blue-50 transition" title="تعديل">
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -1389,7 +1388,7 @@
             });
         }
 
-        // ================= EXCEL EXPORT FUNCTIONS =================
+        // EXCEL EXPORT FUNCTIONS
         function downloadCSV(csvContent, filename) {
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
@@ -1402,7 +1401,6 @@
             URL.revokeObjectURL(url);
         }
 
-        // 1. تصدير التقرير الشامل (من الأعلى)
         function exportData() {
             let csvContent = "\uFEFFType,Date,Code,Description,Unit,Quantity,Notes\n";
             productionLogs.forEach(row => {
@@ -1414,7 +1412,6 @@
             downloadCSV(csvContent, "factory_complete_report.csv");
         }
 
-        // 2. تصدير تنبيهات المخزون المنخفض
         function exportLowStockExcel() {
             let csvContent = "\uFEFFالكود,وصف المنتج,الوحدة,المخزون الحالي\n";
             const lowStockItems = productsCatalog.filter(p => getCurrentStock(p.code) <= 5);
@@ -1424,7 +1421,6 @@
             downloadCSV(csvContent, "low_stock_report.csv");
         }
 
-        // 3. تصدير الحضور اليومي
         function exportAttendanceExcel() {
             const dateStr = document.getElementById('attendance-date').value;
             const dayRecords = attendanceLogs[dateStr] || {};
@@ -1436,7 +1432,6 @@
             downloadCSV(csvContent, `attendance_${dateStr}.csv`);
         }
 
-        // 4. تصدير سجل خروج المنتجات (الصرف)
         function exportStockOutExcel() {
             let csvContent = "\uFEFFالتاريخ,كود المنتج,الوصف,الوحدة,الكمية,الملاحظات / الوارد الخام\n";
             stockOutLogs.forEach(item => {
@@ -1445,7 +1440,6 @@
             downloadCSV(csvContent, "stock_out_report.csv");
         }
 
-        // 5. تصدير تقارير إنتاج العمال اليومية
         function exportProductionExcel() {
             const filterDate = document.getElementById('filter-date').value;
             const filteredLogs = filterDate ? productionLogs.filter(item => item.date === filterDate) : productionLogs;
@@ -1456,7 +1450,6 @@
             downloadCSV(csvContent, `workers_production_${filterDate || 'all'}.csv`);
         }
 
-        // 6. تصدير المخزون الكلي للمنتجات
         function exportInventoryExcel() {
             let csvContent = "\uFEFFالكود,وصف المنتج,الوحدة,الافتراضي,المُنتَج,المُصَرَف,المخزون الحالي,الحالة\n";
             const prodTotals = {};
@@ -1479,7 +1472,6 @@
             downloadCSV(csvContent, "inventory_report.csv");
         }
 
-        // 7. تصدير التحليل المبياني (أسبوعي / شهري)
         function exportAnalyticsExcel() {
             let csvContent = `\uFEFFفترة التقرير (${currentAnalyticsMode === 'weekly' ? 'أسبوعي' : 'شهري'}),إجمالي الإنتاج\n`;
             const prodGroups = {};
@@ -1494,7 +1486,6 @@
             downloadCSV(csvContent, `analytics_report_${currentAnalyticsMode}.csv`);
         }
 
-        // 8. تصدير معلومات العمال وهواتفهم
         function exportWorkersExcel() {
             let csvContent = "\uFEFFرقم,اسم العامل,رقم الهاتف\n";
             workersList.forEach((w, index) => {
