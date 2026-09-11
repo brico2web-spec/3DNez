@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <!-- MAIN SYSTEM CONTENT (Hidden by default until logged in) -->
+    <!-- MAIN SYSTEM CONTENT -->
     <div id="main-system-content" class="hidden flex-col min-h-screen">
         <!-- Top Header & Navigation Bar -->
         <header class="bg-blue-950 text-white shadow-lg sticky top-0 z-50">
@@ -591,7 +591,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, setDoc, writeBatch, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // 🟢 إعدادات Firebase الخاصة بك
+        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyDemoKeyReplaceWithYourOwnIfNeed",
             authDomain: "factory-system-demo.firebaseapp.com",
@@ -722,8 +722,9 @@
         window.openAddProductModal = function() {
             document.getElementById('product-modal-title').innerText = "إضافة منتج جديد للمخزون";
             document.getElementById('product-edit-id').value = "";
-            document.getElementById('modal-product-code').value = "";
-            document.getElementById('modal-product-code').disabled = false;
+            const codeInput = document.getElementById('modal-product-code');
+            codeInput.value = "";
+            codeInput.readOnly = false;
             document.getElementById('modal-product-desc').value = "";
             document.getElementById('modal-product-unit').value = "";
             document.getElementById('modal-product-boxes').value = "0";
@@ -737,8 +738,9 @@
             if (!product) return;
             document.getElementById('product-modal-title').innerText = "تعديل بيانات المنتج";
             document.getElementById('product-edit-id').value = product.id;
-            document.getElementById('modal-product-code').value = product.code;
-            document.getElementById('modal-product-code').disabled = true;
+            const codeInput = document.getElementById('modal-product-code');
+            codeInput.value = product.code;
+            codeInput.readOnly = true;
             document.getElementById('modal-product-desc').value = product.desc;
             document.getElementById('modal-product-unit').value = product.unit;
             document.getElementById('modal-product-boxes').value = product.boxes || 0;
@@ -751,12 +753,11 @@
             document.getElementById('product-modal').classList.add('hidden');
         };
 
-        // 🟢 إصلاح حفظ المنتج ومزامنة التحديث على السحابة
+        // 🟢 FIX: إصلاح حفظ تعديل المنتج بشكل نهائي وإظهار نافذة تأكيد الحفظ
         window.handleProductSave = async function(event) {
             event.preventDefault();
             const docId = document.getElementById('product-edit-id').value;
-            const codeInput = document.getElementById('modal-product-code');
-            const code = codeInput.value.trim().toUpperCase();
+            const code = document.getElementById('modal-product-code').value.trim().toUpperCase();
             const desc = document.getElementById('modal-product-desc').value.trim();
             const unit = document.getElementById('modal-product-unit').value.trim();
             const boxes = parseInt(document.getElementById('modal-product-boxes').value) || 0;
@@ -771,19 +772,17 @@
                         return;
                     }
                     await addDoc(collection(db, "products"), { code, desc, unit, boxes, itemsPerBox, qty });
-                    alert(`تم إضافة المنتج الجديد (${code}) وتحديث المخزون السحابي بنجاح!`);
                 } else {
-                    await updateDoc(doc(db, "products", docId), { desc, unit, boxes, itemsPerBox, qty });
-                    alert(`تم حفظ وتحديث تعديلات المنتج (${code}) بنجاح!`);
+                    await updateDoc(doc(db, "products", docId), { code, desc, unit, boxes, itemsPerBox, qty });
                 }
                 closeProductModal();
+                alert("تم حفظ البيانات وتحديث المنتج بنجاح!");
             } catch (e) {
                 console.error("Error saving product: ", e);
                 alert("حدث خطأ أثناء حفظ المنتج: " + e.message);
             }
         };
 
-        // 🔴 دالة حذف جميع المنتجات من المخزون في Firebase
         window.deleteAllProducts = async function() {
             if (confirm("هل أنت متأكد تماماً من حذف جميع المنتجات من المخزون السحابي؟ هذه العملية لا يمكن التراجع عنها!")) {
                 try {
@@ -793,7 +792,7 @@
                         batch.delete(doc.ref);
                     });
                     await batch.commit();
-                    alert("تم حذف جميع المنتجات بنجاح. يمكن الآن رفع ملف الإكسيل لجميع الـ 89 منتج.");
+                    alert("تم حذف جميع المنتجات بنجاح. يمكن الآن رفع ملف الإكسيل لجميع المنتجات.");
                 } catch (e) {
                     console.error("Error deleting all products: ", e);
                     alert("حدث خطأ أثناء إفراغ المخزون: " + e.message);
@@ -801,7 +800,6 @@
             }
         };
 
-        // 🟢 Excel File Parser & Bulk Upload
         window.handleExcelUpload = function(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -852,7 +850,7 @@
                     alert("حدث خطأ أثناء قراءة ملف الإكسيل، يرجى التأكد من التنسيق.");
                 }
             };
-            reader.readAsBuffer(file);
+            reader.readAsBuffer ? reader.readAsArrayBuffer(file) : reader.readAsBinaryString(file);
         };
 
         window.deleteProduct = async function(docId) {
@@ -867,7 +865,6 @@
             }
         };
 
-        // Handlers for Operations
         window.handleProductionSubmit = async function(event) {
             event.preventDefault();
             const worker = document.getElementById('worker-name').value;
@@ -1308,7 +1305,7 @@
                     summaryDiv.innerHTML += `
                         <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
                             <span class="font-bold text-slate-700 flex items-center gap-2"><i class="fa-solid fa-user text-blue-600"></i> ${worker}</span>
-                            <span class="bg-blue-900 text-white px-3 py-1 rounded-lg text-xs font-bold">${totalQty} وحدة منتجة اليوم</span>
+                            <span class="bg-blue-950 text-white px-3 py-1 rounded-lg text-xs font-bold">${totalQty} وحدة منتجة اليوم</span>
                         </div>
                     `;
                 }
