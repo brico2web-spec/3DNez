@@ -268,6 +268,16 @@
                         </button>
                     </div>
                 </form>
+
+                <!-- Saved Attendance Date Buttons (Appears below on save) -->
+                <div id="saved-attendance-section" class="mt-8 pt-6 border-t border-slate-200">
+                    <h3 class="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-clock-rotate-left text-indigo-600"></i> تواريخ الحضور المحفوظة (اضغط على التاريخ لعرض التفاصيل):
+                    </h3>
+                    <div id="saved-attendance-buttons" class="flex flex-wrap gap-2.5">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -514,6 +524,35 @@
         </div>
     </div>
 
+    <!-- Modal for Viewing Attendance Details by Date -->
+    <div id="attendance-detail-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-slate-200 max-h-[85vh] flex flex-col">
+            <div class="flex justify-between items-center mb-4 border-b pb-3">
+                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2" id="attendance-modal-title">
+                    <i class="fa-solid fa-calendar-day text-indigo-600"></i> تفاصيل الحضور
+                </h3>
+                <button onclick="closeAttendanceModal()" class="text-slate-400 hover:text-slate-600 text-2xl font-bold">&times;</button>
+            </div>
+            <div class="overflow-y-auto flex-grow">
+                <table class="w-full text-right text-sm">
+                    <thead class="bg-slate-100 text-slate-700 sticky top-0">
+                        <tr>
+                            <th class="p-3">اسم العامل</th>
+                            <th class="p-3">رقم الهاتف</th>
+                            <th class="p-3">الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-modal-tbody" class="divide-y divide-slate-100">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4 pt-3 border-t flex justify-end">
+                <button onclick="closeAttendanceModal()" class="bg-slate-800 hover:bg-slate-900 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition shadow">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 py-4 text-center text-xs mt-auto">
         <p>نظام إدارة الإنتاج والتخزين الصناعي &copy; 2026 - جميع الحقوق محفوظة</p>
@@ -649,6 +688,7 @@
 
             populateProductDropdowns();
             updateWorkersDropdown();
+            renderSavedAttendanceButtons();
             renderAll();
         };
 
@@ -675,6 +715,7 @@
 
             if(tabId === 'attendance') {
                 renderAttendanceTable();
+                renderSavedAttendanceButtons();
             }
             if(tabId === 'analytics') {
                 renderAnalytics();
@@ -809,7 +850,66 @@
             });
 
             localStorage.setItem('factory_attendance_logs', JSON.stringify(attendanceLogs));
+            renderSavedAttendanceButtons(); // Render the date button below
             alert('تم حفظ سجل حضور العمال بنجاح لتاريخ: ' + dateStr);
+        }
+
+        // Render Saved Attendance Date Buttons
+        function renderSavedAttendanceButtons() {
+            const container = document.getElementById('saved-attendance-buttons');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const savedDates = Object.keys(attendanceLogs).sort().reverse();
+            if (savedDates.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400">لا توجد تواريخ حضور محفوظة بعد.</p>`;
+                return;
+            }
+
+            savedDates.forEach(dateStr => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = "bg-slate-800 hover:bg-slate-900 text-white px-4 py-2.5 rounded-xl text-sm font-bold transition shadow flex items-center gap-2 border border-slate-700";
+                btn.innerHTML = `<i class="fa-solid fa-calendar-day text-indigo-400"></i> ${dateStr}`;
+                btn.onclick = () => openAttendanceModal(dateStr);
+                container.appendChild(btn);
+            });
+        }
+
+        // Open Modal with Attendance Details for Specific Date
+        function openAttendanceModal(dateStr) {
+            document.getElementById('attendance-modal-title').innerHTML = `<i class="fa-solid fa-calendar-day text-indigo-600"></i> تفاصيل الحضور ليوم: ${dateStr}`;
+            const tbody = document.getElementById('attendance-modal-tbody');
+            tbody.innerHTML = '';
+
+            const dayRecords = attendanceLogs[dateStr] || {};
+            if (workersList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="p-6 text-center text-slate-400">لا يوجد عمال مسجلين</td></tr>`;
+            } else {
+                workersList.forEach(w => {
+                    const status = dayRecords[w.name] || 'غير مسجل';
+                    let statusBadgeClass = 'bg-slate-100 text-slate-700';
+                    if (status === 'حاضر') statusBadgeClass = 'bg-emerald-100 text-emerald-800 font-bold';
+                    else if (status === 'مريض') statusBadgeClass = 'bg-rose-100 text-rose-800 font-bold';
+                    else if (status === 'غير مبرر') statusBadgeClass = 'bg-amber-100 text-amber-800 font-bold';
+                    else if (status === 'مسألة خاصة') statusBadgeClass = 'bg-blue-100 text-blue-800 font-bold';
+                    else if (status === 'إستقل') statusBadgeClass = 'bg-slate-200 text-slate-700 font-bold';
+
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="p-3 font-bold text-slate-800">${w.name}</td>
+                            <td class="p-3 font-mono text-emerald-700 font-semibold" dir="ltr">${w.phone}</td>
+                            <td class="p-3"><span class="px-3 py-1 rounded-full text-xs ${statusBadgeClass}">${status}</span></td>
+                        </tr>
+                    `;
+                });
+            }
+
+            document.getElementById('attendance-detail-modal').classList.remove('hidden');
+        }
+
+        function closeAttendanceModal() {
+            document.getElementById('attendance-detail-modal').classList.add('hidden');
         }
 
         // Stock Out Submit
