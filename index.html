@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام تسيير الإنتاج والتخزين - المصنع (Firebase)</title>
+    <title>نظام تسيير الإنتاج والتخزين - المصنع</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -72,7 +72,7 @@
                         </div>
                         <div>
                             <h1 class="text-base sm:text-lg font-bold tracking-wide">نظام تسيير الإنتاج والتخزين</h1>
-                            <p class="text-xs text-blue-300">إدارة المخزون ومتابعة إنتاج الحضور والعمال (مربوط سحابياً مع Firebase)</p>
+                            <p class="text-xs text-blue-300">إدارة المخزون ومتابعة إنتاج الحضور والعمال</p>
                         </div>
                     </div>
 
@@ -457,7 +457,7 @@
         </main>
 
         <footer class="bg-blue-950 text-blue-300 py-4 text-center text-xs mt-auto">
-            <p>نظام إدارة الإنتاج والتخزين الصناعي &copy; 2026 - مدمج مع Firebase Cloud</p>
+            <p>نظام إدارة الإنتاج والتخزين الصناعي &copy; 2026 - مدمج مع Cloud</p>
         </footer>
     </div>
 
@@ -1024,8 +1024,11 @@
 
         // Window Load & Utilities
         window.onload = function() {
-            const todayStr = new Date().toISOString().split('T')[0];
-            document.getElementById('current-date').innerText = "التاريخ: " + todayStr;
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            const formattedDate = today.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+            
+            document.getElementById('current-date').innerText = "التاريخ: " + formattedDate;
             document.getElementById('prod-date').value = todayStr;
             document.getElementById('out-date').value = todayStr;
             document.getElementById('filter-date').value = todayStr;
