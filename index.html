@@ -581,7 +581,7 @@
                 </table>
             </div>
             <div class="mt-4 pt-3 border-t flex justify-start">
-                <button onclick="closeAttendanceModal()" class="bg-blue-900 hover:bg-blue-950 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition shadow">إغلاق</button>
+                <button onclick="closeAttendanceModal()" class="bg-blue-950 hover:bg-blue-900 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition shadow">إغلاق</button>
             </div>
         </div>
     </div>
@@ -753,7 +753,6 @@
             document.getElementById('product-modal').classList.add('hidden');
         };
 
-        // 🟢 FIX: إصلاح حفظ تعديل المنتج بشكل نهائي وإظهار نافذة تأكيد الحفظ
         window.handleProductSave = async function(event) {
             event.preventDefault();
             const docId = document.getElementById('product-edit-id').value;
@@ -787,11 +786,19 @@
             if (confirm("هل أنت متأكد تماماً من حذف جميع المنتجات من المخزون السحابي؟ هذه العملية لا يمكن التراجع عنها!")) {
                 try {
                     const querySnapshot = await getDocs(collection(db, "products"));
-                    const batch = writeBatch(db);
-                    querySnapshot.forEach((doc) => {
-                        batch.delete(doc.ref);
-                    });
-                    await batch.commit();
+                    let batch = writeBatch(db);
+                    let count = 0;
+                    for (const document of querySnapshot.docs) {
+                        batch.delete(document.ref);
+                        count++;
+                        if (count % 400 === 0) {
+                            await batch.commit();
+                            batch = writeBatch(db);
+                        }
+                    }
+                    if (count % 400 !== 0) {
+                        await batch.commit();
+                    }
                     alert("تم حذف جميع المنتجات بنجاح. يمكن الآن رفع ملف الإكسيل لجميع المنتجات.");
                 } catch (e) {
                     console.error("Error deleting all products: ", e);
@@ -800,6 +807,7 @@
             }
         };
 
+        // 🟢 FIX EXCEL IMPORT METHOD
         window.handleExcelUpload = function(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -811,46 +819,79 @@
                     const workbook = XLSX.read(data, { type: 'array' });
                     const firstSheetName = workbook.SheetNames[0];
                     const worksheet = workbook.Sheets[firstSheetName];
-                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                    
+                    // Read rows as array without skipping header automatically
+                    const rawRows = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
 
-                    if (jsonData.length <= 1) {
+                    if (!rawRows || rawRows.length === 0) {
                         alert("الملف فارغ أو لا يحتوي على بيانات كافية!");
                         return;
                     }
 
-                    const batch = writeBatch(db);
-                    let addedCount = 0;
+                    // Check if row 0 is header or data
+                    let startIndex = 0;
+                    const firstRowFirstCol = String(rawRows[0][0] || '').trim().toLowerCase();
+                    if (firstRowFirstCol.includes('code') || firstRowFirstCol.includes('كود') || firstRowFirstCol.includes('رمز') || firstRowFirstCol.includes('id')) {
+                        startIndex = 1;
+                    }
 
-                    for (let i = 1; i < jsonData.length; i++) {
-                        const row = jsonData[i];
-                        if (!row || !row[0]) continue;
+                    let validRows = [];
+                    for (let i = startIndex; i < rawRows.length; i++) {
+                        const row = rawRows[i];
+                        if (!row || row.length === 0) continue;
+                        
+                        const code = String(row[0] !== undefined ? row[0] : '').trim().toUpperCase();
+                        if (!code) continue; // Skip rows without code
 
-                        const code = String(row[0]).trim().toUpperCase();
-                        const desc = row[1] ? String(row[1]).trim() : "بدون وصف";
-                        const unit = row[2] ? String(row[2]).trim() : "علبة";
+                        const desc = row[1] !== undefined && String(row[1]).trim() !== "" ? String(row[1]).trim() : "بدون وصف";
+                        const unit = row[2] !== undefined && String(row[2]).trim() !== "" ? String(row[2]).trim() : "علبة";
                         const boxes = parseInt(row[3]) || 0;
                         const itemsPerBox = parseInt(row[4]) || 1;
-                        const qty = row[5] !== undefined ? parseInt(row[5]) : (boxes * itemsPerBox);
+                        
+                        let qty = 0;
+                        if (row[5] !== undefined && String(row[5]).trim() !== "") {
+                            qty = parseInt(row[5]) || 0;
+                        } else {
+                            qty = boxes * itemsPerBox;
+                        }
 
+                        validRows.push({ code, desc, unit, boxes, itemsPerBox, qty });
+                    }
+
+                    if (validRows.length === 0) {
+                        alert("الملف فارغ أو لا يحتوي على بيانات صالحة للمنتجات!");
+                        document.getElementById('excel-file-input').value = "";
+                        return;
+                    }
+
+                    // Process Firebase Batches (Max 400 items per batch safely)
+                    let batch = writeBatch(db);
+                    let counter = 0;
+
+                    for (let item of validRows) {
                         const docRef = doc(collection(db, "products"));
-                        batch.set(docRef, { code, desc, unit, boxes, itemsPerBox, qty });
-                        addedCount++;
+                        batch.set(docRef, item);
+                        counter++;
+
+                        if (counter % 400 === 0) {
+                            await batch.commit();
+                            batch = writeBatch(db);
+                        }
                     }
 
-                    if (addedCount > 0) {
+                    if (counter % 400 !== 0) {
                         await batch.commit();
-                        alert(`تم استيراد كافة المنتجات (${addedCount} منتج) بنجاح إلى Firebase!`);
-                    } else {
-                        alert("لم يتم العثور على أسطر صالحة للاستيراد داخل الملف.");
                     }
 
+                    alert(`تم استيراد كافة المنتجات (${validRows.length} منتج) بنجاح إلى المخزون السحابي!`);
                     document.getElementById('excel-file-input').value = "";
                 } catch (err) {
                     console.error("Error reading excel: ", err);
-                    alert("حدث خطأ أثناء قراءة ملف الإكسيل، يرجى التأكد من التنسيق.");
+                    alert("حدث خطأ أثناء قراءة ملف الإكسيل: " + err.message);
+                    document.getElementById('excel-file-input').value = "";
                 }
             };
-            reader.readAsBuffer ? reader.readAsArrayBuffer(file) : reader.readAsBinaryString(file);
+            reader.readAsArrayBuffer(file);
         };
 
         window.deleteProduct = async function(docId) {
