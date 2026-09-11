@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,11 +25,11 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col text-right" dir="rtl">
+<body class="min-h-screen flex flex-col text-left" dir="ltr">
 
     <!-- 🔒 LOGIN OVERLAY SECTION -->
     <div id="login-overlay" class="fixed inset-0 bg-blue-950/90 backdrop-blur-md z-[100] flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-100 text-right">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-100 text-left">
             <div class="text-center mb-6">
                 <div class="bg-blue-600 text-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-lg">
                     <i class="fa-solid fa-lock"></i>
@@ -41,18 +41,18 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">اسم المستخدم</label>
                     <div class="relative">
-                        <i class="fa-solid fa-user absolute right-3.5 top-3.5 text-slate-400"></i>
-                        <input type="text" id="login-username" required placeholder="admin" class="w-full pr-10 pl-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none text-sm">
+                        <i class="fa-solid fa-user absolute left-3.5 top-3.5 text-slate-400"></i>
+                        <input type="text" id="login-username" required placeholder="admin" class="w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none text-sm">
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">كلمة المرور</label>
                     <div class="relative">
-                        <i class="fa-solid fa-key absolute right-3.5 top-3.5 text-slate-400"></i>
-                        <input type="password" id="login-password" required placeholder="••••••••" class="w-full pr-10 pl-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none text-sm">
+                        <i class="fa-solid fa-key absolute left-3.5 top-3.5 text-slate-400"></i>
+                        <input type="password" id="login-password" required placeholder="••••••••" class="w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none text-sm">
                     </div>
                 </div>
-                <p id="login-error" class="text-xs text-rose-600 font-bold hidden text-center"><i class="fa-solid fa-circle-exclamation ml-1"></i> اسم المستخدم أو كلمة المرور غير صحيحة!</p>
+                <p id="login-error" class="text-xs text-rose-600 font-bold hidden text-center"><i class="fa-solid fa-circle-exclamation mr-1"></i> اسم المستخدم أو كلمة المرور غير صحيحة!</p>
                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2">
                     <i class="fa-solid fa-right-to-bracket"></i> دخول للنظام
                 </button>
@@ -81,31 +81,31 @@
                         <button onclick="toggleMenu()" id="menu-toggle-btn" class="bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2.5 shadow border border-blue-800 transition">
                             <i class="fa-solid fa-bars text-blue-400"></i>
                             <span id="current-tab-title">لوحة المؤشرات</span>
-                            <i class="fa-solid fa-chevron-down text-xs text-blue-300 mr-1"></i>
+                            <i class="fa-solid fa-chevron-down text-xs text-blue-300 ml-1"></i>
                         </button>
-                        <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden py-2 z-50 text-slate-800">
-                            <button onclick="selectTab('dashboard', 'لوحة المؤشرات')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                        <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden py-2 z-50 text-slate-800">
+                            <button onclick="selectTab('dashboard', 'لوحة المؤشرات')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-chart-pie text-blue-600 w-5"></i> لوحة المؤشرات
                             </button>
-                            <button onclick="selectTab('production', 'تسجيل إنتاج العمال')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                            <button onclick="selectTab('production', 'تسجيل إنتاج العمال')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-clipboard-user text-blue-600 w-5"></i> تسجيل إنتاج العمال
                             </button>
-                            <button onclick="selectTab('attendance', 'حضور وغياب العمال اليومي')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                            <button onclick="selectTab('attendance', 'حضور وغياب العمال اليومي')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-calendar-check text-sky-600 w-5"></i> الحضور اليومي للعمال
                             </button>
-                            <button onclick="selectTab('stockout', 'خروج المنتوجات (الصرف)')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                            <button onclick="selectTab('stockout', 'خروج المنتوجات (الصرف)')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-truck-fast text-rose-600 w-5"></i> خروج المنتوجات (الصرف)
                             </button>
-                            <button onclick="selectTab('workers', 'تقارير العمال اليومية')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                            <button onclick="selectTab('workers', 'تقارير العمال اليومية')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-users-gear text-indigo-600 w-5"></i> تقارير العمال اليومية
                             </button>
-                            <button onclick="selectTab('inventory', 'مخزون المنتجات الكلي')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                            <button onclick="selectTab('inventory', 'مخزون المنتجات الكلي')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-boxes-stacked text-cyan-600 w-5"></i> مخزون المنتجات الكلي
                             </button>
-                            <button onclick="selectTab('analytics', 'التحليل المبياني (أسبوعي / شهري)')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                            <button onclick="selectTab('analytics', 'التحليل المبياني (أسبوعي / شهري)')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-chart-line text-blue-500 w-5"></i> التحليل المبياني والتقارير
                             </button>
-                            <button onclick="selectTab('workers-info', 'معلومات العمال (هواتف)')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition">
+                            <button onclick="selectTab('workers-info', 'معلومات العمال (هواتف)')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition">
                                 <i class="fa-solid fa-address-book text-amber-600 w-5"></i> معلومات العمال (هواتف)
                             </button>
                         </div>
@@ -156,7 +156,7 @@
                         <span id="low-stock-count" class="bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1 rounded-full">0 منتج</span>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-right text-sm">
+                        <table class="w-full text-left text-sm">
                             <thead class="bg-rose-50 text-rose-900 border-b border-rose-100">
                                 <tr>
                                     <th class="p-3">الكود</th>
@@ -176,7 +176,7 @@
                             <i class="fa-solid fa-clock-rotate-left text-blue-500"></i> آخر عمليات خروج المنتجات
                         </h3>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-right text-sm">
+                            <table class="w-full text-left text-sm">
                                 <thead class="bg-slate-50 text-slate-600 border-b">
                                     <tr>
                                         <th class="p-3">المنتج</th>
@@ -254,7 +254,7 @@
                     </div>
                     <form id="attendance-form" onsubmit="handleAttendanceSubmit(event)">
                         <div class="overflow-x-auto">
-                            <table class="w-full text-right border-collapse text-sm">
+                            <table class="w-full text-left border-collapse text-sm">
                                 <thead class="bg-slate-100 text-slate-700 border-b">
                                     <tr>
                                         <th class="p-3">#</th>
@@ -315,7 +315,7 @@
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 lg:col-span-2">
                         <h2 class="text-lg font-bold text-slate-800 mb-4">سجل حركات خروج المنتجات</h2>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-right border-collapse text-sm">
+                            <table class="w-full text-left border-collapse text-sm">
                                 <thead class="bg-slate-100 text-slate-700 border-b">
                                     <tr>
                                         <th class="p-3">التاريخ</th>
@@ -344,7 +344,7 @@
                         <input type="date" id="filter-date" onchange="renderProductionTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm">
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-right border-collapse text-sm">
+                        <table class="w-full text-left border-collapse text-sm">
                             <thead class="bg-slate-100 text-slate-700 border-b">
                                 <tr>
                                     <th class="p-3">التاريخ</th>
@@ -374,10 +374,14 @@
                         <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
                             <input type="text" id="search-product" onkeyup="filterInventory()" placeholder="ابحث برمز المنتج أو الوصف..." class="w-full sm:w-60 p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                             
-                            <!-- Excel Upload Button & Hidden Input -->
+                            <!-- Excel Upload Button & Clear All Products Button -->
                             <input type="file" id="excel-file-input" accept=".xlsx, .xls" class="hidden" onchange="handleExcelUpload(event)">
                             <button onclick="document.getElementById('excel-file-input').click()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2 whitespace-nowrap">
                                 <i class="fa-solid fa-file-excel"></i> رفع ملف إكسيل
+                            </button>
+
+                            <button onclick="deleteAllProducts()" class="bg-rose-700 hover:bg-rose-800 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2 whitespace-nowrap">
+                                <i class="fa-solid fa-trash-can"></i> حذف جميع المنتجات
                             </button>
 
                             <button onclick="openAddProductModal()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2 whitespace-nowrap">
@@ -386,7 +390,7 @@
                         </div>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-right border-collapse text-sm" id="inventory-table">
+                        <table class="w-full text-left border-collapse text-sm" id="inventory-table">
                             <thead class="bg-slate-100 text-slate-700 border-b">
                                 <tr>
                                     <th class="p-3">الكود #</th>
@@ -436,7 +440,7 @@
                         </button>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-right border-collapse text-sm">
+                        <table class="w-full text-left border-collapse text-sm">
                             <thead class="bg-slate-100 text-slate-700 border-b">
                                 <tr>
                                     <th class="p-3">#</th>
@@ -461,7 +465,7 @@
 
     <!-- Password Modal -->
     <div id="password-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 border border-slate-100 text-right">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 border border-slate-100 text-left">
             <div class="flex justify-between items-center border-b pb-3 mb-4">
                 <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
                     <i class="fa-solid fa-shield-halved text-amber-500"></i> تغيير كلمة المرور
@@ -491,7 +495,7 @@
 
     <!-- Product Modal -->
     <div id="product-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 text-right overflow-y-auto max-h-[90vh]">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 text-left overflow-y-auto max-h-[90vh]">
             <h3 class="text-lg font-bold text-slate-800 mb-4" id="product-modal-title">إضافة منتج جديد</h3>
             <form id="product-modal-form" onsubmit="handleProductSave(event)" class="space-y-4">
                 <input type="hidden" id="product-edit-id" value="">
@@ -535,7 +539,7 @@
 
     <!-- Worker Modal -->
     <div id="worker-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 text-right">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 text-left">
             <h3 class="text-lg font-bold text-slate-800 mb-4" id="modal-title">إضافة عامل جديد</h3>
             <form id="worker-modal-form" onsubmit="handleWorkerSave(event)" class="space-y-4">
                 <input type="hidden" id="worker-edit-id" value="">
@@ -557,7 +561,7 @@
 
     <!-- Attendance Modal -->
     <div id="attendance-detail-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-slate-200 max-h-[85vh] flex flex-col text-right">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-slate-200 max-h-[85vh] flex flex-col text-left">
             <div class="flex justify-between items-center mb-4 border-b pb-3">
                 <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2" id="attendance-modal-title">
                     <i class="fa-solid fa-calendar-day text-blue-600"></i> تفاصيل الحضور
@@ -565,7 +569,7 @@
                 <button onclick="closeAttendanceModal()" class="text-slate-400 hover:text-slate-600 text-2xl font-bold">&times;</button>
             </div>
             <div class="overflow-y-auto flex-grow">
-                <table class="w-full text-right text-sm">
+                <table class="w-full text-left text-sm">
                     <thead class="bg-slate-100 text-slate-700 sticky top-0">
                         <tr>
                             <th class="p-3">اسم العامل</th>
@@ -585,7 +589,7 @@
     <!-- Firebase SDK Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, setDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, setDoc, writeBatch, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         // 🟢 إعدادات Firebase الخاصة بك
         const firebaseConfig = {
@@ -599,24 +603,6 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-
-        // المنتوجات المأخوذة مباشرة من الصورة المرفقة
-        const initialImageProducts = [
-            { code: "AC55", desc: "Acide Chlorhydrique 17°", unit: "550 ml", boxes: 0, itemsPerBox: 1, qty: 0 },
-            { code: "AC75", desc: "Acide Chlorhydrique 17°", unit: "750 ml", boxes: 0, itemsPerBox: 1, qty: 0 },
-            { code: "AC90", desc: "Acide Chlorhydrique 17°", unit: "900 ml", boxes: 0, itemsPerBox: 1, qty: 0 },
-            { code: "AC40", desc: "Acide Chlorhydrique 17°", unit: "4 L", boxes: 0, itemsPerBox: 1, qty: 0 },
-            { code: "S1000", desc: "Détartrant Surpuissant FOX 90 CL", unit: "90 CL", boxes: 0, itemsPerBox: 1, qty: 0 },
-            { code: "Z1000", desc: "Grezyl 5%", unit: "1L", boxes: 0, itemsPerBox: 1, qty: 0 },
-            { code: "CL1000", desc: "Soude Caustique Liquide 1L", unit: "1L", boxes: 0, itemsPerBox: 1, qty: 0 },
-            { code: "D1000", desc: "Eau Déminéralisée - Spécial Batterie", unit: "1L", boxes: 0, itemsPerBox: 1, qty: 0 },
-            { code: "S1000-28", desc: "Acide Chlorhydrique 28°", unit: "1 L", boxes: 0, itemsPerBox: 1, qty: 0 },
-            { code: "L1000", desc: "Déboucheur Liquide 1L", unit: "1L", boxes: 0, itemsPerBox: 1, qty: 0 },
-            { code: "GR200", desc: "Graisse industrielle", unit: "200 gm", boxes: 0, itemsPerBox: 1, qty: 0 },
-            { code: "GR2500", desc: "Graisse industrielle", unit: "2500 gm", boxes: 0, itemsPerBox: 1, qty: 0 },
-            { code: "HL60", desc: "Huile de Lin", unit: "600 ml", boxes: 0, itemsPerBox: 1, qty: 0 },
-            { code: "VB600", desc: "Vaseline de bois", unit: "600 ml", boxes: 0, itemsPerBox: 1, qty: 0 }
-        ];
 
         // --- AUTHENTICATION ---
         let systemUsername = localStorage.getItem('sys_username') || "admin";
@@ -693,21 +679,11 @@
         window.attendanceLogs = {};
         window.currentAnalyticsMode = 'weekly';
 
-        // 🟢 Realtime Sync Listeners (مزامنة فورية حية سحابية)
-        onSnapshot(collection(db, "products"), async (snapshot) => {
-            if (snapshot.empty) {
-                // إذا كان المخزن فارغاً في قاعدة البيانات، رفع المنتجات الأولية تلقائياً
-                const batch = writeBatch(db);
-                initialImageProducts.forEach(prod => {
-                    const docRef = doc(collection(db, "products"));
-                    batch.set(docRef, prod);
-                });
-                await batch.commit();
-            } else {
-                window.productsCatalog = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                populateProductDropdowns();
-                renderAll();
-            }
+        // 🟢 Realtime Sync Listeners
+        onSnapshot(collection(db, "products"), (snapshot) => {
+            window.productsCatalog = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            populateProductDropdowns();
+            renderAll();
         });
 
         onSnapshot(collection(db, "production"), (snapshot) => {
@@ -804,7 +780,25 @@
             }
         };
 
-        // 🟢 Excel File Parser & Bulk Upload
+        // 🔴 دالة حذف جميع المنتجات من المخزون في Firebase
+        window.deleteAllProducts = async function() {
+            if (confirm("هل أنت متأكد تماماً من حذف جميع المنتجات من المخزون السحابي؟ هذه العملية لا يمكن التراجع عنها!")) {
+                try {
+                    const querySnapshot = await getDocs(collection(db, "products"));
+                    const batch = writeBatch(db);
+                    querySnapshot.forEach((doc) => {
+                        batch.delete(doc.ref);
+                    });
+                    await batch.commit();
+                    alert("تم حذف جميع المنتجات بنجاح. يمكن الآن رفع ملف الإكسيل لجميع الـ 89 منتج.");
+                } catch (e) {
+                    console.error("Error deleting all products: ", e);
+                    alert("حدث خطأ أثناء إفراغ المخزون: " + e.message);
+                }
+            }
+        };
+
+        // 🟢 Excel File Parser & Bulk Upload (معدلة لرفع جميع الـ 89 منتج بدون استثناء)
         window.handleExcelUpload = function(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -823,10 +817,12 @@
                         return;
                     }
 
+                    const batch = writeBatch(db);
                     let addedCount = 0;
+
                     for (let i = 1; i < jsonData.length; i++) {
                         const row = jsonData[i];
-                        if (!row[0]) continue;
+                        if (!row || !row[0]) continue;
 
                         const code = String(row[0]).trim().toUpperCase();
                         const desc = row[1] ? String(row[1]).trim() : "بدون وصف";
@@ -835,14 +831,18 @@
                         const itemsPerBox = parseInt(row[4]) || 1;
                         const qty = row[5] !== undefined ? parseInt(row[5]) : (boxes * itemsPerBox);
 
-                        const existing = window.productsCatalog.find(p => p.code === code);
-                        if (!existing) {
-                            await addDoc(collection(db, "products"), { code, desc, unit, boxes, itemsPerBox, qty });
-                            addedCount++;
-                        }
+                        const docRef = doc(collection(db, "products"));
+                        batch.set(docRef, { code, desc, unit, boxes, itemsPerBox, qty });
+                        addedCount++;
                     }
 
-                    alert(`تم استيراد ${addedCount} منتج بنجاح إلى Firebase!`);
+                    if (addedCount > 0) {
+                        await batch.commit();
+                        alert(`تم استيراد كافة المنتجات (${addedCount} منتج) بنجاح إلى Firebase!`);
+                    } else {
+                        alert("لم يتم العثور على أسطر صالحة للاستيراد داخل الملف.");
+                    }
+
                     document.getElementById('excel-file-input').value = "";
                 } catch (err) {
                     console.error("Error reading excel: ", err);
@@ -1241,7 +1241,7 @@
                                     <i class="fa-solid fa-box-open text-rose-600"></i> المنتجات المستهلكة/المصروفة
                                 </h4>
                                 <div class="overflow-x-auto max-h-48 overflow-y-auto">
-                                    <table class="w-full text-right">
+                                    <table class="w-full text-left">
                                         <thead class="bg-slate-100 text-slate-600 text-xs">
                                             <tr>
                                                 <th class="p-2">الكود</th>
@@ -1435,7 +1435,7 @@
                         <td class="p-3"><span class="bg-rose-50 text-rose-700 px-2.5 py-1 rounded-lg font-bold">${out}</span></td>
                         <td class="p-3"><span class="bg-blue-950 text-white px-3 py-1 rounded-lg font-black">${currentStock}</span></td>
                         <td class="p-3">${statusBadge}</td>
-                        <td class="p-3 text-center space-x-2 space-x-reverse">
+                        <td class="p-3 text-center space-x-2">
                             <button onclick="editProduct('${p.id}')" class="text-blue-500 hover:text-blue-700 p-1.5 rounded-lg hover:bg-blue-50 transition" title="تعديل">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
@@ -1463,7 +1463,7 @@
                         <td class="p-3 text-slate-500 font-mono">${index + 1}</td>
                         <td class="p-3 font-bold text-slate-800">${w.name}</td>
                         <td class="p-3 font-mono text-blue-700 font-semibold" dir="ltr">${w.phone}</td>
-                        <td class="p-3 text-center space-x-2 space-x-reverse">
+                        <td class="p-3 text-center space-x-2">
                             <button onclick="editWorker('${w.id}')" class="text-blue-500 hover:text-blue-700 p-1.5 rounded-lg hover:bg-blue-50 transition" title="تعديل">
                                 <i class="fa-solid fa-user-pen"></i>
                             </button>
