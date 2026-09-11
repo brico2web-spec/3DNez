@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,16 +21,13 @@
         .tab-content.active {
             display: block;
         }
-        th, td {
-            text-align: left !important;
-        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col text-left" dir="ltr">
+<body class="min-h-screen flex flex-col text-right" dir="rtl">
 
     <!-- 🔒 LOGIN OVERLAY SECTION -->
     <div id="login-overlay" class="fixed inset-0 bg-blue-950/90 backdrop-blur-md z-[100] flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-100 text-left">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-100 text-right">
             <div class="text-center mb-6">
                 <div class="bg-blue-600 text-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-lg">
                     <i class="fa-solid fa-lock"></i>
@@ -42,18 +39,18 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">اسم المستخدم</label>
                     <div class="relative">
-                        <i class="fa-solid fa-user absolute left-3.5 top-3.5 text-slate-400"></i>
-                        <input type="text" id="login-username" required placeholder="admin" class="w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none text-sm">
+                        <i class="fa-solid fa-user absolute right-3.5 top-3.5 text-slate-400"></i>
+                        <input type="text" id="login-username" required placeholder="admin" class="w-full pr-10 pl-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none text-sm">
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">كلمة المرور</label>
                     <div class="relative">
-                        <i class="fa-solid fa-key absolute left-3.5 top-3.5 text-slate-400"></i>
-                        <input type="password" id="login-password" required placeholder="••••••••" class="w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none text-sm">
+                        <i class="fa-solid fa-key absolute right-3.5 top-3.5 text-slate-400"></i>
+                        <input type="password" id="login-password" required placeholder="••••••••" class="w-full pr-10 pl-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none text-sm">
                     </div>
                 </div>
-                <p id="login-error" class="text-xs text-rose-600 font-bold hidden text-center"><i class="fa-solid fa-circle-exclamation mr-1"></i> اسم المستخدم أو كلمة المرور غير صحيحة!</p>
+                <p id="login-error" class="text-xs text-rose-600 font-bold hidden text-center"><i class="fa-solid fa-circle-exclamation ml-1"></i> اسم المستخدم أو كلمة المرور غير صحيحة!</p>
                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2">
                     <i class="fa-solid fa-right-to-bracket"></i> دخول للنظام
                 </button>
@@ -66,8 +63,6 @@
         <!-- Top Header & Navigation Bar -->
         <header class="bg-blue-950 text-white shadow-lg sticky top-0 z-50">
             <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
-                
-                <!-- Logo, Title & Dropdown Menu Side-by-Side -->
                 <div class="flex items-center gap-4 flex-wrap">
                     <div class="flex items-center gap-3">
                         <div class="bg-blue-600 p-2 rounded-xl text-white font-bold text-xl shadow">
@@ -79,45 +74,42 @@
                         </div>
                     </div>
 
-                    <!-- Dropdown Menu Integrated in Top Header -->
+                    <!-- Dropdown Menu -->
                     <div class="relative">
                         <button onclick="toggleMenu()" id="menu-toggle-btn" class="bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2.5 shadow border border-blue-800 transition">
-                            <i class="fa-solid fa-bars text-blue-400"></i> 
-                            <span id="current-tab-title">لوحة المؤشرات</span> 
+                            <i class="fa-solid fa-bars text-blue-400"></i>
+                            <span id="current-tab-title">لوحة المؤشرات</span>
                             <i class="fa-solid fa-chevron-down text-xs text-blue-300 mr-1"></i>
                         </button>
-                        
-                        <!-- Dropdown Menu List -->
-                        <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden py-2 z-50 text-slate-800">
-                            <button onclick="selectTab('dashboard', 'لوحة المؤشرات')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                        <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden py-2 z-50 text-slate-800">
+                            <button onclick="selectTab('dashboard', 'لوحة المؤشرات')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-chart-pie text-blue-600 w-5"></i> لوحة المؤشرات
                             </button>
-                            <button onclick="selectTab('production', 'تسجيل إنتاج العمال')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                            <button onclick="selectTab('production', 'تسجيل إنتاج العمال')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-clipboard-user text-blue-600 w-5"></i> تسجيل إنتاج العمال
                             </button>
-                            <button onclick="selectTab('attendance', 'حضور وغياب العمال اليومي')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                            <button onclick="selectTab('attendance', 'حضور وغياب العمال اليومي')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-calendar-check text-sky-600 w-5"></i> الحضور اليومي للعمال
                             </button>
-                            <button onclick="selectTab('stockout', 'خروج المنتوجات (الصرف)')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                            <button onclick="selectTab('stockout', 'خروج المنتوجات (الصرف)')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-truck-fast text-rose-600 w-5"></i> خروج المنتوجات (الصرف)
                             </button>
-                            <button onclick="selectTab('workers', 'تقارير العمال اليومية')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                            <button onclick="selectTab('workers', 'تقارير العمال اليومية')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-users-gear text-indigo-600 w-5"></i> تقارير العمال اليومية
                             </button>
-                            <button onclick="selectTab('inventory', 'مخزون المنتجات الكلي')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                            <button onclick="selectTab('inventory', 'مخزون المنتجات الكلي')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-boxes-stacked text-cyan-600 w-5"></i> مخزون المنتجات الكلي
                             </button>
-                            <button onclick="selectTab('analytics', 'التحليل المبياني (أسبوعي / شهري)')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
+                            <button onclick="selectTab('analytics', 'التحليل المبياني (أسبوعي / شهري)')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition border-b border-slate-100">
                                 <i class="fa-solid fa-chart-line text-blue-500 w-5"></i> التحليل المبياني والتقارير
                             </button>
-                            <button onclick="selectTab('workers-info', 'معلومات العمال (هواتف)')" class="w-full text-left px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition">
+                            <button onclick="selectTab('workers-info', 'معلومات العمال (هواتف)')" class="w-full text-right px-4 py-3 hover:bg-blue-50 text-slate-700 font-semibold flex items-center gap-3 transition">
                                 <i class="fa-solid fa-address-book text-amber-600 w-5"></i> معلومات العمال (هواتف)
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- User Controls, Date & Export Actions -->
                 <div class="flex items-center gap-3 flex-wrap">
                     <span id="current-date" class="text-xs sm:text-sm bg-blue-900 px-3 py-1.5 rounded-lg border border-blue-800 text-blue-200"></span>
                     <button onclick="openChangePasswordModal()" class="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow">
@@ -132,10 +124,8 @@
 
         <!-- Main Container -->
         <main class="container mx-auto px-4 py-6 flex-grow">
-
             <!-- TAB 1: Dashboard -->
             <div id="dashboard" class="tab-content active space-y-6">
-                <!-- Quick Action Bar -->
                 <div class="flex flex-wrap gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200 items-center justify-between">
                     <div class="flex items-center gap-2 text-slate-700 font-bold">
                         <i class="fa-solid fa-bolt text-amber-500"></i> اختصارات سريعة:
@@ -156,24 +146,21 @@
                     </div>
                 </div>
 
-                <!-- Low Stock Alerts Section -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-200">
                     <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
                         <h3 class="text-lg font-bold text-rose-700 flex items-center gap-2">
                             <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> تنبيه المنتجات قليلة المخزون
                         </h3>
-                        <div class="flex items-center gap-3">
-                            <span id="low-stock-count" class="bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1 rounded-full">0 منتج</span>
-                        </div>
+                        <span id="low-stock-count" class="bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1 rounded-full">0 منتج</span>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm" dir="ltr">
+                        <table class="w-full text-right text-sm">
                             <thead class="bg-rose-50 text-rose-900 border-b border-rose-100">
                                 <tr>
-                                    <th class="p-3 text-left">الكود</th>
-                                    <th class="p-3 text-left">وصف المنتج</th>
-                                    <th class="p-3 text-left">الوحدة</th>
-                                    <th class="p-3 text-left">المخزون الحالي</th>
+                                    <th class="p-3">الكود</th>
+                                    <th class="p-3">وصف المنتج</th>
+                                    <th class="p-3">الوحدة</th>
+                                    <th class="p-3">المخزون الحالي</th>
                                 </tr>
                             </thead>
                             <tbody id="low-stock-table" class="divide-y divide-rose-50"></tbody>
@@ -181,26 +168,24 @@
                     </div>
                 </div>
 
-                <!-- Quick Recent Activity & Summary -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                         <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
                             <i class="fa-solid fa-clock-rotate-left text-blue-500"></i> آخر عمليات خروج المنتجات
                         </h3>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left text-sm" dir="ltr">
+                            <table class="w-full text-right text-sm">
                                 <thead class="bg-slate-50 text-slate-600 border-b">
                                     <tr>
-                                        <th class="p-3 text-left">المنتج</th>
-                                        <th class="p-3 text-left">الكمية</th>
-                                        <th class="p-3 text-left">التاريخ</th>
+                                        <th class="p-3">المنتج</th>
+                                        <th class="p-3">الكمية</th>
+                                        <th class="p-3">التاريخ</th>
                                     </tr>
                                 </thead>
                                 <tbody id="recent-out-table" class="divide-y divide-slate-100"></tbody>
                             </table>
                         </div>
                     </div>
-
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                         <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
                             <i class="fa-solid fa-chart-column text-blue-600"></i> ملخص إنتاج العمال اليوم
@@ -224,13 +209,11 @@
                                 <option value="">-- اختر العامل --</option>
                             </select>
                         </div>
-
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">ابحث واختار المنتج</label>
                             <input type="text" id="product-search-input" list="products-datalist" placeholder="اكتب كود المنتج أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
                             <datalist id="products-datalist"></datalist>
                         </div>
-
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-semibold text-slate-700 mb-1">الكمية المنتجة اليوم</label>
@@ -241,12 +224,10 @@
                                 <input type="date" id="prod-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
                             </div>
                         </div>
-
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-1">ملاحظات (اختياري)</label>
                             <input type="text" id="prod-notes" placeholder="ورشة رقم 1..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
                         </div>
-
                         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold p-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2">
                             <i class="fa-solid fa-plus-circle"></i> حفظ وتسجيل الإنتاج بالمخزون
                         </button>
@@ -254,7 +235,7 @@
                 </div>
             </div>
 
-            <!-- TAB: Workers Daily Attendance -->
+            <!-- TAB: Attendance -->
             <div id="attendance" class="tab-content space-y-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                     <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 border-b pb-4">
@@ -264,23 +245,20 @@
                             </h2>
                             <p class="text-xs text-slate-500 mt-1">حدد الحالة اليومية لكل عامل لحفظها سحابياً</p>
                         </div>
-                        <div class="flex items-center gap-3 flex-wrap">
-                            <div class="flex items-center gap-2">
-                                <label class="text-sm font-semibold text-slate-700">تاريخ الحضور:</label>
-                                <input type="date" id="attendance-date" onchange="renderAttendanceTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            </div>
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm font-semibold text-slate-700">تاريخ الحضور:</label>
+                            <input type="date" id="attendance-date" onchange="renderAttendanceTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                         </div>
                     </div>
-
                     <form id="attendance-form" onsubmit="handleAttendanceSubmit(event)">
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-sm" dir="ltr">
+                            <table class="w-full text-right border-collapse text-sm">
                                 <thead class="bg-slate-100 text-slate-700 border-b">
                                     <tr>
-                                        <th class="p-3 text-left">#</th>
-                                        <th class="p-3 text-left">اسم العامل</th>
-                                        <th class="p-3 text-left">رقم الهاتف</th>
-                                        <th class="p-3 text-left">الحالة اليومية</th>
+                                        <th class="p-3">#</th>
+                                        <th class="p-3">اسم العامل</th>
+                                        <th class="p-3">رقم الهاتف</th>
+                                        <th class="p-3">الحالة اليومية</th>
                                     </tr>
                                 </thead>
                                 <tbody id="attendance-tbody" class="divide-y divide-slate-200"></tbody>
@@ -292,7 +270,6 @@
                             </button>
                         </div>
                     </form>
-
                     <div id="saved-attendance-section" class="mt-8 pt-6 border-t border-slate-200">
                         <h3 class="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
                             <i class="fa-solid fa-clock-rotate-left text-blue-600"></i> تواريخ الحضور المحفوظة:
@@ -316,44 +293,34 @@
                                 <input type="text" id="out-product-search-input" list="out-products-datalist" placeholder="اكتب الكود أو الوصف..." required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm">
                                 <datalist id="out-products-datalist"></datalist>
                             </div>
-
                             <div>
                                 <label class="block text-sm font-semibold text-slate-700 mb-1">الكمية الخارجة</label>
                                 <input type="number" id="out-quantity" min="1" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none">
                             </div>
-
                             <div>
                                 <label class="block text-sm font-semibold text-slate-700 mb-1">التاريخ</label>
                                 <input type="date" id="out-date" required class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none">
                             </div>
-
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-1">الملاحظات / تاريخ الوارد الخام</label>
-                                <input type="text" id="out-notes" placeholder="مثال: دفعة خام واردة بتاريخ..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm">
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">الملاحظات</label>
+                                <input type="text" id="out-notes" placeholder="مثال: دفعة خام واردة..." class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none text-sm">
                             </div>
-
                             <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold p-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-truck-ramp-box"></i> تأكيد خروج البضاعة
                             </button>
                         </form>
                     </div>
-
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 lg:col-span-2">
-                        <div class="flex justify-between items-center mb-6 flex-wrap gap-3">
-                            <div>
-                                <h2 class="text-lg font-bold text-slate-800">سجل حركات خروج المنتجات</h2>
-                                <p class="text-xs text-slate-500">جميع الكميات التي تم صرفها</p>
-                            </div>
-                        </div>
+                        <h2 class="text-lg font-bold text-slate-800 mb-4">سجل حركات خروج المنتجات</h2>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-sm" dir="ltr">
+                            <table class="w-full text-right border-collapse text-sm">
                                 <thead class="bg-slate-100 text-slate-700 border-b">
                                     <tr>
-                                        <th class="p-3 text-left">التاريخ</th>
-                                        <th class="p-3 text-left">الكود</th>
-                                        <th class="p-3 text-left">المنتج</th>
-                                        <th class="p-3 text-left">الكمية</th>
-                                        <th class="p-3 text-left">الملاحظات</th>
+                                        <th class="p-3">التاريخ</th>
+                                        <th class="p-3">الكود</th>
+                                        <th class="p-3">المنتج</th>
+                                        <th class="p-3">الكمية</th>
+                                        <th class="p-3">الملاحظات</th>
                                         <th class="p-3 text-center">إجراء</th>
                                     </tr>
                                 </thead>
@@ -364,7 +331,7 @@
                 </div>
             </div>
 
-            <!-- TAB 4: Workers Daily Report -->
+            <!-- TAB 4: Workers Report -->
             <div id="workers" class="tab-content space-y-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                     <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
@@ -372,22 +339,19 @@
                             <h2 class="text-xl font-bold text-slate-800">سجل إنتاج العمال اليومي</h2>
                             <p class="text-xs text-slate-500">تفاصيل ما أنتجه كل عامل</p>
                         </div>
-                        <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
-                            <input type="date" id="filter-date" onchange="renderProductionTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm">
-                        </div>
+                        <input type="date" id="filter-date" onchange="renderProductionTable()" class="p-2.5 border border-slate-300 rounded-xl text-sm">
                     </div>
-
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-sm" dir="ltr">
+                        <table class="w-full text-right border-collapse text-sm">
                             <thead class="bg-slate-100 text-slate-700 border-b">
                                 <tr>
-                                    <th class="p-3 text-left">التاريخ</th>
-                                    <th class="p-3 text-left">اسم العامل</th>
-                                    <th class="p-3 text-left">كود المنتج</th>
-                                    <th class="p-3 text-left">وصف المنتج</th>
-                                    <th class="p-3 text-left">الوحدة</th>
-                                    <th class="p-3 text-left">الكمية</th>
-                                    <th class="p-3 text-left">ملاحظات</th>
+                                    <th class="p-3">التاريخ</th>
+                                    <th class="p-3">اسم العامل</th>
+                                    <th class="p-3">كود المنتج</th>
+                                    <th class="p-3">وصف المنتج</th>
+                                    <th class="p-3">الوحدة</th>
+                                    <th class="p-3">الكمية</th>
+                                    <th class="p-3">ملاحظات</th>
                                     <th class="p-3 text-center">إجراء</th>
                                 </tr>
                             </thead>
@@ -405,28 +369,25 @@
                             <h2 class="text-xl font-bold text-slate-800">مخزون المنتجات الكلي في المصنع</h2>
                             <p class="text-xs text-slate-500">تتبع رصيد المخزون الفعلي المحدث سحابياً</p>
                         </div>
-                        <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
-                            <div class="w-full sm:w-72">
-                                <input type="text" id="search-product" onkeyup="filterInventory()" placeholder="ابحث برمز المنتج أو الوصف..." class="w-full p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            </div>
-                            <button onclick="openAddProductModal()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
+                        <div class="flex items-center gap-3 w-full sm:w-auto">
+                            <input type="text" id="search-product" onkeyup="filterInventory()" placeholder="ابحث برمز المنتج أو الوصف..." class="w-full sm:w-72 p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <button onclick="openAddProductModal()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2 whitespace-nowrap">
                                 <i class="fa-solid fa-plus-circle"></i> إضافة منتج جديد
                             </button>
                         </div>
                     </div>
-
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-sm" id="inventory-table" dir="ltr">
+                        <table class="w-full text-right border-collapse text-sm" id="inventory-table">
                             <thead class="bg-slate-100 text-slate-700 border-b">
                                 <tr>
-                                    <th class="p-3 text-left">الكود #</th>
-                                    <th class="p-3 text-left">وصف المنتج</th>
-                                    <th class="p-3 text-left">الوحدة</th>
-                                    <th class="p-3 text-left">الافتراضي</th>
-                                    <th class="p-3 text-left">المُنتَج</th>
-                                    <th class="p-3 text-left">المُصَرَف</th>
-                                    <th class="p-3 text-left">المخزون الحالي</th>
-                                    <th class="p-3 text-left">الحالة</th>
+                                    <th class="p-3">الكود #</th>
+                                    <th class="p-3">وصف المنتج</th>
+                                    <th class="p-3">الوحدة</th>
+                                    <th class="p-3">الافتراضي</th>
+                                    <th class="p-3">المُنتَج</th>
+                                    <th class="p-3">المُصَرَف</th>
+                                    <th class="p-3">المخزون الحالي</th>
+                                    <th class="p-3">الحالة</th>
                                     <th class="p-3 text-center">الإجراءات</th>
                                 </tr>
                             </thead>
@@ -436,47 +397,40 @@
                 </div>
             </div>
 
-            <!-- TAB: Analytics Weekly/Monthly -->
+            <!-- TAB 6: Analytics -->
             <div id="analytics" class="tab-content space-y-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                     <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 border-b pb-4">
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                                <i class="fa-solid fa-chart-line text-blue-600"></i> التحليل المبياني والإحصائيات (أسبوعي / شهري)
-                            </h2>
-                        </div>
-                        <div class="flex gap-2 flex-wrap items-center">
-                            <button onclick="setAnalyticsView('weekly')" id="btn-view-weekly" class="px-4 py-2 rounded-xl text-sm font-bold bg-blue-600 text-white transition shadow">العرض الأسبوعي</button>
-                            <button onclick="setAnalyticsView('monthly')" id="btn-view-monthly" class="px-4 py-2 rounded-xl text-sm font-bold bg-slate-200 text-slate-700 transition">العرض الشهري</button>
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line text-blue-600"></i> التحليل المبياني والإحصائيات
+                        </h2>
+                        <div class="flex gap-2">
+                            <button onclick="setAnalyticsView('weekly')" id="btn-view-weekly" class="px-4 py-2 rounded-xl text-sm font-bold bg-blue-600 text-white shadow">العرض الأسبوعي</button>
+                            <button onclick="setAnalyticsView('monthly')" id="btn-view-monthly" class="px-4 py-2 rounded-xl text-sm font-bold bg-slate-200 text-slate-700">العرض الشهري</button>
                         </div>
                     </div>
                     <div id="analytics-content" class="space-y-8"></div>
                 </div>
             </div>
 
-            <!-- TAB 6: Workers Info & Phone Numbers -->
+            <!-- TAB 7: Workers Info -->
             <div id="workers-info" class="tab-content space-y-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                                <i class="fa-solid fa-address-book text-blue-600"></i> دليل معلومات وهواتف العمال
-                            </h2>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="openAddWorkerModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow-sm flex items-center gap-2">
-                                <i class="fa-solid fa-user-plus"></i> إضافة عامل جديد
-                            </button>
-                        </div>
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-address-book text-blue-600"></i> دليل معلومات وهواتف العمال
+                        </h2>
+                        <button onclick="openAddWorkerModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2">
+                            <i class="fa-solid fa-user-plus"></i> إضافة عامل جديد
+                        </button>
                     </div>
-
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-sm" dir="ltr">
+                        <table class="w-full text-right border-collapse text-sm">
                             <thead class="bg-slate-100 text-slate-700 border-b">
                                 <tr>
-                                    <th class="p-3 text-left">#</th>
-                                    <th class="p-3 text-left">اسم العامل</th>
-                                    <th class="p-3 text-left">رقم الهاتـف</th>
+                                    <th class="p-3">#</th>
+                                    <th class="p-3">اسم العامل</th>
+                                    <th class="p-3">رقم الهاتـف</th>
                                     <th class="p-3 text-center">الإجراءات</th>
                                 </tr>
                             </thead>
@@ -485,18 +439,18 @@
                     </div>
                 </div>
             </div>
-
         </main>
 
-        <!-- Footer -->
         <footer class="bg-blue-950 text-blue-300 py-4 text-center text-xs mt-auto">
             <p>نظام إدارة الإنتاج والتخزين الصناعي &copy; 2026 - مدمج مع Firebase Cloud</p>
         </footer>
     </div>
 
-    <!-- 🔐 CHANGE PASSWORD MODAL -->
+    <!-- MODALS -->
+
+    <!-- Password Modal -->
     <div id="password-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 border border-slate-100 text-left">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 border border-slate-100 text-right">
             <div class="flex justify-between items-center border-b pb-3 mb-4">
                 <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
                     <i class="fa-solid fa-shield-halved text-amber-500"></i> تغيير كلمة المرور
@@ -524,12 +478,12 @@
         </div>
     </div>
 
-    <!-- Modal Add/Edit Product -->
+    <!-- Product Modal -->
     <div id="product-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 text-left">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 text-right">
             <h3 class="text-lg font-bold text-slate-800 mb-4" id="product-modal-title">إضافة منتج جديد</h3>
             <form id="product-modal-form" onsubmit="handleProductSave(event)" class="space-y-4">
-                <input type="hidden" id="product-edit-code" value="">
+                <input type="hidden" id="product-edit-id" value="">
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1">كود المنتج (Code)</label>
                     <input type="text" id="modal-product-code" required placeholder="مثال: AC100" class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
@@ -554,9 +508,9 @@
         </div>
     </div>
 
-    <!-- Modal Add/Edit Worker -->
+    <!-- Worker Modal -->
     <div id="worker-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 text-left">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 text-right">
             <h3 class="text-lg font-bold text-slate-800 mb-4" id="modal-title">إضافة عامل جديد</h3>
             <form id="worker-modal-form" onsubmit="handleWorkerSave(event)" class="space-y-4">
                 <input type="hidden" id="worker-edit-id" value="">
@@ -576,9 +530,9 @@
         </div>
     </div>
 
-    <!-- Modal View Attendance Details -->
+    <!-- Attendance Modal -->
     <div id="attendance-detail-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-slate-200 max-h-[85vh] flex flex-col text-left">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-slate-200 max-h-[85vh] flex flex-col text-right">
             <div class="flex justify-between items-center mb-4 border-b pb-3">
                 <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2" id="attendance-modal-title">
                     <i class="fa-solid fa-calendar-day text-blue-600"></i> تفاصيل الحضور
@@ -586,12 +540,12 @@
                 <button onclick="closeAttendanceModal()" class="text-slate-400 hover:text-slate-600 text-2xl font-bold">&times;</button>
             </div>
             <div class="overflow-y-auto flex-grow">
-                <table class="w-full text-left text-sm" dir="ltr">
+                <table class="w-full text-right text-sm">
                     <thead class="bg-slate-100 text-slate-700 sticky top-0">
                         <tr>
-                            <th class="p-3 text-left">اسم العامل</th>
-                            <th class="p-3 text-left">رقم الهاتف</th>
-                            <th class="p-3 text-left">الحالة</th>
+                            <th class="p-3">اسم العامل</th>
+                            <th class="p-3">رقم الهاتف</th>
+                            <th class="p-3">الحالة</th>
                         </tr>
                     </thead>
                     <tbody id="attendance-modal-tbody" class="divide-y divide-slate-100"></tbody>
@@ -603,12 +557,10 @@
         </div>
     </div>
 
-    <!-- Firebase SDK Scripts Integration -->
+    <!-- Firebase SDK Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { 
-            getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, setDoc 
-        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDemoKeyReplaceWithYourOwnIfNeed",
@@ -622,7 +574,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- AUTHENTICATION STATE & CREDENTIALS ---
+        // --- AUTHENTICATION ---
         let systemUsername = localStorage.getItem('sys_username') || "admin";
         let systemPassword = localStorage.getItem('sys_password') || "admin123";
 
@@ -630,6 +582,8 @@
             event.preventDefault();
             const userIn = document.getElementById('login-username').value.trim();
             const passIn = document.getElementById('login-password').value.trim();
+            
+            systemPassword = localStorage.getItem('sys_password') || "admin123";
 
             if (userIn === systemUsername && passIn === systemPassword) {
                 sessionStorage.setItem('isLoggedIn', 'true');
@@ -661,6 +615,8 @@
             const newP = document.getElementById('new-pass').value;
             const confirmP = document.getElementById('confirm-new-pass').value;
 
+            systemPassword = localStorage.getItem('sys_password') || "admin123";
+
             if (current !== systemPassword) {
                 alert('كلمة المرور الحالية غير صحيحة!');
                 return;
@@ -680,119 +636,22 @@
             closeChangePasswordModal();
         };
 
-        // Check login on load
         if (sessionStorage.getItem('isLoggedIn') === 'true') {
             document.getElementById('login-overlay').classList.add('hidden');
             document.getElementById('main-system-content').classList.remove('hidden');
         }
 
-        // Initial default products catalog
-        const defaultProductsCatalog = [
-            { code: "AC55", desc: "Acide Chlorithrique 17°", unit: "550 ml", qty: 30 },
-            { code: "AC75", desc: "Acide Chlorithrique 17°", unit: "750 ml", qty: 20 },
-            { code: "AC90", desc: "Acide Chlorithrique 17°", unit: "900 ml", qty: 20 },
-            { code: "AC40", desc: "Acide Chlorithrique 17°", unit: "4 L", qty: 5 },
-            { code: "DS1000", desc: "Detatrent Surpuissant FOX 90 CL", unit: "90 CL", qty: 20 },
-            { code: "GZ1000", desc: "Grezyl 5%", unit: "1 L", qty: 20 },
-            { code: "SCL1000", desc: "Saude Costique Liquide 1L", unit: "1 L", qty: 20 },
-            { code: "ED1000", desc: "Eau Dèminéralisée - Special Batterie", unit: "1 L", qty: 20 },
-            { code: "AS1000", desc: "Acide Chlorithrique 28°", unit: "1 L", qty: 20 },
-            { code: "DL1000", desc: "Deboucheur Liquide 1L", unit: "1 L", qty: 20 },
-            { code: "GR200", desc: "Garisse industriel", unit: "200 gm", qty: 24 },
-            { code: "GR2500", desc: "Garisse industriel", unit: "2500 gm", qty: 1 },
-            { code: "HL60", desc: "Huile de L'in", unit: "600 ml", qty: 30 },
-            { code: "VB600", desc: "Vaseline de bois", unit: "600 ml", qty: 30 },
-            { code: "W252", desc: "Essence SP 25 Cc", unit: "250 ml", qty: 60 },
-            { code: "W552", desc: "Essence SP 55 Cc", unit: "550 ml", qty: 30 },
-            { code: "W102", desc: "Essence AXA 90 Cc", unit: "1 L", qty: 20 },
-            { code: "W202", desc: "Essence AXA 2L", unit: "2 L", qty: 11 },
-            { code: "W402", desc: "Essence AXA 4L", unit: "4 L", qty: 5 },
-            { code: "W251", desc: "Essence City 25 Cc", unit: "250 ml", qty: 60 },
-            { code: "W551", desc: "Essence City 55 Cc", unit: "550 ml", qty: 30 },
-            { code: "W101", desc: "Essence City 90 Cc", unit: "1 L", qty: 20 },
-            { code: "W201", desc: "Essence City 2L", unit: "2 L", qty: 11 },
-            { code: "W401", desc: "Essence City 4L", unit: "4 L", qty: 5 },
-            { code: "J25", desc: "Jupiter 25 Cc", unit: "250 ml", qty: 60 },
-            { code: "J55", desc: "Jupiter 55 Cc", unit: "550 ml", qty: 30 },
-            { code: "D252", desc: "Diluant SP 25 Cc", unit: "250 ml", qty: 60 },
-            { code: "D552", desc: "Diluant SP 55 Cc", unit: "550 ml", qty: 30 },
-            { code: "D602", desc: "Diluant SP 60 CL", unit: "600 ml", qty: 30 },
-            { code: "D102", desc: "Diluant AXA 90 Cc", unit: "1 L", qty: 20 },
-            { code: "D202", desc: "Diluant AXA 2L", unit: "2 L", qty: 11 },
-            { code: "D402", desc: "Diluant AXA 4L", unit: "4 L", qty: 5 },
-            { code: "D251", desc: "Diluant City 25 Cc", unit: "250 ml", qty: 60 },
-            { code: "D551", desc: "Diluant City 1éme 3/4", unit: "550 ml", qty: 30 },
-            { code: "D601", desc: "Diluant City 1éme 60 CL", unit: "600 ml", qty: 30 },
-            { code: "D101", desc: "Diluant City 90 Cc", unit: "1 L", qty: 20 },
-            { code: "D201", desc: "Diluant City 2L", unit: "2 L", qty: 11 },
-            { code: "D401", desc: "Diluant City 4L", unit: "4 L", qty: 5 },
-            { code: "D603", desc: "Diluant XTRA 60 CL", unit: "600 ml", qty: 30 },
-            { code: "D103", desc: "Diluant XTRA 90 CC", unit: "1 L", qty: 20 },
-            { code: "D203", desc: "Diluant XTRA 2L", unit: "2 L", qty: 11 },
-            { code: "D403", desc: "Diluant XTRA 4L", unit: "4 L", qty: 5 },
-            { code: "DP600", desc: "Diluant PRO 600ml", unit: "600 ml", qty: 30 },
-            { code: "DPMP900", desc: "Diluant PRO MAX 90cc", unit: "90 CL", qty: 20 },
-            { code: "DPMP45", desc: "Diluant PRO MAX 4.5L", unit: "4.5 L", qty: 5 },
-            { code: "D752-Z", desc: "Diluant SP 75 Cc Z", unit: "75 ml", qty: 25 },
-            { code: "D752-P", desc: "Diluant SP 75 Cc P", unit: "75 ml", qty: 25 },
-            { code: "D751-Z", desc: "Diluant CITY 75 Cc Z", unit: "75 ml", qty: 25 },
-            { code: "D751-P", desc: "Diluant CITY 75 Cc P", unit: "75 ml", qty: 25 },
-            { code: "D405", desc: "Diluant VOX Paint 4L", unit: "4 L", qty: 1 },
-            { code: "CB250", desc: "Colle a Bois", unit: "250 gm", qty: 24 },
-            { code: "CB500", desc: "Colle a Bois", unit: "550 gm", qty: 24 },
-            { code: "CB4000", desc: "Colle a Bois", unit: "4 Kg", qty: 1 },
-            { code: "CB20000", desc: "Colle a Bois", unit: "20 Kg", qty: 1 },
-            { code: "FR1000", desc: "Colle FLIX Rouge", unit: "1 Kg", qty: 24 },
-            { code: "FR5000", desc: "Colle FLIX Rouge", unit: "5 Kg", qty: 1 },
-            { code: "FR20000", desc: "Colle FLIX Rouge", unit: "20 Kg", qty: 1 },
-            { code: "FB1000", desc: "Colle FLIX Blanc", unit: "1 Kg", qty: 24 },
-            { code: "FB5000", desc: "Colle FLIX Blanc", unit: "5 Kg", qty: 1 },
-            { code: "FB20000", desc: "Colle FLIX Blanc", unit: "20 Kg", qty: 1 },
-            { code: "SL500", desc: "Colle Grifi Sofalit", unit: "500 gm", qty: 24 },
-            { code: "SL850", desc: "Colle Grifi Sofalit", unit: "850 gm", qty: 6 },
-            { code: "CC250", desc: "Colle Grifi Sofalit", unit: "250 gm", qty: 1 },
-            { code: "CC500", desc: "Colle Grifi Sofalit", unit: "500 gm", qty: 1 },
-            { code: "CC1000", desc: "Colle Grifi Sofalit", unit: "1 Kg", qty: 1 },
-            { code: "VF500", desc: "Colle Vit Fit", unit: "500 gm", qty: 24 },
-            { code: "AP1000", desc: "Vinylique AXA Plast", unit: "1 Kg", qty: 24 },
-            { code: "PVP1", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24 },
-            { code: "PVP10", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24 },
-            { code: "PVP100", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24 },
-            { code: "PVP1000", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24 },
-            { code: "SP5000", desc: "SOLTAN Plast", unit: "5 kg", qty: 1 },
-            { code: "AP5000", desc: "Vinylique AXA Plast", unit: "5 Kg", qty: 1 },
-            { code: "PVV1", desc: "Vinylique PVV Plast", unit: "5 kg", qty: 1 },
-            { code: "PVV10", desc: "Vinylique PVV Plast", unit: "5 kg", qty: 1 },
-            { code: "PVV100", desc: "Vinylique PVV Plast", unit: "5 kg", qty: 1 },
-            { code: "PVV1000", desc: "Vinylique PVV Plast", unit: "5 kg", qty: 1 },
-            { code: "PVC1", desc: "Vinylique PVC Plast", unit: "10 Kg", qty: 1 },
-            { code: "PVC10", desc: "Vinylique PVC Plast", unit: "10 Kg", qty: 1 },
-            { code: "PVC100", desc: "Vinylique PVC Plast", unit: "10 Kg", qty: 1 },
-            { code: "PVC1000", desc: "Vinylique PVC Plast", unit: "10 Kg", qty: 1 },
-            { code: "MP3000", desc: "MIMOSA AXA Plast", unit: "30Kg", qty: 1 },
-            { code: "VL3000", desc: "VOX LATIX", unit: "30Kg", qty: 1 },
-            { code: "CP3000", desc: "CITY PLAST", unit: "30Kg", qty: 1 },
-            { code: "MP50000", desc: "MIMOSA AXA Plast", unit: "50 Kg", qty: 1 },
-            { code: "SLBL4500", desc: "LACKY", unit: "4.5Kg", qty: 1 },
-            { code: "AFG5000", desc: "LANTIROUI", unit: "5Kg", qty: 1 },
-            { code: "AFR5000", desc: "LANTIROUI", unit: "5Kg", qty: 1 }
-        ];
-
-        // Global State variables
-        window.productsCatalog = [...defaultProductsCatalog];
+        // Global State
+        window.productsCatalog = [];
         window.productionLogs = [];
         window.stockOutLogs = [];
         window.workersList = [];
         window.attendanceLogs = {};
         window.currentAnalyticsMode = 'weekly';
 
-        // 🟢 Realtime Sync Listeners from Firestore
+        // 🟢 Realtime Sync Listeners
         onSnapshot(collection(db, "products"), (snapshot) => {
-            if (!snapshot.empty) {
-                window.productsCatalog = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            } else {
-                window.productsCatalog = [...defaultProductsCatalog];
-            }
+            window.productsCatalog = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             populateProductDropdowns();
             renderAll();
         });
@@ -823,10 +682,10 @@
             renderAttendanceTable();
         });
 
-        // 🔴 Handlers for Adding, Editing & Deleting Products
+        // 🔴 Handlers for Products
         window.openAddProductModal = function() {
             document.getElementById('product-modal-title').innerText = "إضافة منتج جديد للمخزون";
-            document.getElementById('product-edit-code').value = "";
+            document.getElementById('product-edit-id').value = "";
             document.getElementById('modal-product-code').value = "";
             document.getElementById('modal-product-code').disabled = false;
             document.getElementById('modal-product-desc').value = "";
@@ -835,11 +694,11 @@
             document.getElementById('product-modal').classList.remove('hidden');
         };
 
-        window.editProduct = function(code) {
-            const product = window.productsCatalog.find(p => p.code === code);
+        window.editProduct = function(docId) {
+            const product = window.productsCatalog.find(p => p.id === docId || p.code === docId);
             if (!product) return;
             document.getElementById('product-modal-title').innerText = "تعديل بيانات المنتج";
-            document.getElementById('product-edit-code').value = product.code;
+            document.getElementById('product-edit-id').value = product.id;
             document.getElementById('modal-product-code').value = product.code;
             document.getElementById('modal-product-code').disabled = true;
             document.getElementById('modal-product-desc').value = product.desc;
@@ -854,45 +713,35 @@
 
         window.handleProductSave = async function(event) {
             event.preventDefault();
-            const editCode = document.getElementById('product-edit-code').value;
+            const docId = document.getElementById('product-edit-id').value;
             const code = document.getElementById('modal-product-code').value.trim().toUpperCase();
             const desc = document.getElementById('modal-product-desc').value.trim();
             const unit = document.getElementById('modal-product-unit').value.trim();
             const qty = parseInt(document.getElementById('modal-product-qty').value) || 0;
 
             try {
-                if (!editCode) {
+                if (!docId) {
                     const existing = window.productsCatalog.find(p => p.code === code);
                     if (existing) {
                         alert('كود هذا المنتج موجود بالفعل! يرجى استخدام كود آخر.');
                         return;
                     }
-                    await setDoc(doc(db, "products", code), { code, desc, unit, qty });
+                    await addDoc(collection(db, "products"), { code, desc, unit, qty });
                 } else {
-                    const productObj = window.productsCatalog.find(p => p.code === editCode);
-                    if (productObj && productObj.id) {
-                        await updateDoc(doc(db, "products", productObj.id), { desc, unit, qty });
-                    } else {
-                        await setDoc(doc(db, "products", editCode), { code: editCode, desc, unit, qty });
-                    }
+                    await updateDoc(doc(db, "products", docId), { desc, unit, qty });
                 }
                 closeProductModal();
-                alert('تم حفظ بيانات المنتج سحابياً بنجاح!');
+                alert('تم حفظ بيانات المنتج بنجاح!');
             } catch (e) {
                 console.error("Error saving product: ", e);
-                alert("حدث خطأ أثناء حفظ المنتج.");
+                alert("حدث خطأ أثناء حفظ المنتج: " + e.message);
             }
         };
 
-        window.deleteProduct = async function(code) {
-            if (confirm(`هل أنت متأكد من حذف المنتج (${code}) نهائياً من المخزون؟`)) {
+        window.deleteProduct = async function(docId) {
+            if (confirm(`هل أنت متأكد من حذف هذا المنتج نهائياً من المخزون؟`)) {
                 try {
-                    const productObj = window.productsCatalog.find(p => p.code === code);
-                    if (productObj && productObj.id) {
-                        await deleteDoc(doc(db, "products", productObj.id));
-                    } else {
-                        await deleteDoc(doc(db, "products", code));
-                    }
+                    await deleteDoc(doc(db, "products", docId));
                     alert('تم حذف المنتج بنجاح.');
                 } catch (e) {
                     console.error("Error deleting product: ", e);
@@ -901,7 +750,7 @@
             }
         };
 
-        // Handlers for Record Submissions
+        // Handlers for Operations
         window.handleProductionSubmit = async function(event) {
             event.preventDefault();
             const worker = document.getElementById('worker-name').value;
@@ -913,19 +762,18 @@
 
             const productObj = window.productsCatalog.find(p => p.code === code);
             if (!productObj) {
-                alert('الرجاء اختيار منتج صحيح من القائمة المقترحة!');
+                alert('الرجاء اختيار منتج صحيح من القائمة!');
                 return;
             }
 
             try {
                 await addDoc(collection(db, "production"), {
-                    date, worker, code: productObj.code, desc: productObj.desc,
-                    unit: productObj.unit, qty: quantity, notes, createdAt: new Date()
+                    date, worker, code: productObj.code, desc: productObj.desc, unit: productObj.unit, qty: quantity, notes, createdAt: new Date()
                 });
                 document.getElementById('production-form').reset();
                 document.getElementById('prod-date').value = new Date().toISOString().split('T')[0];
                 selectTab('workers', 'تقارير العمال اليومية');
-                alert('تم تسجيل الإنتاج بنجاح ورُفع إلى Cloud Firebase!');
+                alert('تم تسجيل الإنتاج بنجاح!');
             } catch (e) {
                 console.error("Error adding document: ", e);
             }
@@ -953,12 +801,11 @@
 
             try {
                 await addDoc(collection(db, "stockout"), {
-                    date, code: productObj.code, desc: productObj.desc,
-                    unit: productObj.unit, qty: quantity, notes, createdAt: new Date()
+                    date, code: productObj.code, desc: productObj.desc, unit: productObj.unit, qty: quantity, notes, createdAt: new Date()
                 });
                 document.getElementById('stockout-form').reset();
                 document.getElementById('out-date').value = new Date().toISOString().split('T')[0];
-                alert('تم تسجيل خروج المنتجات بنجاح في Firebase!');
+                alert('تم تسجيل خروج المنتجات بنجاح!');
             } catch (e) {
                 console.error("Error adding document: ", e);
             }
@@ -967,22 +814,17 @@
         window.handleAttendanceSubmit = async function(event) {
             event.preventDefault();
             const dateStr = document.getElementById('attendance-date').value;
-            if(!dateStr) {
-                alert('الرجاء تحديد تاريخ الحضور!');
-                return;
-            }
+            if(!dateStr) { alert('الرجاء تحديد تاريخ الحضور!'); return; }
 
             const attendanceData = {};
             window.workersList.forEach((w, index) => {
                 const selectElem = document.getElementById(`attendance_select_${index}`);
-                if (selectElem) {
-                    attendanceData[w.name] = selectElem.value;
-                }
+                if (selectElem) { attendanceData[w.name] = selectElem.value; }
             });
 
             try {
                 await setDoc(doc(db, "attendance", dateStr), attendanceData);
-                alert('تم حفظ سجل حضور العمال بنجاح في Firebase لتاريخ: ' + dateStr);
+                alert('تم حفظ سجل حضور العمال بنجاح لتاريخ: ' + dateStr);
             } catch (e) {
                 console.error("Error saving attendance: ", e);
             }
@@ -1001,14 +843,14 @@
                     await updateDoc(doc(db, "workers", docId), { name, phone });
                 }
                 closeWorkerModal();
-                alert('تم حفظ بيانات العامل سحابياً!');
+                alert('تم حفظ بيانات العامل بنجاح!');
             } catch(e) {
                 console.error("Error saving worker: ", e);
             }
         };
 
         window.deleteEntry = async function(id) {
-            if (confirm('هل أنت متأكد من حذف هذا السجل من السحابة؟')) {
+            if (confirm('هل أنت متأكد من حذف هذا السجل؟')) {
                 await deleteDoc(doc(db, "production", id));
             }
         };
@@ -1020,12 +862,12 @@
         };
 
         window.deleteWorker = async function(id) {
-            if (confirm('هل أنت متأكد من حذف هذا العامل من Firebase؟')) {
+            if (confirm('هل أنت متأكد من حذف هذا العامل؟')) {
                 await deleteDoc(doc(db, "workers", id));
             }
         };
 
-        // Window Load Functions
+        // Window Load & Utilities
         window.onload = function() {
             const todayStr = new Date().toISOString().split('T')[0];
             document.getElementById('current-date').innerText = "التاريخ: " + todayStr;
@@ -1033,7 +875,6 @@
             document.getElementById('out-date').value = todayStr;
             document.getElementById('filter-date').value = todayStr;
             document.getElementById('attendance-date').value = todayStr;
-
             populateProductDropdowns();
         };
 
@@ -1047,32 +888,18 @@
             document.getElementById('current-tab-title').innerText = title;
             document.getElementById('dropdown-menu').classList.add('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            if(tabId === 'attendance') {
-                renderAttendanceTable();
-                renderSavedAttendanceButtons();
-            }
-            if(tabId === 'analytics') {
-                renderAnalytics();
-            }
+            if(tabId === 'attendance') { renderAttendanceTable(); renderSavedAttendanceButtons(); }
+            if(tabId === 'analytics') { renderAnalytics(); }
         };
 
         function populateProductDropdowns() {
             const list1 = document.getElementById('products-datalist');
             const list2 = document.getElementById('out-products-datalist');
-            list1.innerHTML = '';
-            list2.innerHTML = '';
-
+            list1.innerHTML = ''; list2.innerHTML = '';
             window.productsCatalog.forEach(p => {
                 const optText = `${p.code} - ${p.desc} (${p.unit})`;
-                
-                const opt1 = document.createElement('option');
-                opt1.value = optText;
-                list1.appendChild(opt1);
-
-                const opt2 = document.createElement('option');
-                opt2.value = optText;
-                list2.appendChild(opt2);
+                const opt1 = document.createElement('option'); opt1.value = optText; list1.appendChild(opt1);
+                const opt2 = document.createElement('option'); opt2.value = optText; list2.appendChild(opt2);
             });
         }
 
@@ -1086,7 +913,7 @@
 
         function getCurrentStock(code) {
             const product = window.productsCatalog.find(p => p.code === code);
-            const initial = product ? product.qty : 0;
+            const initial = product ? (product.qty || 0) : 0;
             const produced = window.productionLogs.filter(item => item.code === code).reduce((sum, item) => sum + item.qty, 0);
             const out = window.stockOutLogs.filter(item => item.code === code).reduce((sum, item) => sum + item.qty, 0);
             return initial + produced - out;
@@ -1096,28 +923,25 @@
             const dateStr = document.getElementById('attendance-date').value;
             const tbody = document.getElementById('attendance-tbody');
             tbody.innerHTML = '';
-
             if (window.workersList.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">لا يوجد عمال مسجلين</td></tr>`;
                 return;
             }
-
             const dayRecords = window.attendanceLogs[dateStr] || {};
-
             window.workersList.forEach((w, index) => {
                 const currentStatus = dayRecords[w.name] || 'حاضر';
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
-                        <td class="p-3 text-slate-500 font-mono text-left">${index + 1}</td>
-                        <td class="p-3 font-bold text-slate-800 text-left">${w.name}</td>
-                        <td class="p-3 font-mono text-blue-700 font-semibold text-left" dir="ltr">${w.phone}</td>
-                        <td class="p-3 text-left">
+                        <td class="p-3 text-slate-500 font-mono">${index + 1}</td>
+                        <td class="p-3 font-bold text-slate-800">${w.name}</td>
+                        <td class="p-3 font-mono text-blue-700 font-semibold" dir="ltr">${w.phone}</td>
+                        <td class="p-3">
                             <select id="attendance_select_${index}" class="p-2.5 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-blue-500 focus:outline-none w-full sm:w-48 bg-white">
-                                <option value="حاضر" ${currentStatus === 'حاضر' ? 'selected' : ''} class="text-blue-700 font-semibold">حاضر</option>
-                                <option value="مريض" ${currentStatus === 'مريض' ? 'selected' : ''} class="text-rose-600 font-semibold">مريض</option>
-                                <option value="غير مبرر" ${currentStatus === 'غير مبرر' ? 'selected' : ''} class="text-amber-600 font-semibold">غير مبرر</option>
-                                <option value="مسألة خاصة" ${currentStatus === 'مسألة خاصة' ? 'selected' : ''} class="text-sky-600 font-semibold">مسألة خاصة</option>
-                                <option value="إستقل" ${currentStatus === 'إستقل' ? 'selected' : ''} class="text-slate-600 font-semibold">إستقل</option>
+                                <option value="حاضر" ${currentStatus === 'حاضر' ? 'selected' : ''}>حاضر</option>
+                                <option value="مريض" ${currentStatus === 'مريض' ? 'selected' : ''}>مريض</option>
+                                <option value="غير مبرر" ${currentStatus === 'غير مبرر' ? 'selected' : ''}>غير مبرر</option>
+                                <option value="مسألة خاصة" ${currentStatus === 'مسألة خاصة' ? 'selected' : ''}>مسألة خاصة</option>
+                                <option value="إستقل" ${currentStatus === 'إستقل' ? 'selected' : ''}>إستقل</option>
                             </select>
                         </td>
                     </tr>
@@ -1129,13 +953,11 @@
             const container = document.getElementById('saved-attendance-buttons');
             if (!container) return;
             container.innerHTML = '';
-
             const savedDates = Object.keys(window.attendanceLogs).sort().reverse();
             if (savedDates.length === 0) {
                 container.innerHTML = `<p class="text-xs text-slate-400">لا توجد تواريخ حضور محفوظة بعد.</p>`;
                 return;
             }
-
             savedDates.forEach(dateStr => {
                 const btn = document.createElement('button');
                 btn.type = 'button';
@@ -1150,7 +972,6 @@
             document.getElementById('attendance-modal-title').innerHTML = `<i class="fa-solid fa-calendar-day text-blue-600"></i> تفاصيل الحضور ليوم: ${dateStr}`;
             const tbody = document.getElementById('attendance-modal-tbody');
             tbody.innerHTML = '';
-
             const dayRecords = window.attendanceLogs[dateStr] || {};
             if (window.workersList.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="3" class="p-6 text-center text-slate-400">لا يوجد عمال مسجلين</td></tr>`;
@@ -1166,14 +987,13 @@
 
                     tbody.innerHTML += `
                         <tr class="hover:bg-slate-50 transition">
-                            <td class="p-3 font-bold text-slate-800 text-left">${w.name}</td>
-                            <td class="p-3 font-mono text-blue-700 font-semibold text-left" dir="ltr">${w.phone}</td>
-                            <td class="p-3 text-left"><span class="px-3 py-1 rounded-full text-xs ${statusBadgeClass}">${status}</span></td>
+                            <td class="p-3 font-bold text-slate-800">${w.name}</td>
+                            <td class="p-3 font-mono text-blue-700 font-semibold" dir="ltr">${w.phone}</td>
+                            <td class="p-3"><span class="px-3 py-1 rounded-full text-xs ${statusBadgeClass}">${status}</span></td>
                         </tr>
                     `;
                 });
             }
-
             document.getElementById('attendance-detail-modal').classList.remove('hidden');
         };
 
@@ -1234,7 +1054,6 @@
         function renderAnalytics() {
             const container = document.getElementById('analytics-content');
             container.innerHTML = '';
-
             const prodGroups = {};
             const stockOutGroups = {};
 
@@ -1242,14 +1061,8 @@
                 const key = window.currentAnalyticsMode === 'weekly' ? getWeekIdentifier(item.date) : getMonthIdentifier(item.date);
                 if (!prodGroups[key]) prodGroups[key] = { totalQty: 0, workers: {}, products: {} };
                 prodGroups[key].totalQty += item.qty;
-
                 if (!prodGroups[key].workers[item.worker]) prodGroups[key].workers[item.worker] = 0;
                 prodGroups[key].workers[item.worker] += item.qty;
-
-                if (!prodGroups[key].products[item.code]) {
-                    prodGroups[key].products[item.code] = { desc: item.desc, unit: item.unit, qty: 0 };
-                }
-                prodGroups[key].products[item.code].qty += item.qty;
             });
 
             window.stockOutLogs.forEach(item => {
@@ -1262,14 +1075,13 @@
             });
 
             const allPeriods = Array.from(new Set([...Object.keys(prodGroups), ...Object.keys(stockOutGroups)])).sort().reverse();
-
             if (allPeriods.length === 0) {
                 container.innerHTML = `<p class="text-center text-slate-400 py-8">لا توجد بيانات كافية لعرض التحليل الإحصائي حالياً.</p>`;
                 return;
             }
 
             allPeriods.forEach(period => {
-                const pData = prodGroups[period] || { totalQty: 0, workers: {}, products: {} };
+                const pData = prodGroups[period] || { totalQty: 0, workers: {} };
                 const sData = stockOutGroups[period] || {};
 
                 let workersHtml = '';
@@ -1282,10 +1094,10 @@
                 for (const [cCode, cObj] of Object.entries(sData)) {
                     consumedHtml += `
                         <tr class="hover:bg-slate-50 text-xs">
-                            <td class="p-2 font-mono font-bold text-rose-600 text-left">${cCode}</td>
-                            <td class="p-2 text-slate-700 text-left">${cObj.desc}</td>
-                            <td class="p-2 text-slate-500 text-left">${cObj.unit}</td>
-                            <td class="p-2 text-left"><span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">${cObj.qty}</span></td>
+                            <td class="p-2 font-mono font-bold text-rose-600">${cCode}</td>
+                            <td class="p-2 text-slate-700">${cObj.desc}</td>
+                            <td class="p-2 text-slate-500">${cObj.unit}</td>
+                            <td class="p-2"><span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">${cObj.qty}</span></td>
                         </tr>
                     `;
                 }
@@ -1299,7 +1111,6 @@
                             </h3>
                             <span class="bg-blue-700 text-white text-xs px-3 py-1 rounded-lg font-bold">إجمالي الإنتاج: ${pData.totalQty} وحدة</span>
                         </div>
-
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
                                 <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b pb-2">
@@ -1307,19 +1118,18 @@
                                 </h4>
                                 <ul class="space-y-1 max-h-48 overflow-y-auto">${workersHtml}</ul>
                             </div>
-
                             <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
                                 <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b pb-2">
                                     <i class="fa-solid fa-box-open text-rose-600"></i> المنتجات المستهلكة/المصروفة
                                 </h4>
                                 <div class="overflow-x-auto max-h-48 overflow-y-auto">
-                                    <table class="w-full text-left" dir="ltr">
+                                    <table class="w-full text-right">
                                         <thead class="bg-slate-100 text-slate-600 text-xs">
                                             <tr>
-                                                <th class="p-2 text-left">الكود</th>
-                                                <th class="p-2 text-left">المنتج</th>
-                                                <th class="p-2 text-left">الوحدة</th>
-                                                <th class="p-2 text-left">كمية الاستهلاك</th>
+                                                <th class="p-2">الكود</th>
+                                                <th class="p-2">المنتج</th>
+                                                <th class="p-2">الوحدة</th>
+                                                <th class="p-2">الكمية</th>
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-slate-100">${consumedHtml}</tbody>
@@ -1350,9 +1160,9 @@
                 window.stockOutLogs.slice(0, 5).forEach(item => {
                     recentOutTbody.innerHTML += `
                         <tr class="hover:bg-slate-50">
-                            <td class="p-3 text-slate-700 font-medium text-left">${item.code} - ${item.desc}</td>
-                            <td class="p-3 text-left"><span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">${item.qty} (${item.unit})</span></td>
-                            <td class="p-3 text-slate-400 text-xs text-left">${item.date}</td>
+                            <td class="p-3 text-slate-700 font-medium">${item.code} - ${item.desc}</td>
+                            <td class="p-3"><span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">${item.qty} (${item.unit})</span></td>
+                            <td class="p-3 text-slate-400 text-xs">${item.date}</td>
                         </tr>
                     `;
                 });
@@ -1360,7 +1170,6 @@
 
             const summaryDiv = document.getElementById('workers-summary-dash');
             summaryDiv.innerHTML = '';
-            
             const todayStr = new Date().toISOString().split('T')[0];
             const todayLogs = window.productionLogs.filter(item => item.date === todayStr);
             const workerMap = {};
@@ -1386,7 +1195,6 @@
         function renderLowStockTable() {
             const tbody = document.getElementById('low-stock-table');
             tbody.innerHTML = '';
-
             const lowStockItems = window.productsCatalog.filter(p => getCurrentStock(p.code) <= 5);
             document.getElementById('low-stock-count').innerText = `${lowStockItems.length} منتج`;
 
@@ -1399,10 +1207,10 @@
                 const current = getCurrentStock(p.code);
                 tbody.innerHTML += `
                     <tr class="hover:bg-rose-50/50">
-                        <td class="p-3 font-mono font-bold text-slate-800 text-left">${p.code}</td>
-                        <td class="p-3 text-slate-700 font-medium text-left">${p.desc}</td>
-                        <td class="p-3 text-slate-500 text-left">${p.unit}</td>
-                        <td class="p-3 text-left"><span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-lg font-bold">${current}</span></td>
+                        <td class="p-3 font-mono font-bold text-slate-800">${p.code}</td>
+                        <td class="p-3 text-slate-700 font-medium">${p.desc}</td>
+                        <td class="p-3 text-slate-500">${p.unit}</td>
+                        <td class="p-3"><span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-lg font-bold">${current}</span></td>
                     </tr>
                 `;
             });
@@ -1412,7 +1220,6 @@
             const filterDate = document.getElementById('filter-date').value;
             const tbody = document.getElementById('full-production-table');
             tbody.innerHTML = '';
-
             const filteredLogs = filterDate ? window.productionLogs.filter(item => item.date === filterDate) : window.productionLogs;
 
             if (filteredLogs.length === 0) {
@@ -1423,13 +1230,13 @@
             filteredLogs.forEach(item => {
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
-                        <td class="p-3 text-slate-600 font-mono text-left">${item.date}</td>
-                        <td class="p-3 font-bold text-slate-800 text-left">${item.worker}</td>
-                        <td class="p-3 font-mono font-semibold text-blue-600 text-left">${item.code}</td>
-                        <td class="p-3 text-slate-700 text-left">${item.desc}</td>
-                        <td class="p-3 text-slate-500 text-left">${item.unit}</td>
-                        <td class="p-3 text-left"><span class="bg-blue-100 text-blue-800 px-2.5 py-1 rounded-lg font-bold">${item.qty}</span></td>
-                        <td class="p-3 text-slate-500 text-xs text-left">${item.notes || '-'}</td>
+                        <td class="p-3 text-slate-600 font-mono">${item.date}</td>
+                        <td class="p-3 font-bold text-slate-800">${item.worker}</td>
+                        <td class="p-3 font-mono font-semibold text-blue-600">${item.code}</td>
+                        <td class="p-3 text-slate-700">${item.desc}</td>
+                        <td class="p-3 text-slate-500">${item.unit}</td>
+                        <td class="p-3"><span class="bg-blue-100 text-blue-800 px-2.5 py-1 rounded-lg font-bold">${item.qty}</span></td>
+                        <td class="p-3 text-slate-500 text-xs">${item.notes || '-'}</td>
                         <td class="p-3 text-center">
                             <button onclick="deleteEntry('${item.id}')" class="text-red-500 hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition" title="حذف">
                                 <i class="fa-solid fa-trash"></i>
@@ -1443,7 +1250,6 @@
         function renderStockOutTable() {
             const tbody = document.getElementById('full-stockout-table');
             tbody.innerHTML = '';
-
             if (window.stockOutLogs.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">لا توجد حركات خروج مسجلة حتى الآن</td></tr>`;
                 return;
@@ -1452,11 +1258,11 @@
             window.stockOutLogs.forEach(item => {
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
-                        <td class="p-3 text-slate-600 font-mono text-left">${item.date}</td>
-                        <td class="p-3 font-mono font-semibold text-rose-600 text-left">${item.code}</td>
-                        <td class="p-3 text-slate-700 text-left">${item.desc} (${item.unit})</td>
-                        <td class="p-3 text-left"><span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-lg font-bold">${item.qty}</span></td>
-                        <td class="p-3 text-slate-600 text-xs font-medium text-left">${item.notes || '-'}</td>
+                        <td class="p-3 text-slate-600 font-mono">${item.date}</td>
+                        <td class="p-3 font-mono font-semibold text-rose-600">${item.code}</td>
+                        <td class="p-3 text-slate-700">${item.desc} (${item.unit})</td>
+                        <td class="p-3"><span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-lg font-bold">${item.qty}</span></td>
+                        <td class="p-3 text-slate-600 text-xs font-medium">${item.notes || '-'}</td>
                         <td class="p-3 text-center">
                             <button onclick="deleteStockOutEntry('${item.id}')" class="text-red-500 hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition" title="حذف">
                                 <i class="fa-solid fa-trash"></i>
@@ -1486,8 +1292,8 @@
             window.productsCatalog.forEach(p => {
                 const produced = prodTotals[p.code] || 0;
                 const out = outTotals[p.code] || 0;
-                const currentStock = p.qty + produced - out;
-                
+                const currentStock = (p.qty || 0) + produced - out;
+
                 let statusBadge = `<span class="bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full text-xs font-bold">متوفر</span>`;
                 if (currentStock <= 5) {
                     statusBadge = `<span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-full text-xs font-bold">منخفض جداً</span>`;
@@ -1495,19 +1301,19 @@
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition inventory-row" data-search="${p.code.toLowerCase()} ${p.desc.toLowerCase()}">
-                        <td class="p-3 font-mono font-bold text-slate-800 text-left">${p.code}</td>
-                        <td class="p-3 text-slate-700 font-medium text-left">${p.desc}</td>
-                        <td class="p-3 text-slate-500 text-left">${p.unit}</td>
-                        <td class="p-3 font-semibold text-slate-600 text-left">${p.qty}</td>
-                        <td class="p-3 text-left"><span class="bg-blue-50 text-blue-700 px-2.5 py-1 rounded-lg font-bold">${produced}</span></td>
-                        <td class="p-3 text-left"><span class="bg-rose-50 text-rose-700 px-2.5 py-1 rounded-lg font-bold">${out}</span></td>
-                        <td class="p-3 text-left"><span class="bg-blue-950 text-white px-3 py-1 rounded-lg font-black">${currentStock}</span></td>
-                        <td class="p-3 text-left">${statusBadge}</td>
-                        <td class="p-3 text-center space-x-2">
-                            <button onclick="editProduct('${p.code}')" class="text-blue-500 hover:text-blue-700 p-1.5 rounded-lg hover:bg-blue-50 transition" title="تعديل">
+                        <td class="p-3 font-mono font-bold text-slate-800">${p.code}</td>
+                        <td class="p-3 text-slate-700 font-medium">${p.desc}</td>
+                        <td class="p-3 text-slate-500">${p.unit}</td>
+                        <td class="p-3 font-semibold text-slate-600">${p.qty || 0}</td>
+                        <td class="p-3"><span class="bg-blue-50 text-blue-700 px-2.5 py-1 rounded-lg font-bold">${produced}</span></td>
+                        <td class="p-3"><span class="bg-rose-50 text-rose-700 px-2.5 py-1 rounded-lg font-bold">${out}</span></td>
+                        <td class="p-3"><span class="bg-blue-950 text-white px-3 py-1 rounded-lg font-black">${currentStock}</span></td>
+                        <td class="p-3">${statusBadge}</td>
+                        <td class="p-3 text-center space-x-2 space-x-reverse">
+                            <button onclick="editProduct('${p.id}')" class="text-blue-500 hover:text-blue-700 p-1.5 rounded-lg hover:bg-blue-50 transition" title="تعديل">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
-                            <button onclick="deleteProduct('${p.code}')" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 transition" title="حذف">
+                            <button onclick="deleteProduct('${p.id}')" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 transition" title="حذف">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </td>
@@ -1519,7 +1325,6 @@
         function renderWorkersInfoTable() {
             const tbody = document.getElementById('workers-info-tbody');
             tbody.innerHTML = '';
-
             if (window.workersList.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">لا يوجد عمال مسجلين بعد</td></tr>`;
                 return;
@@ -1528,10 +1333,10 @@
             window.workersList.forEach((w, index) => {
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
-                        <td class="p-3 text-slate-500 font-mono text-left">${index + 1}</td>
-                        <td class="p-3 font-bold text-slate-800 text-left">${w.name}</td>
-                        <td class="p-3 font-mono text-blue-700 font-semibold text-left" dir="ltr">${w.phone}</td>
-                        <td class="p-3 text-center space-x-2">
+                        <td class="p-3 text-slate-500 font-mono">${index + 1}</td>
+                        <td class="p-3 font-bold text-slate-800">${w.name}</td>
+                        <td class="p-3 font-mono text-blue-700 font-semibold" dir="ltr">${w.phone}</td>
+                        <td class="p-3 text-center space-x-2 space-x-reverse">
                             <button onclick="editWorker('${w.id}')" class="text-blue-500 hover:text-blue-700 p-1.5 rounded-lg hover:bg-blue-50 transition" title="تعديل">
                                 <i class="fa-solid fa-user-pen"></i>
                             </button>
