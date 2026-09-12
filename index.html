@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>نظام المصنع - Firebase Premium</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Geist:wght@400;600;700&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet">
+<title>نظام تسيير الإنتاج</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -17,46 +17,36 @@ const firebaseConfig = {
   projectId: "factory-system-a4db8",
   storageBucket: "factory-system-a4db8.firebasestorage.app",
   messagingSenderId: "216358094084",
-  appId: "1:216358094084:web:500d511f7b130f23ecfc51",
-  measurementId: "G-ECNQ5M5HNE"
+  appId: "1:216358094084:web:500d511f7b130f23ecfc51"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-window.db = db;
 </script>
 <style>
-:root{
-  --bg:#f8fafc; --bg-elevated:#ffffff; --card:#ffffff;
-  --text:#0f172a; --text-muted:#64748b; --text-faint:#94a3b8;
-  --border:#e2e8f0; --border-strong:#cbd5e1;
-  --primary:#2563eb; --primary-glow:rgba(37,99,235,0.16);
-  --shadow:0 8px 30px rgba(15,23,42,0.06),0 1px 3px rgba(15,23,42,0.04);
-  --shadow-lg:0 20px 60px rgba(15,23,42,0.08),0 8px 20px rgba(15,23,42,0.05);
-  --ring:0 0 0 4px var(--primary-glow); --grid:rgba(148,163,184,0.12);
-}
-[data-theme="dark"]{
-  --bg:#09090b; --bg-elevated:#18181b; --card:#18181b;
-  --text:#fafafa; --text-muted:#a1a1aa; --text-faint:#52525b;
-  --border:#27272a; --border-strong:#3f3f46;
-  --primary:#3b82f6; --primary-glow:rgba(59,130,246,0.35);
-  --shadow:0 0 0 1px var(--border),0 8px 24px rgba(0,0,0,0.4);
-  --shadow-lg:0 0 0 1px var(--border),0 20px 60px rgba(0,0,0,0.6);
-  --ring:0 0 0 4px var(--primary-glow); --grid:rgba(63,63,70,0.22);
-}
-*{font-family:'Cairo',system-ui,sans-serif; transition: all .2s ease}
-body{margin:0;background:var(--bg);color:var(--text)}
-.tab-content{display:none}.tab-content.active{display:block;animation:tabIn .32s ease}
-@keyframes tabIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--grid) 1px, transparent 1px),linear-gradient(90deg, var(--grid) 1px, transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 80% 70% at 50% 0%, black 40%, transparent 90%);}
-.glow-orb{position:fixed;pointer-events:none;z-index:0;border-radius:999px;filter:blur(80px);opacity:.55;}
-.premium-card{background:var(--card);border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(12px);}
-.btn-lift{transition:all .2s cubic-bezier(.16,1,.3,1)}.btn-lift:hover{transform:translateY(-1.5px);box-shadow:var(--shadow-lg)}
-.input-premium{width:100%;height:48px;padding:0 16px;border-radius:16px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);font-weight:700;font-size:13px;outline:none;}
-.input-premium:focus{border-color:var(--primary);box-shadow:var(--ring)}
-.table-premium thead th{position:sticky;top:0;z-index:2;background:var(--bg-elevated);border-bottom:1px solid var(--border);font-size:11px;font-weight:900;color:var(--text-muted);padding:14px;}
-.modal-backdrop{backdrop-filter:blur(20px);background:rgba(9,9,11,.55)}
-.modal-card{border-radius:28px;background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow-lg)}
-.touch-target{min-height:44px;min-width:44px}
+:root{--bg:#f8fafc;--card:#ffffff;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--primary:#2563eb;--shadow:0 8px 30px rgba(15,23,42,0.06);--shadow-lg:0 20px 60px rgba(15,23,42,0.10);--ring:0 0 0 4px rgba(37,99,235,0.15);--grid:rgba(148,163,184,0.10)}
+[data-theme="dark"]{--bg:#09090b;--card:#18181b;--text:#fafafa;--muted:#a1a1aa;--border:#27272a;--primary:#3b82f6;--shadow:0 0 0 1px #27272a,0 8px 24px rgba(0,0,0,0.4);--shadow-lg:0 0 0 1px #27272a,0 20px 60px rgba(0,0,0,0.6);--ring:0 0 0 4px rgba(59,130,246,0.3);--grid:rgba(63,63,70,0.18)}
+*{font-family:'Cairo',system-ui,sans-serif;box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);transition:background .3s,color .2s}
+.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--grid) 1px, transparent 1px),linear-gradient(90deg, var(--grid) 1px, transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 80% 70% at 50% 0%, black 40%, transparent 90%)}
+.glow{position:fixed;pointer-events:none;z-index:0;border-radius:999px;filter:blur(80px);opacity:.5}
+.card{background:var(--card);border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow)}
+.input{width:100%;height:48px;padding:0 16px;border-radius:14px;border:1px solid var(--border);background:var(--card);color:var(--text);font-weight:700;font-size:13px;outline:none;transition:.2s}
+.input:focus{border-color:var(--primary);box-shadow:var(--ring)}
+.btn{height:48px;padding:0 20px;border-radius:14px;font-weight:800;font-size:13px;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:.2s;border:1px solid transparent}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-lg)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn-dark{background:#0f172a;color:#fff}
+[data-theme="dark"] .btn-dark{background:#fafafa;color:#09090b}
+.btn-primary{background:var(--primary);color:#fff}
+.toggle{width:64px;height:40px;border-radius:999px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;padding:3px;cursor:pointer;box-shadow:var(--shadow);transition:.3s;position:relative}
+.toggle-dot{width:32px;height:32px;border-radius:999px;background:#0f172a;color:#facc15;display:grid;place-items:center;transition:.3s cubic-bezier(.4,0,.2,1);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+[data-theme="dark"] .toggle-dot{transform:translateX(-24px);background:#fafafa;color:#0f172a}
+.table-head th{font-size:11px;font-weight:900;color:var(--muted);padding:14px 12px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}
+.table-row td{padding:12px;font-size:13px;border-bottom:1px solid var(--border)}
+.modal-bg{backdrop-filter:blur(18px);background:rgba(15,23,42,.45)}
+.modal{border-radius:24px;background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow-lg);animation:pop .3s cubic-bezier(.16,1,.3,1)}
+@keyframes pop{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@media(max-width:768px){.hide-m{display:none}.table-head{display:none}.table-row{display:block;border:1px solid var(--border);border-radius:16px;margin-bottom:10px;padding:8px}.table-row td{display:flex;justify-content:space-between;align-items:center;border:none!important;padding:10px 6px!important;border-bottom:1px dashed var(--border)!important}.table-row td:last-child{border-bottom:none!important;justify-content:center}.table-row td::before{content:attr(data-label);font-size:11px;font-weight:900;color:var(--muted);margin-left:10px}}
 </style>
 </head>
 <body>
@@ -68,263 +58,345 @@ body{margin:0;background:var(--bg);color:var(--text)}
 const {useState, useEffect, useRef} = React;
 
 function App(){
-  const [theme, setTheme] = useState(localStorage.getItem("factory_theme")||"light");
+  const [theme,setTheme]=useState(localStorage.getItem("factory_theme")||"light");
   useEffect(()=>{document.documentElement.setAttribute("data-theme",theme);localStorage.setItem("factory_theme",theme)},[theme]);
-  const [logged, setLogged] = useState(false);
-  const [tab, setTab] = useState("dashboard");
-  const [tabTitle, setTabTitle] = useState("لوحة المؤشرات");
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [production, setProduction] = useState([]);
-  const [stockOut, setStockOut] = useState([]);
-  const [workers, setWorkers] = useState([]);
-  const [attendance, setAttendance] = useState({});
-  const [toasts, setToasts] = useState([]);
-  const [showProductModal, setShowProductModal] = useState(false);
-  const [showWorkerModal, setShowWorkerModal] = useState(false);
-  const [showPassModal, setShowPassModal] = useState(false);
-  const [editProductId, setEditProductId] = useState("");
-  const [editWorkerId, setEditWorkerId] = useState("");
-  const [attendanceDate, setAttendanceDate] = useState(new Date().toISOString().split('T')[0]);
-  const [filterDate, setFilterDate] = useState(new Date().toISOString().split('T')[0]);
-  const [searchProduct, setSearchProduct] = useState("");
-  const [formProd, setFormProd] = useState({worker:"", productRaw:"", qty:"", date:new Date().toISOString().split('T')[0], notes:""});
-  const [formOut, setFormOut] = useState({productRaw:"", qty:"", date:new Date().toISOString().split('T')[0], notes:""});
-  const [newProduct, setNewProduct] = useState({code:"", desc:"", unit:"1 لتر", boxes:0, itemsPerBox:12, qty:0});
-  const [newWorker, setNewWorker] = useState({name:"", phone:""});
-  const [attendanceForm, setAttendanceForm] = useState({});
-  const toastId = useRef(0);
-  const notify = (msg,type="success")=>{
-    const id=++toastId.current;
-    setToasts(t=>[...t,{id,msg,type}]);
-    setTimeout(()=> setToasts(t=>t.filter(x=>x.id!==id)),3500);
-  };
+  const [logged,setLogged]=useState(localStorage.getItem("factory_logged")==="1");
+  const [tab,setTab]=useState("dashboard");
+  const [menu,setMenu]=useState(false);
+  const [products,setProducts]=useState([]);
+  const [production,setProduction]=useState([]);
+  const [stockOut,setStockOut]=useState([]);
+  const [workers,setWorkers]=useState([]);
+  const [attendance,setAttendance]=useState({});
+  const [toasts,setToasts]=useState([]);
+  const [showProdModal,setShowProdModal]=useState(false);
+  const [showWorkerModal,setShowWorkerModal]=useState(false);
+  const [editProdId,setEditProdId]=useState("");
+  const [editWorkerId,setEditWorkerId]=useState("");
+  const [attDate,setAttDate]=useState(new Date().toISOString().split('T')[0]);
+  const [filterDate,setFilterDate]=useState(new Date().toISOString().split('T')[0]);
+  const [search,setSearch]=useState("");
+  const [formProd,setFormProd]=useState({worker:"",productRaw:"",qty:"",date:new Date().toISOString().split('T')[0],notes:""});
+  const [formOut,setFormOut]=useState({productRaw:"",qty:"",date:new Date().toISOString().split('T')[0],notes:""});
+  const [newProd,setNewProd]=useState({code:"",desc:"",unit:"1 لتر",boxes:0,itemsPerBox:12,minStock:10});
+  const [newWorker,setNewWorker]=useState({name:"",phone:""});
+  const [attForm,setAttForm]=useState({});
+  const tid=useRef(0);
+  const notify=(m,t="ok")=>{const id=++tid.current; setToasts(v=>[...v,{id,m,t}]); setTimeout(()=>setToasts(v=>v.filter(x=>x.id!==id)),3500)};
 
   useEffect(()=>{
-    const unsubP = db.collection("products").onSnapshot(snap=>{ setProducts(snap.docs.map(d=>({id:d.id, ...d.data()}))); });
-    const unsubW = db.collection("workers").onSnapshot(snap=>{ setWorkers(snap.docs.map(d=>({id:d.id, ...d.data()}))); });
-    const unsubProd = db.collection("productionLogs").orderBy("createdAt","desc").limit(200).onSnapshot(snap=>{ setProduction(snap.docs.map(d=>({id:d.id, ...d.data()}))); });
-    const unsubOut = db.collection("stockOutLogs").orderBy("createdAt","desc").limit(200).onSnapshot(snap=>{ setStockOut(snap.docs.map(d=>({id:d.id, ...d.data()}))); });
-    const unsubAtt = db.collection("attendanceLogs").onSnapshot(snap=>{ const obj={}; snap.docs.forEach(d=>{ obj[d.id]=d.data().records||{} }); setAttendance(obj); });
-    return ()=>{ unsubP(); unsubW(); unsubProd(); unsubOut(); unsubAtt(); };
+    const u1=db.collection("products").onSnapshot(s=>setProducts(s.docs.map(d=>({id:d.id,...d.data()}))));
+    const u2=db.collection("workers").onSnapshot(s=>setWorkers(s.docs.map(d=>({id:d.id,...d.data()}))));
+    const u3=db.collection("productionLogs").orderBy("createdAt","desc").limit(300).onSnapshot(s=>setProduction(s.docs.map(d=>({id:d.id,...d.data()}))));
+    const u4=db.collection("stockOutLogs").orderBy("createdAt","desc").limit(300).onSnapshot(s=>setStockOut(s.docs.map(d=>({id:d.id,...d.data()}))));
+    const u5=db.collection("attendanceLogs").onSnapshot(s=>{const o={}; s.docs.forEach(d=>o[d.id]=d.data().records||{}); setAttendance(o)});
+    return ()=>{u1();u2();u3();u4();u5();};
   },[]);
 
   useEffect(()=>{
-    const rec = attendance[attendanceDate] || {};
-    const init={};
-    workers.forEach(w=>{ init[w.name]=rec[w.name]||"حاضر" });
-    setAttendanceForm(init);
-  },[attendanceDate, attendance, workers]);
+    const rec=attendance[attDate]||{};
+    const init={}; workers.forEach(w=>init[w.name]=rec[w.name]||"حاضر");
+    setAttForm(init);
+  },[attDate,attendance,workers]);
 
-  const stockOf = (code)=>{
-    const base = products.find(p=>p.code===code)?.qty || 0;
-    const prod = production.filter(p=>p.code===code).reduce((a,b)=>a+Number(b.qty||0),0);
-    const out = stockOut.filter(p=>p.code===code).reduce((a,b)=>a+Number(b.qty||0),0);
-    return base + prod - out;
+  const stockOf=(code)=>{
+    const base=products.find(p=>p.code===code)?.qty||0;
+    const pr=production.filter(p=>p.code===code).reduce((a,b)=>a+Number(b.qty||0),0);
+    const out=stockOut.filter(p=>p.code===code).reduce((a,b)=>a+Number(b.qty||0),0);
+    return base+pr-out;
+  };
+  const getMin=(code)=>{ const p=products.find(x=>x.code===code); return Number(p?.minStock||10); };
+  const low=products.filter(p=>stockOf(p.code)<=getMin(p.code));
+  const todayProd=production.filter(p=>p.date===new Date().toISOString().split('T')[0]);
+  const filtProd=filterDate?production.filter(p=>p.date===filterDate):production;
+  const filtProducts=products.filter(p=>`${p.code} ${p.desc}`.toLowerCase().includes(search.toLowerCase()));
+
+  const handleLogin=(e)=>{
+    e.preventDefault();
+    const u=document.getElementById("u").value.trim();
+    const pw=document.getElementById("pw").value.trim();
+    if(u==="admin" && pw==="admin123"){setLogged(true); localStorage.setItem("factory_logged","1"); notify("مرحباً بك 👋");}
+    else document.getElementById("err").classList.remove("hidden");
   };
 
-  const lowStock = products.filter(p=>stockOf(p.code)<=5);
-  const todayProd = production.filter(p=>p.date===new Date().toISOString().split('T')[0]);
-  const filteredProduction = filterDate ? production.filter(p=>p.date===filterDate) : production;
-  const filteredProducts = products.filter(p=>`${p.code} ${p.desc}`.toLowerCase().includes(searchProduct.toLowerCase()));
-  const totalWorkersProd={};
-  todayProd.forEach(p=>{ totalWorkersProd[p.worker]=(totalWorkersProd[p.worker]||0)+Number(p.qty) });
-
-  const handleLogin = (e)=>{
+  const handleSaveProd=async(e)=>{
     e.preventDefault();
-    const u=document.getElementById("login-username")?.value.trim();
-    const pw=document.getElementById("login-password")?.value.trim();
-    const savedU=localStorage.getItem("sys_username")||"admin";
-    const savedP=localStorage.getItem("sys_password")||"admin123";
-    if(u===savedU && pw===savedP){ setLogged(true); notify("مرحباً بك - Firebase متصل ✅"); }
-    else{ document.getElementById("login-error")?.classList.remove("hidden"); }
+    const code=newProd.code.toUpperCase().trim();
+    if(!code) return notify("أدخل الكود","err");
+    if(!editProdId && products.some(p=>p.code===code)) return notify("الكود موجود","err");
+    const qty=Number(newProd.boxes)*Number(newProd.itemsPerBox);
+    const data={code,desc:newProd.desc,unit:newProd.unit,boxes:Number(newProd.boxes),itemsPerBox:Number(newProd.itemsPerBox),qty,minStock:Number(newProd.minStock||10)};
+    if(editProdId){await db.collection("products").doc(editProdId).update(data); notify("تم التحديث");}
+    else await db.collection("products").add({...data,createdAt:new Date()});
+    setShowProdModal(false); setEditProdId(""); setNewProd({code:"",desc:"",unit:"1 لتر",boxes:0,itemsPerBox:12,minStock:10});
   };
 
-  const handleAddProduct = async (e)=>{
+  const handleSaveWorker=async(e)=>{
     e.preventDefault();
-    if(!newProduct.code) return notify("أدخل كود المنتج","error");
-    const code=newProduct.code.toUpperCase();
-    if(!editProductId && products.some(p=>p.code===code)) return notify("الكود موجود مسبقاً","error");
-    const data={code, desc:newProduct.desc, unit:newProduct.unit, boxes:Number(newProduct.boxes), itemsPerBox:Number(newProduct.itemsPerBox), qty:Number(newProduct.boxes)*Number(newProduct.itemsPerBox)};
-    if(editProductId){ await db.collection("products").doc(editProductId).update(data); notify("تم تحديث المنتج"); }
-    else { await db.collection("products").add({...data, createdAt:new Date()}); notify("تمت إضافة المنتج إلى Firebase"); }
-    setShowProductModal(false); setEditProductId(""); setNewProduct({code:"",desc:"",unit:"1 لتر",boxes:0,itemsPerBox:12,qty:0});
-  };
-
-  const handleAddWorker = async (e)=>{
-    e.preventDefault();
-    if(!newWorker.name) return notify("أدخل اسم العامل","error");
-    if(editWorkerId){ await db.collection("workers").doc(editWorkerId).update(newWorker); notify("تم تحديث العامل"); }
-    else { await db.collection("workers").add({...newWorker, createdAt:new Date()}); notify("تمت إضافة العامل"); }
+    if(!newWorker.name) return notify("أدخل الاسم","err");
+    if(editWorkerId){await db.collection("workers").doc(editWorkerId).update(newWorker); notify("تم التحديث");}
+    else await db.collection("workers").add({...newWorker,createdAt:new Date()});
     setShowWorkerModal(false); setEditWorkerId(""); setNewWorker({name:"",phone:""});
   };
 
-  const handleProduction = async (e)=>{
+  const handleProd=async(e)=>{
     e.preventDefault();
     const code=formProd.productRaw.split(" - ")[0].trim().toUpperCase();
-    const prod=products.find(p=>p.code===code);
-    if(!prod) return notify("اختر منتج صحيح","error");
-    if(!formProd.worker) return notify("اختر العامل","error");
-    await db.collection("productionLogs").add({date:formProd.date, worker:formProd.worker, code:prod.code, desc:prod.desc, unit:prod.unit, qty:Number(formProd.qty), notes:formProd.notes, createdAt:new Date()});
-    setFormProd({worker:"",productRaw:"",qty:"",date:formProd.date,notes:""}); notify("تم تسجيل الإنتاج");
+    const p=products.find(x=>x.code===code);
+    if(!p) return notify("منتج غير صحيح","err");
+    await db.collection("productionLogs").add({date:formProd.date,worker:formProd.worker,code:p.code,desc:p.desc,unit:p.unit,qty:Number(formProd.qty),notes:formProd.notes,createdAt:new Date()});
+    setFormProd({worker:"",productRaw:"",qty:"",date:formProd.date,notes:""}); notify("تم التسجيل");
   };
 
-  const handleStockOut = async (e)=>{
+  const handleOut=async(e)=>{
     e.preventDefault();
     const code=formOut.productRaw.split(" - ")[0].trim().toUpperCase();
-    const prod=products.find(p=>p.code===code);
-    if(!prod) return notify("اختر منتج صحيح","error");
-    if(Number(formOut.qty) > stockOf(code)) return notify("الكمية أكبر من المخزون ("+stockOf(code)+")","error");
-    await db.collection("stockOutLogs").add({date:formOut.date, code:prod.code, desc:prod.desc, unit:prod.unit, qty:Number(formOut.qty), notes:formOut.notes, createdAt:new Date()});
-    setFormOut({productRaw:"",qty:"",date:formOut.date,notes:""}); notify("تم تسجيل خروج البضاعة");
+    const p=products.find(x=>x.code===code);
+    if(!p) return notify("منتج غير صحيح","err");
+    if(Number(formOut.qty)>stockOf(code)) return notify("الكمية أكبر من المخزون ("+stockOf(code)+")","err");
+    await db.collection("stockOutLogs").add({date:formOut.date,code:p.code,desc:p.desc,unit:p.unit,qty:Number(formOut.qty),notes:formOut.notes,createdAt:new Date()});
+    setFormOut({productRaw:"",qty:"",date:formOut.date,notes:""}); notify("تم تسجيل الخروج");
   };
 
-  const handleAttendance = async (e)=>{
+  const handleAtt=async(e)=>{
     e.preventDefault();
-    await db.collection("attendanceLogs").doc(attendanceDate).set({date:attendanceDate, records:attendanceForm, updatedAt:new Date()},{merge:true});
-    notify("تم حفظ حضور "+attendanceDate);
+    await db.collection("attendanceLogs").doc(attDate).set({date:attDate,records:attForm,updatedAt:new Date()},{merge:true});
+    notify("تم حفظ الحضور");
+  };
+
+  const handleExcelUpload=async(e)=>{
+    const file=e.target.files[0]; if(!file) return;
+    try{
+      const data=await file.arrayBuffer();
+      const wb=XLSX.read(data);
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const rows=XLSX.utils.sheet_to_json(ws);
+      if(!rows.length) return notify("الملف فارغ","err");
+      let count=0;
+      for(const r of rows){
+        const code=(r.code||r.Code||r["الكود"]||"").toString().toUpperCase().trim();
+        if(!code) continue;
+        const desc=r.desc||r.Desc||r["الوصف"]||r["description"]||"";
+        const unit=r.unit||r["الوحدة"]||"1 لتر";
+        const boxes=Number(r.boxes||r["العلب"]||0);
+        const items=Number(r.itemsPerBox||r["القطع"]||12);
+        const minStock=Number(r.minStock||r["الحد الأدنى"]||10);
+        const qty=boxes*items;
+        const exist=products.find(p=>p.code===code);
+        if(exist){ await db.collection("products").doc(exist.id).update({desc,unit,boxes,itemsPerBox:items,qty,minStock}); }
+        else { await db.collection("products").add({code,desc,unit,boxes,itemsPerBox:items,qty,minStock,createdAt:new Date()}); }
+        count++;
+      }
+      notify(`تم رفع ${count} منتج من Excel ✅`);
+    }catch(err){ notify("خطأ في قراءة Excel: "+err.message,"err"); }
+    e.target.value="";
   };
 
   const tabs=[
-    {id:"dashboard",title:"لوحة المؤشرات",icon:"fa-chart-pie",accent:"#3b82f6"},
-    {id:"production",title:"تسجيل الإنتاج",icon:"fa-clipboard-check",accent:"#10b981"},
-    {id:"attendance",title:"الحضور اليومي",icon:"fa-calendar-check",accent:"#0ea5e9"},
-    {id:"stockout",title:"خروج المنتوجات",icon:"fa-truck-fast",accent:"#f43f5e"},
-    {id:"workers",title:"تقارير العمال",icon:"fa-users",accent:"#8b5cf6"},
-    {id:"inventory",title:"مخزون المنتجات",icon:"fa-boxes-stacked",accent:"#06b6d4"},
-    {id:"analytics",title:"التحليل",icon:"fa-chart-line",accent:"#2563eb"},
-    {id:"workers-info",title:"معلومات العمال",icon:"fa-address-card",accent:"#f59e0b"},
+    {id:"dashboard",title:"لوحة المؤشرات",icon:"fa-chart-pie"},
+    {id:"production",title:"تسجيل الإنتاج",icon:"fa-clipboard-check"},
+    {id:"attendance",title:"الحضور اليومي",icon:"fa-calendar-check"},
+    {id:"stockout",title:"خروج المنتوجات",icon:"fa-truck-fast"},
+    {id:"workers",title:"تقارير العمال",icon:"fa-users"},
+    {id:"inventory",title:"مخزون المنتجات",icon:"fa-boxes-stacked"},
+    {id:"workers-info",title:"معلومات العمال",icon:"fa-address-card"},
   ];
-
-  const selectTab = (id,title)=>{ setTab(id); setTabTitle(title); setMenuOpen(false); window.scrollTo({top:0,behavior:"smooth"}); };
 
   if(!logged){
     return (
-      <div>
+      <div className="min-h-screen grid place-items-center p-4">
         <div className="grid-bg"></div>
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-backdrop">
-          <div className="w-full max-w-[440px] modal-card p-[1px] overflow-hidden">
-            <div className="rounded-[27px] bg-white p-7 sm:p-8">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-14 h-14 rounded-[16px] bg-gradient-to-br from-[#2563eb] to-[#7c3aed] text-white grid place-items-center"><i className="fa-solid fa-industry"></i></div>
-                <div><h2 className="font-black text-[19px]">نظام المصنع السحابي</h2><p className="text-[11px] font-bold text-slate-500">Firebase • Linear × Stripe • Premium</p></div>
-              </div>
-              <div className="mb-6 rounded-2xl p-3.5 text-[11px] font-bold border bg-blue-50">تجريبي: <b>admin</b> / <b>admin123</b> — مربوط بـ Firestore</div>
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div><label className="block text-[11px] font-black mb-2">اسم المستخدم</label><input id="login-username" required placeholder="admin" className="input-premium !h-[52px]" /></div>
-                <div><label className="block text-[11px] font-black mb-2">كلمة المرور</label><input id="login-password" type="password" required placeholder="••••••••" className="input-premium !h-[52px]" /></div>
-                <p id="login-error" className="hidden text-[12px] font-black text-white bg-red-500 rounded-2xl p-3 text-center">❌ خطأ</p>
-                <button type="submit" className="w-full h-[54px] rounded-2xl bg-slate-900 text-white font-black">دخول →</button>
-              </form>
-            </div>
+        <div className="glow w-[600px] h-[600px] bg-blue-500/20 -top-[200px] -right-[200px]"></div>
+        <div className="w-full max-w-[420px] card p-8">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-12 h-12 rounded-xl bg-slate-900 text-white grid place-items-center"><i className="fa-solid fa-industry"></i></div>
+            <div><div className="font-black text-[18px]">نظام المصنع</div><div className="text-[11px] text-slate-500 font-bold">تسجيل الدخول</div></div>
           </div>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <input id="u" className="input" placeholder="اسم المستخدم - admin" required/>
+            <input id="pw" type="password" className="input" placeholder="كلمة المرور - admin123" required/>
+            <div id="err" className="hidden bg-red-500 text-white rounded-xl p-3 text-[12px] font-black text-center">بيانات خاطئة</div>
+            <button className="btn btn-dark w-full">دخول للنظام</button>
+          </form>
         </div>
       </div>
     )
   }
 
   return (
-    <div dir="rtl" lang="ar" data-theme={theme} className="min-h-screen font-[Cairo]">
+    <div data-theme={theme}>
       <div className="grid-bg"></div>
-      <div className="glow-orb w-[720px] h-[720px] bg-[#3b82f6]/20 -top-[240px] -right-[200px]"></div>
-      <header className="sticky top-0 z-40 border-b backdrop-blur-[20px]" style={{background:"color-mix(in srgb, var(--card) 84%, transparent)",borderColor:"var(--border)"}}>
-        <div className="mx-auto max-w-[1440px] px-3 sm:px-6 h-[70px] flex items-center justify-between gap-3">
+      <div className="glow w-[720px] h-[720px] bg-blue-500/10 -top-[240px] -right-[200px]"></div>
+
+      <header className="sticky top-0 z-40 border-b backdrop-blur-xl" style={{background:"color-mix(in srgb, var(--card) 85%, transparent)",borderColor:"var(--border)"}}>
+        <div className="mx-auto max-w-[1440px] px-4 h-[64px] flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <button onClick={()=>setMenuOpen(true)} className="lg:hidden w-11 h-11 grid place-items-center rounded-2xl text-white bg-slate-900"><i className="fa-solid fa-bars"></i></button>
-            <div className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-[#2563eb] to-[#7c3aed] grid place-items-center text-white"><i className="fa-solid fa-industry"></i></div>
-            <div className="hidden sm:block"><h1 className="font-black text-[13px] flex items-center gap-2">نظام تسيير الإنتاج <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#3b82f6] text-white">FIREBASE</span></h1><div className="text-[11px] text-slate-500 font-bold">Live Firestore • eur3</div></div>
-            <div className="sm:hidden font-black text-[13px]">{tabTitle}</div>
+            <button onClick={()=>setMenu(true)} className="lg:hidden w-10 h-10 grid place-items-center rounded-xl bg-slate-900 text-white"><i className="fa-solid fa-bars"></i></button>
+            <div className="w-9 h-9 rounded-xl bg-slate-900 text-white grid place-items-center"><i className="fa-solid fa-industry text-[14px]"></i></div>
+            <div className="hidden sm:block leading-tight"><div className="font-black text-[13px]">نظام تسيير الإنتاج</div><div className="text-[10px] font-bold text-slate-500">{tabs.find(t=>t.id===tab)?.title}</div></div>
           </div>
-          <div className="hidden lg:flex items-center gap-1 p-1 rounded-2xl border bg-slate-50">
-            {tabs.slice(0,4).map(t=>(
-              <button key={t.id} onClick={()=>selectTab(t.id,t.title)} className={`h-9 px-3.5 rounded-xl text-[12px] font-black flex items-center gap-1.5 border ${tab===t.id?'bg-white shadow':'border-transparent text-slate-500'}`}><i className={`fa-solid ${t.icon}`} style={{color:t.accent}}></i> {t.title}</button>
-            ))}
-          </div>
+
           <div className="flex items-center gap-2">
-            <button onClick={()=>setTheme(theme==="light"?"dark":"light")} className="w-[72px] h-11 rounded-full border p-1 flex items-center bg-slate-50"><div className={`w-9 h-9 rounded-full grid place-items-center shadow transition-all ${theme==="dark"?"bg-slate-900 text-yellow-400":"bg-white translate-x-[34px] text-amber-500"}`}><i className={`fa-solid ${theme==="dark"?"fa-moon":"fa-sun"}`}></i></div></button>
-            <button onClick={()=>setLogged(false)} className="w-11 h-11 grid place-items-center rounded-2xl border bg-red-50 text-red-500"><i className="fa-solid fa-right-from-bracket"></i></button>
+            <div className="hidden lg:flex items-center gap-1 p-1 rounded-full border bg-slate-50" style={{borderColor:"var(--border)"}}>
+              {tabs.slice(0,5).map(t=>{
+                const active=tab===t.id;
+                return <button key={t.id} onClick={()=>setTab(t.id)} className={`h-8 px-3 rounded-full text-[11px] font-black flex items-center gap-1.5 transition ${active?'bg-slate-900 text-white shadow':'text-slate-500 hover:bg-white'}`}><i className={`fa-solid ${t.icon} text-[11px]`}></i>{t.title}</button>
+              })}
+            </div>
+
+            <button onClick={()=>setTheme(theme==="light"?"dark":"light")} className="toggle" title="تبديل المظهر">
+              <div className="toggle-dot"><i className={`fa-solid ${theme==="dark"?"fa-moon":"fa-sun"} text-[14px]`}></i></div>
+            </button>
+
+            <button onClick={()=>{localStorage.removeItem("factory_logged"); setLogged(false)}} className="w-10 h-10 grid place-items-center rounded-xl border bg-white text-red-500"><i className="fa-solid fa-right-from-bracket"></i></button>
           </div>
         </div>
       </header>
 
-      {menuOpen && (
-        <div className="fixed inset-0 z-[60]"><div onClick={()=>setMenuOpen(false)} className="absolute inset-0 bg-black/40"></div><aside className="absolute top-0 right-0 h-full w-[86%] max-w-[360px] bg-white border-l shadow-2xl p-3 space-y-1.5"><div className="flex justify-between p-2 border-b mb-2"><b>القائمة</b><button onClick={()=>setMenuOpen(false)}><i className="fa-solid fa-xmark"></i></button></div>{tabs.map(t=>(<button key={t.id} onClick={()=>selectTab(t.id,t.title)} className={`w-full h-[54px] flex items-center gap-3 px-4 rounded-2xl font-black text-[13px] border ${tab===t.id?'bg-slate-900 text-white':'bg-white'}`}><i className={`fa-solid ${t.icon}`} style={{color:t.accent}}></i> {t.title}</button>))}</aside></div>
+      {menu && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <div onClick={()=>setMenu(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+          <div className="absolute top-0 right-0 h-full w-[80%] max-w-[300px] bg-white border-l shadow-2xl p-3 space-y-1 overflow-y-auto">
+            <div className="flex justify-between items-center p-2 mb-2 border-b"><b className="text-[13px]">القائمة</b><button onClick={()=>setMenu(false)} className="w-8 h-8 grid place-items-center rounded-lg border"><i className="fa-solid fa-xmark"></i></button></div>
+            {tabs.map(t=><button key={t.id} onClick={()=>{setTab(t.id); setMenu(false)}} className={`w-full h-12 flex items-center gap-3 px-4 rounded-xl font-black text-[12px] ${tab===t.id?'bg-slate-900 text-white':'bg-slate-50'}`}><i className={`fa-solid ${t.icon}`}></i>{t.title}</button>)}
+          </div>
+        </div>
       )}
 
-      <main className="mx-auto max-w-[1440px] px-3 sm:px-6 py-6 pb-[112px] lg:pb-6 relative z-[1]">
+      <main className="mx-auto max-w-[1440px] px-3 sm:px-4 py-5 pb-[96px] lg:pb-5 relative z-[1]">
+
         {tab==="dashboard" && (
           <div className="space-y-4">
-            <div className="premium-card p-4 flex flex-wrap justify-between gap-3"><div className="font-black flex items-center gap-2"><span className="w-8 h-8 rounded-xl bg-yellow-400 grid place-items-center">⚡</span> Firebase Live - نفس الستايل الأصلي</div><div className="flex gap-2"><button onClick={()=>selectTab("production","تسجيل الإنتاج")} className="h-11 px-4 rounded-2xl bg-blue-600 text-white font-black text-[12px]">+ إنتاج</button><button onClick={()=>selectTab("inventory","المخزون")} className="h-11 px-4 rounded-2xl border bg-white font-black text-[12px]">المخزون</button></div></div>
+            <div className="card p-4 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2 font-black text-[13px]"><div className="w-8 h-8 rounded-lg bg-amber-400 grid place-items-center">⚡</div>لوحة التحكم</div>
+              <div className="flex gap-2">
+                <button onClick={()=>setTab("production")} className="btn btn-primary h-9 text-[11px]"><i className="fa-solid fa-plus"></i>إنتاج جديد</button>
+                <button onClick={()=>setTab("inventory")} className="btn h-9 text-[11px] border bg-white">المخزون</button>
+              </div>
+            </div>
+
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-              <div className="premium-card p-4"><div className="text-[11px] text-slate-500 font-black">إجمالي المنتجات</div><div className="text-[28px] font-black">{products.length}</div><div className="text-[11px] text-emerald-600">Firestore Live</div></div>
-              <div className="premium-card p-4"><div className="text-[11px] text-slate-500 font-black">إنتاج اليوم</div><div className="text-[28px] font-black">{todayProd.reduce((a,b)=>a+Number(b.qty),0)}</div><div className="text-[11px]">{todayProd.length} عملية</div></div>
-              <div className="premium-card p-4"><div className="text-[11px] text-slate-500 font-black">خروج اليوم</div><div className="text-[28px] font-black">{stockOut.filter(p=>p.date===new Date().toISOString().split('T')[0]).reduce((a,b)=>a+Number(b.qty),0)}</div></div>
-              <div className="premium-card p-4 border-red-200"><div className="text-[11px] text-slate-500 font-black">منخفض المخزون</div><div className="text-[28px] font-black text-red-500">{lowStock.length}</div></div>
+              <div className="card p-4"><div className="text-[10px] font-black text-slate-500">إجمالي المنتجات</div><div className="text-[26px] font-black mt-1">{products.length}</div><div className="text-[10px] text-slate-400 mt-1">{low.length} قريب من النفاد</div></div>
+              <div className="card p-4"><div className="text-[10px] font-black text-slate-500">إنتاج اليوم</div><div className="text-[26px] font-black mt-1">{todayProd.reduce((a,b)=>a+Number(b.qty),0)}</div><div className="text-[10px] text-slate-400 mt-1">{todayProd.length} عملية</div></div>
+              <div className="card p-4"><div className="text-[10px] font-black text-slate-500">خروج اليوم</div><div className="text-[26px] font-black mt-1">{stockOut.filter(p=>p.date===new Date().toISOString().split('T')[0]).reduce((a,b)=>a+Number(b.qty),0)}</div></div>
+              <div className="card p-4 border-red-200 bg-red-50/50"><div className="text-[10px] font-black text-red-600">قريب من النفاد</div><div className="text-[26px] font-black text-red-600 mt-1">{low.length}</div><div className="text-[10px] text-red-400 mt-1">يحتاج متابعة</div></div>
             </div>
-            <div className="premium-card overflow-hidden"><div className="p-4 flex justify-between border-b bg-red-50"><h3 className="font-black text-[13px] text-red-600">قليل المخزون</h3><span className="text-[11px] px-3 py-1 rounded-full bg-red-500 text-white font-black">{lowStock.length}</span></div><table className="w-full text-right text-[13px]"><thead><tr><th className="p-3">الكود</th><th className="p-3">الوصف</th><th className="p-3">المخزون</th></tr></thead><tbody>{lowStock.map(p=><tr key={p.id} className="border-t"><td className="p-3 font-mono font-black">{p.code}</td><td className="p-3">{p.desc}</td><td className="p-3"><span className="px-3 py-1 rounded-full bg-red-500 text-white font-black">{stockOf(p.code)}</span></td></tr>)}</tbody></table></div>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="premium-card p-5"><h3 className="font-black text-[13px] mb-3">ملخص إنتاج اليوم</h3>{Object.keys(totalWorkersProd).length===0?<div className="text-center py-8 text-slate-400">لا يوجد إنتاج</div>:Object.entries(totalWorkersProd).map(([n,q])=><div key={n} className="flex justify-between p-3 rounded-2xl border bg-slate-50 mb-2"><span className="font-black">{n}</span><span className="px-3 py-1 rounded-full bg-slate-900 text-white font-black text-[11px]">{q} وحدة</span></div>)}</div>
-              <div className="premium-card p-5"><h3 className="font-black text-[13px] mb-3">آخر خروج</h3><table className="w-full text-[12px]"><thead><tr><th>المنتج</th><th>الكمية</th><th>التاريخ</th></tr></thead><tbody>{stockOut.slice(0,5).map(s=><tr key={s.id} className="border-t"><td className="p-2 font-bold">{s.code} - {s.desc}</td><td className="p-2">{s.qty}</td><td className="p-2">{s.date}</td></tr>)}</tbody></table></div>
-            </div>
+
+            {low.length>0 && (
+              <div className="card overflow-hidden border-amber-200">
+                <div className="p-4 flex items-center justify-between bg-amber-50 border-b"><h3 className="font-black text-[12px] text-amber-800"><i className="fa-solid fa-triangle-exclamation ml-2"></i>منتجات قريبة من النفاد - حسب الحد الأدنى</h3><span className="text-[10px] px-2.5 py-1 rounded-full bg-amber-500 text-white font-black">{low.length}</span></div>
+                <div className="overflow-x-auto">
+                  <table className="w-full"><thead className="table-head"><tr><th>الكود</th><th>الوصف</th><th>الحالي / الأدنى</th><th>النقص</th></tr></thead>
+                  <tbody>{low.map(p=>{const cur=stockOf(p.code); const mn=getMin(p.code); return <tr key={p.id} className="table-row"><td data-label="الكود" className="font-mono font-black">{p.code}</td><td data-label="الوصف" className="font-bold">{p.desc}</td><td data-label="المخزون"><span className="px-2.5 py-1 rounded-full bg-red-500 text-white font-black text-[11px]">{cur} / {mn}</span></td><td data-label="النقص" className="font-black text-red-600">{mn-cur} وحدة</td></tr>})}</tbody></table>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
         {tab==="production" && (
-          <div className="max-w-[720px] mx-auto premium-card overflow-hidden">
-            <div className="p-6 border-b bg-gradient-to-br from-emerald-50 to-white"><h2 className="font-black flex items-center gap-2"><i className="fa-solid fa-clipboard-check text-emerald-600"></i> تسجيل إنتاج - Firebase</h2></div>
-            <form onSubmit={handleProduction} className="p-6 space-y-4">
-              <select value={formProd.worker} onChange={e=>setFormProd({...formProd, worker:e.target.value})} className="input-premium" required><option value="">-- اختر العامل --</option>{workers.map(w=><option key={w.id} value={w.name}>{w.name}</option>)}</select>
-              <input list="prod-list" value={formProd.productRaw} onChange={e=>setFormProd({...formProd, productRaw:e.target.value})} placeholder="كود المنتج - الوصف" className="input-premium" required />
-              <datalist id="prod-list">{products.map(p=><option key={p.id} value={`${p.code} - ${p.desc} (${p.unit})`} />)}</datalist>
-              <div className="grid grid-cols-2 gap-3"><input type="number" value={formProd.qty} onChange={e=>setFormProd({...formProd, qty:e.target.value})} placeholder="الكمية" className="input-premium" required /><input type="date" value={formProd.date} onChange={e=>setFormProd({...formProd, date:e.target.value})} className="input-premium" /></div>
-              <input value={formProd.notes} onChange={e=>setFormProd({...formProd, notes:e.target.value})} placeholder="ملاحظات" className="input-premium" />
-              <button type="submit" className="w-full h-[54px] rounded-2xl bg-slate-900 text-white font-black">حفظ في Firebase</button>
+          <div className="max-w-[560px] mx-auto card overflow-hidden">
+            <div className="p-5 border-b"><h2 className="font-black text-[14px]"><i className="fa-solid fa-clipboard-check text-emerald-600 ml-2"></i>تسجيل الإنتاج</h2><p className="text-[11px] text-slate-500 mt-1">اختر العامل والمنتج</p></div>
+            <form onSubmit={handleProd} className="p-5 space-y-3">
+              <select value={formProd.worker} onChange={e=>setFormProd({...formProd,worker:e.target.value})} className="input" required><option value="">-- اختر العامل --</option>{workers.map(w=><option key={w.id} value={w.name}>{w.name}</option>)}</select>
+              <input list="plist" value={formProd.productRaw} onChange={e=>setFormProd({...formProd,productRaw:e.target.value})} placeholder="الكود - الوصف" className="input" required/>
+              <datalist id="plist">{products.map(p=><option key={p.id} value={`${p.code} - ${p.desc} (${p.unit})`} />)}</datalist>
+              <div className="grid grid-cols-2 gap-2"><input type="number" value={formProd.qty} onChange={e=>setFormProd({...formProd,qty:e.target.value})} placeholder="الكمية" className="input" required/><input type="date" value={formProd.date} onChange={e=>setFormProd({...formProd,date:e.target.value})} className="input"/></div>
+              <input value={formProd.notes} onChange={e=>setFormProd({...formProd,notes:e.target.value})} placeholder="ملاحظات (اختياري)" className="input"/>
+              <button className="btn btn-dark w-full h-12">حفظ الإنتاج</button>
             </form>
           </div>
         )}
 
         {tab==="inventory" && (
-          <div className="premium-card p-5">
-            <div className="flex flex-wrap justify-between gap-3 mb-4"><h2 className="font-black flex items-center gap-2"><i className="fa-solid fa-boxes-stacked text-cyan-600"></i> المخزون Live Firestore</h2><div className="flex gap-2"><input value={searchProduct} onChange={e=>setSearchProduct(e.target.value)} placeholder="بحث..." className="input-premium !h-11 !w-[200px]" /><button onClick={()=>{setEditProductId(""); setNewProduct({code:"",desc:"",unit:"1 لتر",boxes:0,itemsPerBox:12,qty:0}); setShowProductModal(true);}} className="h-11 px-4 rounded-2xl bg-slate-900 text-white font-black text-[12px]">+ منتج</button></div></div>
-            <div className="overflow-x-auto"><table className="w-full text-right text-[12px] table-premium"><thead><tr><th className="p-3">الكود</th><th className="p-3">الوصف</th><th className="p-3">الحالي</th><th className="p-3">إجراء</th></tr></thead><tbody>{filteredProducts.map(p=>{const cur=stockOf(p.code); return <tr key={p.id} className="border-t"><td className="p-3 font-mono font-black">{p.code}</td><td className="p-3 font-bold">{p.desc}</td><td className="p-3"><span className={`px-3 py-1 rounded-full font-black text-white ${cur<=5?'bg-red-500':'bg-slate-900'}`}>{cur}</span></td><td className="p-3 flex gap-1"><button onClick={()=>{setEditProductId(p.id); setNewProduct({code:p.code,desc:p.desc,unit:p.unit,boxes:p.boxes||0,itemsPerBox:p.itemsPerBox||1,qty:p.qty}); setShowProductModal(true);}} className="w-9 h-9 rounded-xl border grid place-items-center"><i className="fa-solid fa-pen"></i></button><button onClick={()=>db.collection("products").doc(p.id).delete()} className="w-9 h-9 rounded-xl border bg-red-50 text-red-500 grid place-items-center"><i className="fa-solid fa-trash"></i></button></td></tr>})}</tbody></table></div>
+          <div className="card p-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <h2 className="font-black text-[13px]"><i className="fa-solid fa-boxes-stacked text-cyan-600 ml-2"></i>مخزون المنتجات</h2>
+              <div className="flex flex-wrap items-center gap-2">
+                <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="بحث بالكود أو الوصف..." className="input h-10 w-[200px] text-[12px]"/>
+                <label className="btn h-10 text-[11px] border bg-white cursor-pointer">
+                  <i className="fa-solid fa-file-excel text-emerald-600"></i> رفع Excel
+                  <input type="file" accept=".xlsx,.xls,.csv" onChange={handleExcelUpload} className="hidden"/>
+                </label>
+                <button onClick={()=>{setEditProdId(""); setNewProd({code:"",desc:"",unit:"1 لتر",boxes:0,itemsPerBox:12,minStock:10}); setShowProdModal(true)}} className="btn btn-dark h-10 text-[11px]"><i className="fa-solid fa-plus"></i>منتج جديد</button>
+              </div>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full"><thead className="table-head"><tr><th>الكود</th><th>الوصف</th><th>الحالي</th><th>الأدنى</th><th>الحالة</th><th>إجراء</th></tr></thead>
+              <tbody>{filtProducts.map(p=>{
+                const cur=stockOf(p.code); const mn=getMin(p.code); const isLow=cur<=mn;
+                return <tr key={p.id} className="table-row"><td data-label="الكود" className="font-mono font-black text-[12px]">{p.code}</td><td data-label="الوصف" className="font-bold">{p.desc}</td><td data-label="الحالي"><span className={`px-2.5 py-1 rounded-full text-[11px] font-black text-white ${isLow?'bg-red-500':'bg-slate-900'}`}>{cur}</span></td><td data-label="الأدنى" className="font-black">{mn}</td><td data-label="الحالة"><span className={`text-[10px] px-2 py-1 rounded-full font-black ${isLow?'bg-amber-100 text-amber-700':'bg-emerald-100 text-emerald-700'}`}>{isLow?'قريب من النفاد':'متوفر'}</span></td><td data-label="إجراء" className="flex gap-1 justify-center"><button onClick={()=>{setEditProdId(p.id); setNewProd({code:p.code,desc:p.desc,unit:p.unit,boxes:p.boxes||0,itemsPerBox:p.itemsPerBox||12,minStock:p.minStock||10}); setShowProdModal(true)}} className="w-8 h-8 grid place-items-center rounded-lg border bg-white"><i className="fa-solid fa-pen text-[11px]"></i></button><button onClick={()=>db.collection("products").doc(p.id).delete()} className="w-8 h-8 grid place-items-center rounded-lg border bg-red-50 text-red-500"><i className="fa-solid fa-trash text-[11px]"></i></button></td></tr>
+              })}</tbody></table>
+            </div>
+            <div className="mt-4 p-3 rounded-xl bg-slate-50 border text-[11px] leading-relaxed"><b>صيغة Excel:</b> الأعمدة المطلوبة: <code>code, desc, unit, boxes, itemsPerBox, minStock</code> - مثال: <code>AC100 | اكتيف منظف | 1 لتر | 10 | 12 | 15</code></div>
           </div>
         )}
 
         {tab==="stockout" && (
-          <div className="grid lg:grid-cols-[380px_1fr] gap-4">
-            <div className="premium-card p-5 h-fit"><h2 className="font-black mb-4">خروج منتجات</h2><form onSubmit={handleStockOut} className="space-y-3"><input list="out-list" value={formOut.productRaw} onChange={e=>setFormOut({...formOut, productRaw:e.target.value})} placeholder="المنتج" className="input-premium" required /><datalist id="out-list">{products.map(p=><option key={p.id} value={`${p.code} - ${p.desc}`} />)}</datalist><input type="number" value={formOut.qty} onChange={e=>setFormOut({...formOut, qty:e.target.value})} placeholder="الكمية" className="input-premium" required /><input type="date" value={formOut.date} onChange={e=>setFormOut({...formOut, date:e.target.value})} className="input-premium" /><button className="w-full h-12 rounded-2xl bg-red-500 text-white font-black">تأكيد</button></form></div>
-            <div className="premium-card p-5"><h2 className="font-black mb-3">سجل الخروج</h2><table className="w-full text-[12px]"><thead><tr><th>التاريخ</th><th>الكود</th><th>الكمية</th><th>حذف</th></tr></thead><tbody>{stockOut.map(s=><tr key={s.id} className="border-t"><td className="p-2">{s.date}</td><td className="p-2 font-mono font-black text-red-500">{s.code}</td><td className="p-2">{s.qty}</td><td className="p-2"><button onClick={()=>db.collection("stockOutLogs").doc(s.id).delete()} className="text-red-500"><i className="fa-solid fa-trash"></i></button></td></tr>)}</tbody></table></div>
+          <div className="grid lg:grid-cols-[360px_1fr] gap-4">
+            <div className="card p-4 h-fit"><h2 className="font-black text-[13px] mb-3">خروج منتجات</h2><form onSubmit={handleOut} className="space-y-2.5"><input list="olist" value={formOut.productRaw} onChange={e=>setFormOut({...formOut,productRaw:e.target.value})} placeholder="اختر المنتج" className="input" required/><datalist id="olist">{products.map(p=><option key={p.id} value={`${p.code} - ${p.desc} | متاح: ${stockOf(p.code)}`} />)}</datalist><input type="number" value={formOut.qty} onChange={e=>setFormOut({...formOut,qty:e.target.value})} placeholder="الكمية" className="input" required/><input type="date" value={formOut.date} onChange={e=>setFormOut({...formOut,date:e.target.value})} className="input"/><button className="btn w-full bg-red-500 text-white h-11">تأكيد الخروج</button></form></div>
+            <div className="card p-4"><h2 className="font-black text-[13px] mb-3">سجل الخروج</h2><table className="w-full"><thead className="table-head"><tr><th>التاريخ</th><th>الكود</th><th>الكمية</th><th>حذف</th></tr></thead><tbody>{stockOut.slice(0,100).map(s=><tr key={s.id} className="table-row"><td data-label="التاريخ" className="text-[11px]">{s.date}</td><td data-label="الكود" className="font-mono font-black text-red-500 text-[12px]">{s.code}</td><td data-label="الكمية">{s.qty}</td><td data-label="حذف"><button onClick={()=>db.collection("stockOutLogs").doc(s.id).delete()} className="text-red-500"><i className="fa-solid fa-trash"></i></button></td></tr>)}</tbody></table></div>
           </div>
         )}
 
         {tab==="workers" && (
-          <div className="premium-card p-5"><div className="flex justify-between mb-4"><h2 className="font-black">سجل إنتاج العمال</h2><input type="date" value={filterDate} onChange={e=>setFilterDate(e.target.value)} className="input-premium !h-11 !w-[180px]" /></div><table className="w-full text-[12px]"><thead><tr><th>التاريخ</th><th>العامل</th><th>الكود</th><th>الكمية</th><th>حذف</th></tr></thead><tbody>{filteredProduction.map(p=><tr key={p.id} className="border-t"><td className="p-2">{p.date}</td><td className="p-2 font-black">{p.worker}</td><td className="p-2 font-mono">{p.code}</td><td className="p-2">{p.qty}</td><td className="p-2"><button onClick={()=>db.collection("productionLogs").doc(p.id).delete()} className="text-red-500"><i className="fa-solid fa-trash"></i></button></td></tr>)}</tbody></table></div>
+          <div className="card p-4"><div className="flex flex-wrap justify-between gap-2 mb-3"><h2 className="font-black text-[13px]">تقارير العمال</h2><input type="date" value={filterDate} onChange={e=>setFilterDate(e.target.value)} className="input h-10 w-[160px] text-[12px]"/></div><table className="w-full"><thead className="table-head"><tr><th>التاريخ</th><th>العامل</th><th>الكود</th><th>الكمية</th><th>حذف</th></tr></thead><tbody>{filtProd.map(p=><tr key={p.id} className="table-row"><td data-label="التاريخ" className="text-[11px]">{p.date}</td><td data-label="العامل" className="font-black">{p.worker}</td><td data-label="الكود" className="font-mono text-[12px]">{p.code}</td><td data-label="الكمية">{p.qty}</td><td data-label="حذف"><button onClick={()=>db.collection("productionLogs").doc(p.id).delete()} className="text-red-500"><i className="fa-solid fa-trash"></i></button></td></tr>)}</tbody></table></div>
         )}
 
         {tab==="attendance" && (
-          <div className="premium-card overflow-hidden"><div className="p-5 border-b flex justify-between"><h2 className="font-black">الحضور اليومي</h2><input type="date" value={attendanceDate} onChange={e=>setAttendanceDate(e.target.value)} className="input-premium !h-11 !w-[180px]" /></div><form onSubmit={handleAttendance}><table className="w-full text-[13px]"><thead><tr><th>#</th><th>العامل</th><th>الحالة</th></tr></thead><tbody>{workers.map((w,i)=><tr key={w.id} className="border-t"><td className="p-3">{i+1}</td><td className="p-3 font-black">{w.name}</td><td className="p-3"><select value={attendanceForm[w.name]||"حاضر"} onChange={e=>setAttendanceForm({...attendanceForm, [w.name]:e.target.value})} className="input-premium !h-11"><option>حاضر ✅</option><option>مريض 🤒</option><option>غير مبرر ⚠️</option><option>مسألة خاصة 📌</option><option>إستقل 🚪</option></select></td></tr>)}</tbody></table><div className="p-4 border-t bg-slate-50"><button className="h-12 px-6 rounded-2xl bg-[#0ea5e9] text-white font-black">حفظ في Firebase</button></div></form></div>
+          <div className="card overflow-hidden"><div className="p-4 border-b flex flex-wrap justify-between gap-2"><h2 className="font-black text-[13px]">الحضور اليومي</h2><input type="date" value={attDate} onChange={e=>setAttDate(e.target.value)} className="input h-10 w-[160px]"/></div><form onSubmit={handleAtt}><table className="w-full"><thead className="table-head"><tr><th>#</th><th>العامل</th><th>الحالة</th></tr></thead><tbody>{workers.map((w,i)=><tr key={w.id} className="table-row"><td data-label="#" className="text-[11px]">{i+1}</td><td data-label="العامل" className="font-black">{w.name}</td><td data-label="الحالة"><select value={attForm[w.name]||"حاضر"} onChange={e=>setAttForm({...attForm,[w.name]:e.target.value})} className="input h-10 text-[12px]"><option>حاضر ✅</option><option>مريض 🤒</option><option>غير مبرر ⚠️</option><option>مسألة خاصة 📌</option><option>إستقل 🚪</option></select></td></tr>)}</tbody></table><div className="p-4 border-t bg-slate-50 flex justify-end"><button className="btn btn-primary h-10 text-[12px]">حفظ الحضور</button></div></form></div>
         )}
 
         {tab==="workers-info" && (
-          <div className="premium-card p-5"><div className="flex justify-between mb-4"><h2 className="font-black">معلومات العمال</h2><button onClick={()=>{setEditWorkerId(""); setNewWorker({name:"",phone:""}); setShowWorkerModal(true);}} className="h-11 px-4 rounded-2xl bg-slate-900 text-white font-black text-[12px]">+ عامل</button></div><table className="w-full text-[13px]"><thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>إجراء</th></tr></thead><tbody>{workers.map((w,i)=><tr key={w.id} className="border-t"><td className="p-3">{i+1}</td><td className="p-3 font-black">{w.name}</td><td className="p-3 font-mono text-blue-600">{w.phone}</td><td className="p-3 flex gap-1"><button onClick={()=>{setEditWorkerId(w.id); setNewWorker({name:w.name,phone:w.phone}); setShowWorkerModal(true);}} className="w-9 h-9 rounded-xl border grid place-items-center"><i className="fa-solid fa-pen"></i></button><button onClick={()=>db.collection("workers").doc(w.id).delete()} className="w-9 h-9 rounded-xl border bg-red-50 text-red-500 grid place-items-center"><i className="fa-solid fa-trash"></i></button></td></tr>)}</tbody></table></div>
+          <div className="card p-4"><div className="flex justify-between mb-3"><h2 className="font-black text-[13px]">معلومات العمال</h2><button onClick={()=>{setEditWorkerId(""); setNewWorker({name:"",phone:""}); setShowWorkerModal(true)}} className="btn btn-dark h-10 text-[11px]">+ عامل</button></div><table className="w-full"><thead className="table-head"><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>إجراء</th></tr></thead><tbody>{workers.map((w,i)=><tr key={w.id} className="table-row"><td data-label="#">{i+1}</td><td data-label="الاسم" className="font-black">{w.name}</td><td data-label="الهاتف" className="font-mono text-blue-600 text-[12px]">{w.phone}</td><td data-label="إجراء" className="flex gap-1 justify-center"><button onClick={()=>{setEditWorkerId(w.id); setNewWorker({name:w.name,phone:w.phone}); setShowWorkerModal(true)}} className="w-8 h-8 grid place-items-center rounded-lg border bg-white"><i className="fa-solid fa-pen text-[11px]"></i></button><button onClick={()=>db.collection("workers").doc(w.id).delete()} className="w-8 h-8 grid place-items-center rounded-lg border bg-red-50 text-red-500"><i className="fa-solid fa-trash text-[11px]"></i></button></td></tr>)}</tbody></table></div>
         )}
-
-        {tab==="analytics" && (<div className="premium-card p-5"><h2 className="font-black mb-4">التحليل من Firebase</h2><p className="text-[12px]">إجمالي الإنتاج: {production.reduce((a,b)=>a+Number(b.qty),0)} وحدة • إجمالي الخروج: {stockOut.reduce((a,b)=>a+Number(b.qty),0)}</p></div>)}
       </main>
 
-      <nav className="lg:hidden fixed bottom-3 inset-x-3 z-40"><div className="mx-auto max-w-[560px] rounded-[24px] border bg-white/90 backdrop-blur shadow px-2 h-[74px] grid grid-cols-4 gap-1">{tabs.slice(0,4).map(t=>{const active=tab===t.id; return <button key={t.id} onClick={()=>selectTab(t.id,t.title)} className={`flex flex-col items-center justify-center gap-1 rounded-2xl ${active?'bg-slate-900 text-white shadow':'text-slate-500'}`}><i className={`fa-solid ${t.icon}`}></i><span className="text-[10px] font-black">{t.title.split(" ")[0]}</span></button>})}</div></nav>
+      <nav className="lg:hidden fixed bottom-3 inset-x-3 z-40">
+        <div className="mx-auto max-w-[420px] rounded-[20px] border bg-white/95 backdrop-blur-xl shadow-lg px-1 h-[64px] grid grid-cols-4 gap-1">
+          {tabs.slice(0,4).map(t=>{
+            const active=tab===t.id;
+            return <button key={t.id} onClick={()=>setTab(t.id)} className={`flex flex-col items-center justify-center gap-1 rounded-[14px] transition ${active?'bg-slate-900 text-white':'text-slate-400'}`}><i className={`fa-solid ${t.icon} text-[13px]`}></i><span className="text-[9px] font-black">{t.title.split(" ")[0]}</span></button>
+          })}
+        </div>
+      </nav>
 
-      {showProductModal && (<div className="fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4"><form onSubmit={handleAddProduct} className="bg-white rounded-[28px] p-6 w-full max-w-[480px] space-y-3"><h3 className="font-black">{editProductId?"تعديل":"منتج جديد - Firebase"}</h3><input value={newProduct.code} onChange={e=>setNewProduct({...newProduct, code:e.target.value})} placeholder="كود AC100" className="input-premium" required /><input value={newProduct.desc} onChange={e=>setNewProduct({...newProduct, desc:e.target.value})} placeholder="الوصف" className="input-premium" required /><input value={newProduct.unit} onChange={e=>setNewProduct({...newProduct, unit:e.target.value})} placeholder="الوحدة" className="input-premium" /><div className="grid grid-cols-2 gap-2"><input type="number" value={newProduct.boxes} onChange={e=>setNewProduct({...newProduct, boxes:e.target.value, qty:Number(e.target.value)*Number(newProduct.itemsPerBox)})} placeholder="العلب" className="input-premium" /><input type="number" value={newProduct.itemsPerBox} onChange={e=>setNewProduct({...newProduct, itemsPerBox:e.target.value, qty:Number(newProduct.boxes)*Number(e.target.value)})} placeholder="قطع/علبة" className="input-premium" /></div><div className="flex gap-2"><button type="submit" className="flex-1 h-12 rounded-2xl bg-slate-900 text-white font-black">حفظ</button><button type="button" onClick={()=>setShowProductModal(false)} className="flex-1 h-12 rounded-2xl border">إلغاء</button></div></form></div>)}
-      {showWorkerModal && (<div className="fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4"><form onSubmit={handleAddWorker} className="bg-white rounded-[28px] p-6 w-full max-w-[420px] space-y-3"><h3 className="font-black">عامل</h3><input value={newWorker.name} onChange={e=>setNewWorker({...newWorker, name:e.target.value})} placeholder="اسم العامل" className="input-premium" required /><input value={newWorker.phone} onChange={e=>setNewWorker({...newWorker, phone:e.target.value})} placeholder="الهاتف" className="input-premium" /><div className="flex gap-2"><button className="flex-1 h-12 rounded-2xl bg-slate-900 text-white font-black">حفظ</button><button type="button" onClick={()=>setShowWorkerModal(false)} className="flex-1 h-12 rounded-2xl border">إلغاء</button></div></form></div>)}
+      {showProdModal && (
+        <div className="fixed inset-0 z-50 modal-bg grid place-items-center p-4">
+          <form onSubmit={handleSaveProd} className="modal p-5 w-full max-w-[460px] space-y-3">
+            <h3 className="font-black text-[14px]">{editProdId?"تعديل المنتج":"منتج جديد"}</h3>
+            <input value={newProd.code} onChange={e=>setNewProd({...newProd,code:e.target.value})} placeholder="الكود - مثال AC100" className="input" required/>
+            <input value={newProd.desc} onChange={e=>setNewProd({...newProd,desc:e.target.value})} placeholder="الوصف - مثال اكتيف 1 لتر" className="input" required/>
+            <input value={newProd.unit} onChange={e=>setNewProd({...newProd,unit:e.target.value})} placeholder="الوحدة" className="input"/>
+            <div className="grid grid-cols-3 gap-2">
+              <input type="number" value={newProd.boxes} onChange={e=>setNewProd({...newProd,boxes:e.target.value})} placeholder="العلب" className="input"/>
+              <input type="number" value={newProd.itemsPerBox} onChange={e=>setNewProd({...newProd,itemsPerBox:e.target.value})} placeholder="قطع/علبة" className="input"/>
+              <input type="number" value={newProd.minStock} onChange={e=>setNewProd({...newProd,minStock:e.target.value})} placeholder="الحد الأدنى" className="input border-amber-300"/>
+            </div>
+            <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-[11px]"><i className="fa-solid fa-bell ml-1 text-amber-600"></i>الحد الأدنى: إذا نزل المخزون تحته سيظهر في "قريب من النفاد"</div>
+            <div className="flex gap-2"><button className="btn btn-dark flex-1">حفظ</button><button type="button" onClick={()=>setShowProdModal(false)} className="btn flex-1 border bg-white">إلغاء</button></div>
+          </form>
+        </div>
+      )}
 
-      <div className="fixed bottom-[88px] lg:bottom-6 right-3 z-[120] flex flex-col gap-2">
-        {toasts.map(t=>(<div key={t.id} className={`px-4 py-3 rounded-2xl text-white font-bold text-[12px] ${t.type==="error"?"bg-red-500":"bg-slate-900"}`}>{t.msg}</div>))}
+      {showWorkerModal && (
+        <div className="fixed inset-0 z-50 modal-bg grid place-items-center p-4">
+          <form onSubmit={handleSaveWorker} className="modal p-5 w-full max-w-[380px] space-y-3">
+            <h3 className="font-black text-[14px]">عامل</h3>
+            <input value={newWorker.name} onChange={e=>setNewWorker({...newWorker,name:e.target.value})} placeholder="اسم العامل" className="input" required/>
+            <input value={newWorker.phone} onChange={e=>setNewWorker({...newWorker,phone:e.target.value})} placeholder="الهاتف" className="input"/>
+            <div className="flex gap-2"><button className="btn btn-dark flex-1">حفظ</button><button type="button" onClick={()=>setShowWorkerModal(false)} className="btn flex-1 border bg-white">إلغاء</button></div>
+          </form>
+        </div>
+      )}
+
+      <div className="fixed bottom-[80px] lg:bottom-4 right-3 left-3 lg:left-auto z-[100] flex flex-col gap-2 max-w-[340px]">
+        {toasts.map(t=><div key={t.id} className={`px-4 py-3 rounded-xl text-white font-bold text-[12px] shadow-lg ${t.t==="err"?"bg-red-500":"bg-slate-900"}`}>{t.m}</div>)}
       </div>
     </div>
-  );
+  )
 }
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root=ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App/>);
 </script>
 </body>
