@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>مَدار | تسيير المصنع</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><span class="brand-logo">م</span><div><b>مَدار</b><small>تسيير المصنع</small></div></div>
+    <div class="factory"><span>م</span><div><small>مساحة العمل</small><b>مصنع مدار</b></div></div>
+    <nav>
+      <button class="nav-item active" data-page="dashboard"><span>▦</span>الرئيسية</button>
+      <button class="nav-item" data-page="production"><span>▥</span>الإنتاج <em>4</em></button>
+      <button class="nav-item" data-page="stock"><span>⬡</span>المخزون <em>12</em></button>
+      <button class="nav-item" data-page="workers"><span>♙</span>العمال</button>
+      <button class="nav-item" data-page="reports"><span>▤</span>التقارير</button>
+    </nav>
+    <div class="side-bottom"><button class="nav-item" data-page="settings"><span>⚙</span>الإعدادات</button><div class="user"><span>م.ع</span><div><b>محمد العروسي</b><small>مدير العمليات</small></div></div></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar"><button class="menu-button" id="menuButton">☰</button><div><small>السبت، 12 شتنبر 2026</small><h1>صباح الخير، محمد 👋</h1></div><div class="top-actions"><button class="theme" id="themeButton">☀️ <span>النمط الشمسي</span></button><button class="notify" id="notifyButton">🔔</button><span class="top-user">م.ع</span></div></header>
+
+    <div class="page" id="dashboardPage">
+      <section class="page-heading"><div><span class="kicker">● لوحة التحكم</span><h2>نظرة عامة على العمليات</h2><p>كل ما تحتاجه لمتابعة المصنع في مكان واحد.</p></div><button class="button primary" id="scrollTask">＋ إضافة مهمة</button></section>
+      <section class="stats"><article><span class="stat-icon green">▥</span><small>الإنتاج اليومي</small><strong>8,420</strong><p><b>↗ 12.8%</b> من أصل 10,000 وحدة</p></article><article><span class="stat-icon blue">⬡</span><small>قيمة المخزون</small><strong>248,650</strong><p><b>↗ 4.6%</b> درهم مغربي</p></article><article><span class="stat-icon purple">♙</span><small>العمال الحاضرون</small><strong>42 / 48</strong><p><b>↗ 3.2%</b> نسبة الحضور</p></article><article><span class="stat-icon orange">▣</span><small>الطلبيات الجاهزة</small><strong>126</strong><p><b>↗ 8.4%</b> طلبيات جاهزة</p></article></section>
+      <section class="columns"><article class="card production-card"><div class="card-title"><div><h3>خطة الإنتاج</h3><small>تقدم خطوط الإنتاج اليوم</small></div><button class="link" data-page-link="production">عرض الكل ←</button></div><div class="production-list"><div class="production-row"><span class="round green-bg">▥</span><div><div class="row-head"><b>زيت الزيتون البكر</b><small>PR-1042</small></div><p>خط التعبئة A · 08:00 — 12:30</p><div class="progress"><i style="width:78%"></i></div><small>78% مكتمل</small></div></div><div class="production-row"><span class="round blue-bg">▥</span><div><div class="row-head"><b>عسل جبلي طبيعي</b><small>PR-1043</small></div><p>خط التعبئة B · 10:30 — 15:00</p><div class="progress blue-progress"><i style="width:46%"></i></div><small>46% مكتمل</small></div></div><div class="production-row"><span class="round orange-bg">▥</span><div><div class="row-head"><b>مربى التين الموسمية</b><small>PR-1044</small></div><p>قسم التحضير · 14:00 — 18:30</p><div class="progress orange-progress"><i style="width:0"></i></div><small>في الانتظار</small></div></div></div></article>
+        <article class="card chart-card"><div class="card-title"><div><h3>مؤشر الإنتاج</h3><small>الوحدات المنتجة خلال الأسبوع</small></div><select><option>هذا الأسبوع</option><option>هذا الشهر</option></select></div><div class="big-number">52,840 <b>↗ 18.4%</b></div><div class="chart"><svg viewBox="0 0 520 180" preserveAspectRatio="none"><defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#39d39e" stop-opacity=".35"/><stop offset="1" stop-color="#39d39e" stop-opacity="0"/></linearGradient></defs><path d="M0 140C35 127 45 128 75 110S108 110 130 122 155 91 184 96 220 109 245 76 277 68 299 88 327 76 350 66 380 47 403 63 438 76 460 38 492 53 520 22V180H0Z" fill="url(#area)"/><path d="M0 140C35 127 45 128 75 110S108 110 130 122 155 91 184 96 220 109 245 76 277 68 299 88 327 76 350 66 380 47 403 63 438 76 460 38 492 53 520 22" fill="none" stroke="#39d39e" stroke-width="3"/></svg></div><div class="days"><span>الإثنين</span><span>الثلاثاء</span><span>الأربعاء</span><span>الخميس</span><span>الجمعة</span><span>السبت</span><span>الأحد</span></div></article></section>
+      <section class="columns lower"><article class="card stock-card"><div class="card-title"><div><h3>حالة المخزون</h3><small>آخر تحديث منذ 12 دقيقة</small></div><input class="search-stock" id="stockSearch" placeholder="بحث..."></div><div class="stock-list"><div class="stock-row heading"><span>الصنف</span><span>الكمية</span><span>الحالة</span></div><div class="stock-row stock-item"><span><b>قنينات زجاجية 500ml</b><small>مواد التعبئة</small></span><strong>2,480 <small>قطعة</small></strong><em class="ok">متوفر</em></div><div class="stock-row stock-item"><span><b>عسل جبلي خام</b><small>مواد أولية</small></span><strong>186 <small>كغ</small></strong><em class="warning">منخفض</em></div><div class="stock-row stock-item"><span><b>أغطية معدنية ذهبية</b><small>مواد التعبئة</small></span><strong>6,240 <small>قطعة</small></strong><em class="ok">متوفر</em></div><div class="stock-row stock-item"><span><b>ملصقات مدار — 500ml</b><small>مواد الطباعة</small></span><strong>940 <small>قطعة</small></strong><em class="danger">ينبغي الطلب</em></div></div></article>
+        <article class="card task-card" id="taskSection"><div class="card-title"><div><h3>إضافة مهمة</h3><small>الفورم ظاهر هنا، ما كايناش نافذة كتعلق</small></div><span class="task-symbol">＋</span></div><label>اسم المهمة</label><input id="taskName" placeholder="مثال: فحص خط التعبئة A"><label>القسم</label><select id="taskDepartment"><option>الإنتاج</option><option>المخزون</option><option>العمال</option></select><button class="button primary full" id="saveTask">حفظ المهمة ✓</button><p class="form-message" id="formMessage"></p></article></section>
+    </div>
+    <div class="simple-page" id="simplePage" hidden><span class="kicker">● قسم مدار</span><h2 id="simpleTitle">الإنتاج</h2><p>هذا القسم جاهز لإضافة البيانات الخاصة به.</p><button class="button primary" data-page="dashboard">العودة للرئيسية</button></div>
+    <footer>© 2026 مدار لإدارة العمليات <span>● كل الأنظمة تعمل بشكل جيد</span></footer>
+  </main>
+  <div class="toast" id="toast" hidden></div>
+  <script src="script.js"></script>
+</body>
+</html>
