@@ -15,49 +15,127 @@ const firebaseConfig={apiKey:"AIzaSyCmpOjdxAkJTL7uE9I_CazbQfh-qSbPnNQ",authDomai
 firebase.initializeApp(firebaseConfig);
 const db=firebase.firestore();
 </script>
+
 <style>
-:root{--bg:#f8fafc;--card:#fff;--card2:#f1f5f9;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--primary:#2563eb;--shadow:0 4px 16px rgba(15,23,42,.06);--grid:rgba(148,163,184,.1)}
-[data-theme="dark"]{--bg:#09090b;--card:#141416;--card2:#1e1e22;--text:#fafafa;--muted:#9ca3af;--border:#242428;--primary:#3b82f6;--grid:rgba(80,80,90,.12)}
+:root{
+  --bg:#f6f8fc;--card:#ffffff;--card2:#f1f5f9;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;
+  --primary:#6366f1;--shadow:0 10px 30px rgba(15,23,42,.08),0 1px 3px rgba(15,23,42,.05);--grid:rgba(148,163,184,.14);
+  --blue:#2563eb;--blue-bg:#eff6ff;--blue-border:#bfdbfe;--blue-text:#1d4ed8;
+  --emerald:#059669;--emerald-bg:#ecfdf5;--emerald-border:#a7f3d0;--emerald-text:#047857;
+  --amber:#d97706;--amber-bg:#fffbeb;--amber-border:#fde68a;--amber-text:#92400e;
+  --rose:#e11d48;--rose-bg:#fff1f2;--rose-border:#fecdd3;--rose-text:#be123c;
+  --violet:#7c3aed;--violet-bg:#f5f3ff;--violet-border:#ddd6fe;--violet-text:#6d28d9;
+  --cyan:#0891b2;--cyan-bg:#ecfeff;--cyan-border:#a5f3fc;--cyan-text:#0e7490;
+  --orange:#ea580c;--orange-bg:#fff7ed;--orange-border:#fed7aa;--orange-text:#c2410c;
+}
+[data-theme="dark"]{
+  --bg:#0a0a0b;--card:#17171a;--card2:#222226;--text:#fafafa;--muted:#9ca3af;--border:#27272a;
+  --primary:#818cf8;--grid:rgba(120,120,140,.14);--shadow:0 10px 30px rgba(0,0,0,.4);
+  --blue-bg:#1e1b4b30;--blue-border:#312e81;--blue-text:#93c5fd;
+  --emerald-bg:#064e3b30;--emerald-border:#065f46;--emerald-text:#6ee7b7;
+  --amber-bg:#78350f20;--amber-border:#92400e;--amber-text:#fcd34d;
+  --rose-bg:#4c051920;--rose-border:#881337;--rose-text:#fda4af;
+  --violet-bg:#2e106530;--violet-border:#5b21b6;--violet-text:#c4b5fd;
+  --cyan-bg:#164e6330;--cyan-border:#155e75;--cyan-text:#67e8f9;
+  --orange-bg:#7c2d1220;--orange-border:#9a3412;--orange-text:#fdba74;
+}
 *{font-family:'Cairo',system-ui,sans-serif;box-sizing:border-box}
 html{font-size:14px}
-body{margin:0;background:var(--bg);color:var(--text)}
-.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,black 40%,transparent 90%)}
-.card{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow)}
-.input{width:100%;height:40px;padding:0 12px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);font-weight:600;font-size:12px;outline:none}
-.input-sm{height:34px;font-size:11px}
-.btn{height:36px;padding:0 14px;border-radius:10px;font-weight:700;font-size:11.5px;display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;border:1px solid transparent;transition:.15s;white-space:nowrap}
-.btn-primary{background:#0f172a;color:#fff}
-[data-theme="dark"] .btn-primary{background:#fff;color:#0f172a}
-.btn-blue{background:#eff6ff;color:#2563eb;border-color:#bfdbfe}
-.btn-emerald{background:#ecfdf5;color:#059669;border-color:#a7f3d0}
+body{margin:0;background:var(--bg);color:var(--text);transition:.3s}
+.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,black 45%,transparent 90%)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);transition:.2s}
+.card:hover{box-shadow:0 14px 40px rgba(15,23,42,.12)}
+.input{width:100%;height:42px;padding:0 14px;border-radius:12px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-weight:700;font-size:12px;outline:none;transition:.2s}
+.input:focus{border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 15%,transparent)}
+.input-sm{height:36px;font-size:11px;border-radius:10px}
+.btn{height:38px;padding:0 16px;border-radius:12px;font-weight:800;font-size:11.5px;display:inline-flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;border:1px solid transparent;transition:.2s;white-space:nowrap;letter-spacing:.2px}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;box-shadow:0 4px 14px rgba(15,23,42,.2)}
+[data-theme="dark"] .btn-primary{background:linear-gradient(135deg,#fff,#e2e8f0);color:#0f172a}
+.btn-blue{background:linear-gradient(135deg,var(--blue-bg),#dbeafe);color:var(--blue-text);border-color:var(--blue-border)}
+.btn-emerald{background:linear-gradient(135deg,var(--emerald-bg),#d1fae5);color:var(--emerald-text);border-color:var(--emerald-border)}
+.btn-amber{background:linear-gradient(135deg,var(--amber-bg),#fef3c7);color:var(--amber-text);border-color:var(--amber-border)}
+.btn-rose{background:linear-gradient(135deg,var(--rose-bg),#ffe4e6);color:var(--rose-text);border-color:var(--rose-border)}
+.btn-violet{background:linear-gradient(135deg,var(--violet-bg),#ede9fe);color:var(--violet-text);border-color:var(--violet-border)}
+.btn-cyan{background:linear-gradient(135deg,var(--cyan-bg),#cffafe);color:var(--cyan-text);border-color:var(--cyan-border)}
+.btn-orange{background:linear-gradient(135deg,var(--orange-bg),#ffedd5);color:var(--orange-text);border-color:var(--orange-border)}
 .btn-slate{background:var(--card2);color:var(--text);border-color:var(--border)}
-[data-theme="dark"] .btn-blue{background:#1e3a8a30;color:#60a5fa;border-color:#1e3a8a}
-.toggle{width:52px;height:30px;border-radius:999px;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;padding:2px;cursor:pointer}
-.toggle-dot{width:24px;height:24px;border-radius:50%;background:var(--card);border:1px solid var(--border);display:grid;place-items:center;transition:transform .3s;box-shadow:0 1px 4px rgba(0,0,0,.1);font-size:10px}
-[data-theme="dark"] .toggle-dot{transform:translateX(-20px)}
-.th{font-size:10px;font-weight:800;color:var(--muted);padding:10px 8px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}
-.td{padding:9px 8px;border-bottom:1px solid var(--border);font-size:11.5px}
-.badge{padding:3px 8px;border-radius:999px;font-size:10px;font-weight:800;display:inline-flex;gap:3px}
-.badge-low{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
-.badge-warn{background:#fffbeb;color:#b45309;border:1px solid #fde68a}
-.badge-ok{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.btn-slate:hover{background:var(--card);border-color:var(--primary)}
+.toggle{width:56px;height:32px;border-radius:999px;background:var(--card2);border:1.5px solid var(--border);display:flex;align-items:center;padding:3px;cursor:pointer;transition:.3s}
+.toggle-dot{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);display:grid;place-items:center;transition:transform .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 2px 6px rgba(0,0,0,.12);font-size:11px}
+[data-theme="dark"] .toggle-dot{transform:translateX(-24px)}
+
+/* Colorful Stat Cards */
+.stat-card{position:relative;overflow:hidden;border-radius:20px;padding:16px;border:1.5px solid transparent}
+.stat-card::after{content:'';position:absolute;top:-20px;left:-20px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.25);filter:blur(1px)}
+.stat-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:16px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.stat-blue{background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff}
+.stat-blue .stat-icon{background:rgba(255,255,255,.2);color:#fff}
+.stat-emerald{background:linear-gradient(135deg,#10b981,#06b6d4);color:#fff}
+.stat-orange{background:linear-gradient(135deg,#f97316,#fb923c);color:#fff}
+.stat-rose{background:linear-gradient(135deg,#f43f5e,#ec4899);color:#fff}
+.stat-violet{background:linear-gradient(135deg,#8b5cf6,#a855f7);color:#fff}
+.stat-amber{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#fff}
+
+.th{font-size:10.5px;font-weight:900;color:var(--muted);padding:12px 10px;border-bottom:2px solid var(--border);text-align:right;white-space:nowrap;text-transform:uppercase;letter-spacing:.5px}
+.td{padding:11px 10px;border-bottom:1px solid var(--border);font-size:11.5px;font-weight:600}
+.tr-hover:hover{background:color-mix(in srgb,var(--primary) 4%,var(--card))}
+
+.badge{padding:4px 10px;border-radius:999px;font-size:10px;font-weight:900;display:inline-flex;align-items:center;gap:4px;letter-spacing:.3px}
+.badge-low{background:linear-gradient(135deg,#fff1f2,#ffe4e6);color:#e11d48;border:1.5px solid #fecdd3}
+.badge-warn{background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#d97706;border:1.5px solid #fde68a}
+.badge-ok{background:linear-gradient(135deg,#ecfdf5,#d1fae5);color:#059669;border:1.5px solid #a7f3d0}
+.badge-blue{background:linear-gradient(135deg,#eff6ff,#dbeafe);color:#2563eb;border:1.5px solid #bfdbfe}
+.badge-violet{background:linear-gradient(135deg,#f5f3ff,#ede9fe);color:#7c3aed;border:1.5px solid #ddd6fe}
+.badge-cyan{background:linear-gradient(135deg,#ecfeff,#cffafe);color:#0891b2;border:1.5px solid #a5f3fc}
 [data-theme="dark"] .badge-low{background:#450a0a;color:#fca5a5;border-color:#7f1d1d}
-.modal-bg{backdrop-filter:blur(12px);background:rgba(15,23,42,.5)}
-.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.2)}
-.bottom-nav{position:fixed;bottom:12px;left:12px;right:12px;z-index:40;display:flex;justify-content:center}
-.bottom-inner{width:100%;max-width:420px;height:56px;background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.12);display:grid;grid-template-columns:repeat(5,1fr);gap:2px;padding:4px}
-.bottom-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:12px;font-size:9px;font-weight:800;color:var(--muted);transition:.2s}
-.bottom-btn.active{background:#0f172a;color:#fff}
-[data-theme="dark"] .bottom-btn.active{background:#fff;color:#0f172a}
-.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.calendar-day{min-height:78px;border-radius:14px;border:1px solid var(--border);background:var(--card);padding:6px;cursor:pointer;transition:.15s;position:relative;overflow:hidden}
-.calendar-day:hover{transform:translateY(-1px);box-shadow:var(--shadow);border-color:var(--primary)}
-.calendar-day.has-data{border-color:#bfdbfe;background:#f8fbff}
-[data-theme="dark"] .calendar-day.has-data{background:#1e293b30;border-color:#1e3a8a}
-.calendar-day.today{outline:2px solid #2563eb;outline-offset:1px}
-.calendar-day.empty{background:transparent;border:none;cursor:default}
-@media(max-width:768px){.calendar-grid{gap:4px}.calendar-day{min-height:64px;padding:4px}.th{display:none}.tr{border:1px solid var(--border);border-radius:14px;margin-bottom:8px;display:block;padding:4px;background:var(--card)}.td{display:flex;justify-content:space-between;border:none!important;border-bottom:1px dashed var(--border)!important;padding:8px 6px!important}.td:last-child{border-bottom:none!important;justify-content:center}.td::before{content:attr(data-label);font-weight:800;font-size:10px;color:var(--muted)}}
+[data-theme="dark"] .badge-ok{background:#052e16;color:#6ee7b7;border-color:#065f46}
+
+.modal-bg{backdrop-filter:blur(16px) saturate(1.2);background:rgba(15,23,42,.55)}
+.modal{background:var(--card);border:1.5px solid var(--border);border-radius:20px;box-shadow:0 24px 64px rgba(0,0,0,.25),0 0 0 1px rgba(255,255,255,.05) inset}
+
+.bottom-nav{position:fixed;bottom:14px;left:14px;right:14px;z-index:40;display:flex;justify-content:center}
+.bottom-inner{width:100%;max-width:460px;height:64px;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(20px) saturate(1.4);border:1.5px solid var(--border);border-radius:20px;box-shadow:0 16px 40px rgba(0,0,0,.16);display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:6px}
+.bottom-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:14px;font-size:9px;font-weight:900;color:var(--muted);transition:.25s;position:relative}
+.bottom-btn i{font-size:15px;transition:.25s}
+.bottom-btn.active{background:linear-gradient(135deg,#0f172a,#334155);color:#fff;box-shadow:0 6px 18px rgba(15,23,42,.25);transform:translateY(-2px)}
+.bottom-btn.active i{transform:scale(1.15)}
+[data-theme="dark"] .bottom-btn.active{background:linear-gradient(135deg,#fff,#e2e8f0);color:#0f172a}
+
+/* Calendar colorful */
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.calendar-day{min-height:88px;border-radius:16px;border:1.5px solid var(--border);background:var(--card);padding:8px;cursor:pointer;transition:.2s;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.calendar-day:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 24px rgba(0,0,0,.1);border-color:var(--primary)}
+.calendar-day.has-data{border-color:#93c5fd;background:linear-gradient(135deg,#f0f9ff,#e0f2fe)}
+.calendar-day.has-data::before{content:'';position:absolute;top:0;right:0;width:100%;height:3px;background:linear-gradient(90deg,#3b82f6,#06b6d4)}
+[data-theme="dark"] .calendar-day.has-data{background:linear-gradient(135deg,#1e293b,#0f172a);border-color:#1e40af}
+.calendar-day.today{outline:2.5px solid #6366f1;outline-offset:2px;box-shadow:0 0 0 6px rgba(99,102,241,.15)}
+.calendar-day.empty{background:transparent;border:none;cursor:default;box-shadow:none}
+.calendar-dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+
+/* Section headers */
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.section-icon{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#fff;font-size:15px;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.icon-blue{background:linear-gradient(135deg,#3b82f6,#6366f1)}
+.icon-emerald{background:linear-gradient(135deg,#10b981,#06b6d4)}
+.icon-amber{background:linear-gradient(135deg,#f59e0b,#fbbf24)}
+.icon-rose{background:linear-gradient(135deg,#f43f5e,#ec4899)}
+.icon-violet{background:linear-gradient(135deg,#8b5cf6,#a855f7)}
+.icon-orange{background:linear-gradient(135deg,#f97316,#fb923c)}
+.icon-cyan{background:linear-gradient(135deg,#06b6d4,#22d3ee)}
+
+/* Tabs colorful pills */
+.tab-pill{position:relative;overflow:hidden}
+.tab-pill.active-blue{background:linear-gradient(135deg,#2563eb,#4f46e5);color:#fff;box-shadow:0 4px 12px rgba(37,99,235,.3)}
+.tab-pill.active-emerald{background:linear-gradient(135deg,#059669,#06b6d4);color:#fff;box-shadow:0 4px 12px rgba(5,150,105,.3)}
+.tab-pill.active-orange{background:linear-gradient(135deg,#ea580c,#f97316);color:#fff}
+.tab-pill.active-violet{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff}
+.tab-pill.active-cyan{background:linear-gradient(135deg,#0891b2,#06b6d4);color:#fff}
+.tab-pill.active-rose{background:linear-gradient(135deg,#e11d48,#ec4899);color:#fff}
+
+@media(max-width:768px){.calendar-grid{gap:5px}.calendar-day{min-height:70px;padding:5px;border-radius:12px}.th{display:none}.tr{border:1.5px solid var(--border);border-radius:16px;margin-bottom:10px;display:block;padding:6px;background:var(--card);box-shadow:var(--shadow)}.td{display:flex;justify-content:space-between;border:none!important;border-bottom:1px dashed var(--border)!important;padding:10px 8px!important}.td:last-child{border-bottom:none!important;justify-content:center}.td::before{content:attr(data-label);font-weight:900;font-size:10px;color:var(--muted)}}
 </style>
+
 </head>
 <body>
 <div id="root"></div>
@@ -255,22 +333,31 @@ function App(){
     e.target.value="";
   };
 
+  const tabColors={
+    dashboard:{bg:"active-blue",icon:"icon-blue",dot:"#3b82f6"},
+    inventory:{bg:"active-emerald",icon:"icon-emerald",dot:"#10b981"},
+    stockout:{bg:"active-orange",icon:"icon-orange",dot:"#f97316"},
+    attendance:{bg:"active-violet",icon:"icon-violet",dot:"#8b5cf6"},
+    archive:{bg:"active-cyan",icon:"icon-cyan",dot:"#06b6d4"},
+    production:{bg:"active-cyan",icon:"icon-cyan",dot:"#0891b2"},
+    "workers-info":{bg:"active-rose",icon:"icon-rose",dot:"#e11d48"},
+  };
   const tabs=[
-    {id:"dashboard",title:"الرئيسية",icon:"fa-house"},
-    {id:"inventory",title:"المخزن",icon:"fa-boxes-stacked"},
-    {id:"stockout",title:"الخروج",icon:"fa-truck-fast"},
-    {id:"attendance",title:"الحضور",icon:"fa-calendar-check"},
-    {id:"archive",title:"الأرشيف",icon:"fa-calendar-days"},
-    {id:"production",title:"الإنتاج",icon:"fa-clipboard-check"},
-    {id:"workers-info",title:"العمال",icon:"fa-users"},
+    {id:"dashboard",title:"الرئيسية",icon:"fa-house",color:"blue"},
+    {id:"inventory",title:"المخزن",icon:"fa-boxes-stacked",color:"emerald"},
+    {id:"stockout",title:"الخروج",icon:"fa-truck-fast",color:"orange"},
+    {id:"attendance",title:"الحضور",icon:"fa-calendar-check",color:"violet"},
+    {id:"archive",title:"الأرشيف",icon:"fa-calendar-days",color:"cyan"},
+    {id:"production",title:"الإنتاج",icon:"fa-clipboard-check",color:"cyan"},
+    {id:"workers-info",title:"العمال",icon:"fa-users",color:"rose"},
   ];
 
   const bottomTabs=[
-    {id:"dashboard",title:"الرئيسية",icon:"fa-house"},
-    {id:"inventory",title:"المخزن",icon:"fa-boxes-stacked"},
-    {id:"stockout",title:"الخروج",icon:"fa-truck-fast"},
-    {id:"attendance",title:"الحضور",icon:"fa-calendar-check"},
-    {id:"archive",title:"الأرشيف",icon:"fa-calendar-days"},
+    {id:"dashboard",title:"الرئيسية",icon:"fa-house",active:"from-blue-600 to-indigo-600"},
+    {id:"inventory",title:"المخزن",icon:"fa-boxes-stacked",active:"from-emerald-600 to-teal-600"},
+    {id:"stockout",title:"الخروج",icon:"fa-truck-fast",active:"from-orange-600 to-amber-600"},
+    {id:"attendance",title:"الحضور",icon:"fa-calendar-check",active:"from-violet-600 to-purple-600"},
+    {id:"archive",title:"الأرشيف",icon:"fa-calendar-days",active:"from-cyan-600 to-blue-600"},
   ];
 
   if(!logged){
@@ -278,8 +365,8 @@ function App(){
       <div className="min-h-screen grid place-items-center p-4">
         <div className="grid-bg"></div>
         <div className="w-full max-w-[360px] card p-6">
-          <div className="flex items-center gap-3 mb-5"><div className="w-10 h-10 rounded-xl bg-slate-900 text-white grid place-items-center"><i className="fa-solid fa-industry text-[13px]"></i></div><div><div className="font-black text-[14px]">نظام المصنع</div><div className="text-[10px] text-slate-500 font-bold">دخول</div></div></div>
-          <form onSubmit={handleLogin} className="space-y-2.5"><input id="u" className="input" placeholder="admin" required/><input id="pw" type="password" className="input" placeholder="كلمة المرور" required/><div id="err" className="hidden bg-red-500 text-white rounded-xl p-2 text-[10px] font-black text-center">خطأ</div><button className="btn btn-primary w-full h-10 text-[12px]">دخول</button></form>
+          <div className="flex items-center gap-3 mb-5"><div className="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white grid place-items-center shadow-lg shadow-indigo-500/30"><i className="fa-solid fa-industry text-[14px]"></i></div><div><div className="font-black text-[14px] flex items-center gap-1.5">نظام المصنع <span className="badge badge-blue">Archive</span></div><div className="text-[10px] text-slate-500 font-bold">مرحبا بعودتك 👋</div></div></div>
+          <form onSubmit={handleLogin} className="space-y-2.5"><input id="u" className="input" placeholder="admin" required/><input id="pw" type="password" className="input" placeholder="كلمة المرور" required/><div id="err" className="hidden bg-red-500 text-white rounded-xl p-2 text-[10px] font-black text-center">خطأ</div><button className="btn btn-primary w-full h-10 shadow-lg shadow-slate-900/20 text-[12px]">دخول</button></form>
         </div>
       </div>
     )
@@ -297,7 +384,7 @@ function App(){
           </div>
           <div className="flex items-center gap-1.5">
             <div className="hidden lg:flex items-center gap-0.5 p-1 rounded-full border" style={{background:"var(--card2)",borderColor:"var(--border)"}}>
-              {tabs.map(t=>{const a=tab===t.id; return <button key={t.id} onClick={()=>setTab(t.id)} className={`h-6 px-2.5 rounded-full text-[10px] font-bold flex items-center gap-1 ${a?'bg-slate-900 text-white':'text-slate-500 hover:bg-white'}`}><i className={`fa-solid ${t.icon} text-[9px]`}></i>{t.title}</button>})}
+              {tabs.map(t=>{const a=tab===t.id; const col=tabColors[t.id]; return <button key={t.id} onClick={()=>setTab(t.id)} className={`tab-pill h-7 px-3 rounded-full text-[10px] font-black flex items-center gap-1.5 transition-all ${a?col.bg+' text-white scale-105':'text-slate-500 hover:bg-white hover:shadow-sm border border-transparent hover:border-slate-200'}`}><i className={`fa-solid ${t.icon} text-[11px]`}></i>{t.title}</button>})}
             </div>
             <button onClick={()=>setTheme(theme==="light"?"dark":"light")} className="toggle"><div className="toggle-dot"><i className={`fa-solid ${theme==="dark"?"fa-moon":"fa-sun"} text-[10px]`}></i></div></button>
             <button onClick={()=>setShowPass(true)} className="w-8 h-8 grid place-items-center rounded-lg border bg-amber-50 text-amber-600"><i className="fa-solid fa-key text-[10px]"></i></button>
@@ -312,13 +399,21 @@ function App(){
 
         {tab==="dashboard" && (
           <div className="space-y-3">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
-              <div className="card p-3"><div className="text-[9.5px] font-bold text-slate-500">المنتجات</div><div className="text-[20px] font-black mt-1">{products.length}</div></div>
-              <div className="card p-3"><div className="text-[9.5px] font-bold text-slate-500">إنتاج اليوم</div><div className="text-[20px] font-black mt-1">{todayProd.reduce((a,b)=>a+Number(b.qty),0)}</div></div>
-              <div className="card p-3"><div className="text-[9.5px] font-bold text-slate-500">الأكثر استهلاكا</div><div className="text-[12px] font-black mt-1 truncate">{mostConsumed[0]?.[0]||"—"}</div></div>
-              <div className="card p-3" style={{background:critical.length?"#fef2f2":"var(--card)",borderColor:critical.length?"#fecaca":"var(--border)"}}><div className="text-[9.5px] font-bold text-red-600">تنبيه</div><div className="text-[20px] font-black mt-1 text-red-600">{critical.length}</div></div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="stat-card stat-blue">
+                <div className="flex justify-between items-start"><div><div className="text-[10px] font-black opacity-90 flex items-center gap-1.5"><i className="fa-solid fa-boxes-stacked"></i>المنتجات</div><div className="text-[26px] font-black mt-1">{products.length}</div><div className="text-[9px] font-bold opacity-80 mt-1">منتج في المخزن</div></div><div className="stat-icon"><i className="fa-solid fa-cubes"></i></div></div>
+              </div>
+              <div className="stat-card stat-emerald">
+                <div className="flex justify-between items-start"><div><div className="text-[10px] font-black opacity-90 flex items-center gap-1.5"><i className="fa-solid fa-industry"></i>إنتاج اليوم</div><div className="text-[26px] font-black mt-1">{todayProd.reduce((a,b)=>a+Number(b.qty),0)}</div><div className="text-[9px] font-bold opacity-80 mt-1">قطعة منتجة</div></div><div className="stat-icon"><i className="fa-solid fa-chart-line"></i></div></div>
+              </div>
+              <div className="stat-card stat-orange">
+                <div className="flex justify-between items-start"><div><div className="text-[10px] font-black opacity-90 flex items-center gap-1.5"><i className="fa-solid fa-fire"></i>الأكثر طلبا</div><div className="text-[13px] font-black mt-1.5 truncate max-w-[100px]">{mostConsumed[0]?.[0]||"—"}</div><div className="text-[9px] font-bold opacity-80 mt-1">{mostConsumed[0]?.[1]||0} خروج</div></div><div className="stat-icon"><i className="fa-solid fa-ranking-star"></i></div></div>
+              </div>
+              <div className={`stat-card ${critical.length?'stat-rose':'stat-violet'}`} style={{border:critical.length?'2px solid #fecdd3':''}}>
+                <div className="flex justify-between items-start"><div><div className="text-[10px] font-black opacity-90 flex items-center gap-1.5"><i className={`fa-solid ${critical.length?'fa-triangle-exclamation':'fa-shield-check'}`}></i>{critical.length?'تنبيه حرج':'الوضع آمن'}</div><div className="text-[26px] font-black mt-1">{critical.length}</div><div className="text-[9px] font-bold opacity-80 mt-1">{critical.length?'منتج ناقص':'لا يوجد نقص'}</div></div><div className="stat-icon"><i className={`fa-solid ${critical.length?'fa-bell':'fa-check'}`}></i></div></div>
+              </div>
             </div>
-            {low.length>0 && (<div className="card overflow-hidden" style={{borderColor:"#fde68a"}}><div className="px-3 py-2.5 flex items-center justify-between" style={{background:"linear-gradient(90deg,#fffbeb,#fef3c7)",borderBottom:"1px solid #fde68a"}}><h3 className="font-bold text-[11px] text-amber-800">⚠️ تنبيه نفاد ({low.length})</h3><span className="badge badge-warn text-[9px]">{critical.length} حرج</span></div><div className="p-2 grid sm:grid-cols-2 lg:grid-cols-3 gap-1.5">{low.map(p=>{const cur=stockOf(p.code); const mn=getMin(p.code); const isCrit=cur<=mn; return <div key={p.id} className="px-2.5 py-2 rounded-xl border flex justify-between items-center" style={{background:isCrit?"#fef2f2":"#fffbeb",borderColor:isCrit?"#fecaca":"#fde68a"}}><div><div className="font-mono font-black text-[11px]">{p.code}</div><div className="text-[10px] font-bold truncate max-w-[140px]">{p.desc}</div><div className="text-[9px] text-slate-500">{cur} / {mn}</div></div><div className={`w-8 h-8 rounded-full grid place-items-center font-black text-[10px] text-white ${isCrit?'bg-red-500':'bg-amber-500'}`}>{cur}</div></div>})}</div></div>)}
+            {low.length>0 && (<div className="card overflow-hidden" style={{borderColor:"#fde68a"}}><div className="px-3 py-2.5 flex items-center justify-between" style={{background:"linear-gradient(90deg,#fffbeb,#fef3c7)",borderBottom:"1px solid #fde68a"}}><h3 className="font-bold text-[11px] text-amber-800">🚨 تنبيه نفاد المخزون ({low.length})</h3><span className="badge badge-warn text-[9px]">{critical.length} حرج</span></div><div className="p-2 grid sm:grid-cols-2 lg:grid-cols-3 gap-1.5">{low.map(p=>{const cur=stockOf(p.code); const mn=getMin(p.code); const isCrit=cur<=mn; return <div key={p.id} className="px-2.5 py-2 rounded-xl border flex justify-between items-center" style={{background:isCrit?"#fef2f2":"#fffbeb",borderColor:isCrit?"#fecaca":"#fde68a"}}><div><div className="font-mono font-black text-[11px]">{p.code}</div><div className="text-[10px] font-bold truncate max-w-[140px]">{p.desc}</div><div className="text-[9px] text-slate-500">{cur} / {mn}</div></div><div className={`w-8 h-8 rounded-full grid place-items-center font-black text-[10px] text-white ${isCrit?'bg-red-500':'bg-amber-500'}`}>{cur}</div></div>})}</div></div>)}
           </div>
         )}
 
