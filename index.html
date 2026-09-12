@@ -3,65 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DATA BASE 3D-NEZAR - Factory System</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<title>DATA BASE 3D-NEZAR - FINAL WORKING</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script>
-const firebaseConfig={apiKey:"AIzaSyCmpOjdxAkJTL7uE9I_CazbQfh-qSbPnNQ",authDomain:"factory-system-a4db8.firebaseapp.com",projectId:"factory-system-a4db8",storageBucket:"factory-system-a4db8.firebasestorage.app",messagingSenderId:"216358094084",appId:"1:216358094084:web:500d511f7b130f23ecfc51"};
-firebase.initializeApp(firebaseConfig);
-const db=firebase.firestore();
-</script>
+<script>const firebaseConfig={apiKey:"AIzaSyCmpOjdxAkJTL7uE9I_CazbQfh-qSbPnNQ",authDomain:"factory-system-a4db8.firebaseapp.com",projectId:"factory-system-a4db8",storageBucket:"factory-system-a4db8.firebasestorage.app",messagingSenderId:"216358094084",appId:"1:216358094084:web:500d511f7b130f23ecfc51"}; firebase.initializeApp(firebaseConfig); const db=firebase.firestore();</script>
 <style>
-:root{--bg:#f6f7ff;--card:#fff;--card2:#eef0ff;--text:#0f172a;--muted:#64748b;--border:#e0e3ff;--primary:#6366f1;--shadow:0 8px 24px rgba(99,102,241,.08);--grid:rgba(99,102,241,.06)}
-[data-theme="dark"]{--bg:#080810;--card:#121228;--card2:#1c1c3a;--text:#f0f0ff;--muted:#9ca3af;--border:#2a2a4a;--primary:#818cf8;--shadow:0 0 0 1px #2a2a4a,0 12px 32px rgba(0,0,0,.6);--grid:rgba(99,102,241,.1)}
-*{font-family:'Cairo',system-ui,sans-serif;box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text)}
-.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:50px 50px;mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,black 40%,transparent 90%)}
-.card{background:var(--card);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:.2s}
-.card:hover{transform:translateY(-1px);box-shadow:0 16px 40px rgba(99,102,241,.15)}
-.input{width:100%;height:42px;padding:0 12px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--text);font-weight:700;font-size:11.5px;outline:none}
-.btn{height:36px;padding:0 14px;border-radius:12px;font-weight:800;font-size:11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;border:1px solid transparent;transition:.15s;white-space:nowrap}
-.btn-primary{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;box-shadow:0 4px 12px rgba(15,23,42,.2)}
-.btn-blue{background:linear-gradient(135deg,#eff6ff,#dbeafe);color:#2563eb;border-color:#bfdbfe}
-.btn-emerald{background:linear-gradient(135deg,#ecfdf5,#d1fae5);color:#059669;border-color:#a7f3d0}
-.btn-red{background:linear-gradient(135deg,#fef2f2,#fee2e2);color:#dc2626;border-color:#fecaca}
-.btn-amber{background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#d97706;border-color:#fde68a}
-.btn-violet{background:linear-gradient(135deg,#f5f3ff,#ede9fe);color:#7c3aed;border-color:#ddd6fe}
-.btn-slate{background:var(--card2);color:var(--text);border-color:var(--border)}
-.toggle{width:54px;height:30px;border-radius:999px;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;padding:3px;cursor:pointer}
-.toggle-dot{width:22px;height:22px;border-radius:50%;background:#fff;border:1px solid var(--border);display:grid;place-items:center;transition:transform .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 2px 6px rgba(0,0,0,.1);font-size:10px}
-[data-theme="dark"] .toggle-dot{transform:translateX(-24px)}
-.th{font-size:10px;font-weight:900;color:var(--muted);padding:11px 8px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}
-.td{padding:10px 8px;border-bottom:1px solid var(--border);font-size:11.5px}
-.badge{padding:3px 9px;border-radius:999px;font-size:10px;font-weight:800;display:inline-flex;gap:4px;align-items:center}
+*{font-family:'Cairo',sans-serif;box-sizing:border-box}
+body{margin:0;background:#f6f7ff;color:#0f172a}
+.card{background:#fff;border:1px solid #e0e3ff;border-radius:20px;box-shadow:0 8px 24px rgba(99,102,241,.08);padding:12px}
+.input{width:100%;height:42px;padding:0 12px;border-radius:12px;border:1px solid #e0e3ff;background:#fff;font-weight:700;font-size:12px;outline:none}
+.btn{height:36px;padding:0 14px;border-radius:12px;font-weight:800;font-size:11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:#0f172a;color:#fff}
+.btn-blue{background:#eff6ff;color:#2563eb;border-color:#bfdbfe}
+.btn-emerald{background:#ecfdf5;color:#059669;border-color:#a7f3d0}
+.badge{padding:3px 9px;border-radius:999px;font-size:10px;font-weight:800;display:inline-flex;gap:4px}
 .badge-low{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
 .badge-warn{background:#fffbeb;color:#d97706;border:1px solid #fde68a}
 .badge-ok{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
-.modal-bg{backdrop-filter:blur(16px);background:rgba(15,23,42,.55)}
-.modal{background:var(--card);border:1px solid var(--border);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-.bottom-nav{position:fixed;bottom:14px;left:14px;right:14px;z-index:40;display:flex;justify-content:center}
-.bottom-inner{width:100%;max-width:440px;height:62px;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:20px;box-shadow:0 12px 32px rgba(0,0,0,.15);display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:6px}
-[data-theme="dark"] .bottom-inner{background:rgba(18,18,40,.95)}
-.bottom-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:14px;font-size:9px;font-weight:800;color:var(--muted);transition:.2s;position:relative}
-.bottom-btn i{font-size:15px;transition:.2s}
-.bottom-btn.active{color:#fff;transform:translateY(-4px);box-shadow:0 6px 16px rgba(0,0,0,.2)}
-.bottom-btn.active .icon-bg{transform:scale(1.1)}
-.bottom-btn.dashboard.active{background:linear-gradient(135deg,#6366f1,#3b82f6);box-shadow:0 6px 20px rgba(99,102,241,.4)}
-.bottom-btn.inventory.active{background:linear-gradient(135deg,#06b6d4,#0ea5e9);box-shadow:0 6px 20px rgba(6,182,214,.4)}
-.bottom-btn.stockout.active{background:linear-gradient(135deg,#ef4444,#f97316);box-shadow:0 6px 20px rgba(239,68,68,.4)}
-.bottom-btn.attendance.active{background:linear-gradient(135deg,#8b5cf6,#a855f7);box-shadow:0 6px 20px rgba(139,92,246,.4)}
-.bottom-btn.archive.active{background:linear-gradient(135deg,#f59e0b,#eab308);box-shadow:0 6px 20px rgba(245,158,11,.4)}
-.phase-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#fff;font-size:18px;box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.modal-bg{backdrop-filter:blur(12px);background:rgba(15,23,42,.5);position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:12px}
+.modal{background:#fff;border:1px solid #e0e3ff;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.3);padding:16px;width:100%;max-width:420px}
+.bottom-nav{position:fixed;bottom:12px;left:12px;right:12px;z-index:40;display:flex;justify-content:center}
+.bottom-inner{width:100%;max-width:460px;height:60px;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border:1px solid #e0e3ff;border-radius:20px;box-shadow:0 12px 32px rgba(0,0,0,.15);display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:6px}
+.bottom-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:14px;font-size:9px;font-weight:800;color:#64748b;border:none;background:transparent;cursor:pointer}
+.bottom-btn.active{color:#fff;transform:translateY(-3px)}
+.bottom-btn.dashboard.active{background:linear-gradient(135deg,#6366f1,#3b82f6)}
+.bottom-btn.inventory.active{background:linear-gradient(135deg,#06b6d4,#0ea5e9)}
+.bottom-btn.analytics.active{background:linear-gradient(135deg,#ec4899,#e11d48)}
+.bottom-btn.attendance.active{background:linear-gradient(135deg,#8b5cf6,#a855f7)}
+.bottom-btn.archive.active{background:linear-gradient(135deg,#f59e0b,#eab308)}
 .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.calendar-day{min-height:76px;border-radius:14px;border:1px solid var(--border);background:var(--card);padding:6px;cursor:pointer;transition:.15s}
-.calendar-day.has-data{border-color:#a5b4fc;background:#eef2ff}
-.calendar-day.today{outline:2px solid #6366f1;outline-offset:1px}
+.calendar-day{min-height:70px;border-radius:12px;border:1px solid #e0e3ff;background:#fff;padding:6px;cursor:pointer}
+.calendar-day.has-data{background:#eef2ff;border-color:#a5b4fc}
+.calendar-day.today{outline:2px solid #6366f1}
 .calendar-day.empty{background:transparent;border:none;cursor:default}
-@media(max-width:768px){.th{display:none}.tr{border:1px solid var(--border);border-radius:16px;margin-bottom:8px;display:block;padding:6px;background:var(--card)}.td{display:flex;justify-content:space-between;border:none!important;border-bottom:1px dashed var(--border)!important}.td:last-child{border-bottom:none!important;justify-content:center}.td::before{content:attr(data-label);font-weight:800;font-size:10px;color:var(--muted)}}
+.th{font-size:10px;font-weight:900;color:#64748b;padding:10px 8px;border-bottom:1px solid #e0e3ff;text-align:right}
+.td{padding:10px 8px;border-bottom:1px solid #e0e3ff;font-size:11px}
 </style>
 </head>
 <body>
@@ -70,13 +50,11 @@ body{margin:0;background:var(--bg);color:var(--text)}
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
-const {useState,useEffect,useRef}=React;
+const {useState,useEffect,useRef} = React;
 function App(){
-  const [theme,setTheme]=useState(localStorage.getItem("factory_theme")||"light");
-  useEffect(()=>{document.documentElement.setAttribute("data-theme",theme);localStorage.setItem("factory_theme",theme)},[theme]);
+  const [theme,setTheme]=useState("light");
   const [logged,setLogged]=useState(localStorage.getItem("factory_logged")==="1");
   const [tab,setTab]=useState("dashboard");
-  const [menu,setMenu]=useState(false);
   const [products,setProducts]=useState([]);
   const [production,setProduction]=useState([]);
   const [stockOut,setStockOut]=useState([]);
@@ -97,6 +75,8 @@ function App(){
   const [formOut,setFormOut]=useState({productRaw:"",qty:"",date:new Date().toISOString().split('T')[0]});
   const [newProd,setNewProd]=useState({code:"",desc:"",unit:"550 ml",boxes:0,itemsPerBox:20,minStock:10,qty:0});
   const [newWorker,setNewWorker]=useState({name:"",phone:"",address:""});
+  const [prodList,setProdList]=useState([{id:1, productRaw:"", qty:""}]);
+  const [prodNote,setProdNote]=useState("");
   const [attForm,setAttForm]=useState({});
   const [passForm,setPassForm]=useState({current:"",newPass:"",confirm:""});
   const tid=useRef(0);
@@ -113,31 +93,36 @@ function App(){
 
   useEffect(()=>{
     const rec=attendance[attDate]||{};
-    const init={}; workers.forEach(w=>init[w.name]=rec[w.name]||"حاضر");
+    const init={}; workers.forEach(w=>{init[w.name]=rec[w.name]||"حاضر"});
     setAttForm(init);
   },[attDate,attendance,workers]);
 
   const stockOf=(code)=>{
-    const base=products.find(p=>p.code===code)?.qty||0;
+    const base=products.find(p=>p.code===code);
+    const baseQty=base ? Number(base.qty||0) : 0;
     const pr=production.filter(p=>p.code===code).reduce((a,b)=>a+Number(b.qty||0),0);
     const out=stockOut.filter(p=>p.code===code).reduce((a,b)=>a+Number(b.qty||0),0);
-    return base+pr-out;
+    return baseQty+pr-out;
   };
-  const getMin=c=>Number(products.find(p=>p.code===c)?.minStock||10);
+  const getMin=(code)=>{
+    const p=products.find(x=>x.code===code);
+    return p ? Number(p.minStock||10) : 10;
+  };
   const low=products.filter(p=>{const cur=stockOf(p.code); const mn=getMin(p.code); return cur<=mn*1.3});
   const critical=products.filter(p=>stockOf(p.code)<=getMin(p.code));
   const todayProd=production.filter(p=>p.date===new Date().toISOString().split('T')[0]);
-  const filtProducts=products.filter(p=>`${p.code} ${p.desc}`.toLowerCase().includes(search.toLowerCase()));
+  const filtProducts=products.filter(p=>{const s=(p.code+" "+p.desc).toLowerCase(); return s.includes(search.toLowerCase())});
   const outByProduct={}; stockOut.forEach(p=>{outByProduct[p.code]=(outByProduct[p.code]||0)+Number(p.qty)});
   const prodByWorker={}; production.forEach(p=>{prodByWorker[p.worker]=(prodByWorker[p.worker]||0)+Number(p.qty)});
-  const mostConsumed=Object.entries(outByProduct).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const mostConsumed=Object.entries(outByProduct).sort((a,b)=>b[1]-a[1]).slice(0,8);
 
   const exportExcel=(data,fileName)=>{
+    if(!data || data.length===0){notify("لا يوجد بيانات","err"); return;}
     const ws=XLSX.utils.json_to_sheet(data);
     const wb=XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb,ws,"Data");
-    XLSX.writeFile(wb,`${fileName}.xlsx`);
-    notify(`تم تحميل ${fileName} ✅`);
+    XLSX.writeFile(wb,fileName+".xlsx");
+    notify("تم التحميل ✅");
   };
 
   const getDaysInMonth=(date)=>{
@@ -146,13 +131,13 @@ function App(){
     const daysInMonth=new Date(year,month+1,0).getDate();
     const days=[];
     const startOffset=(firstDay+6)%7;
-    for(let i=0;i<startOffset;i++) days.push(null);
+    for(let i=0;i<startOffset;i++){days.push(null);}
     for(let d=1; d<=daysInMonth; d++){
-      const iso=`${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const iso=year+"-"+String(month+1).padStart(2,'0')+"-"+String(d).padStart(2,'0');
       const prod=production.filter(p=>p.date===iso);
       const out=stockOut.filter(p=>p.date===iso);
       const att=attendance[iso]||{};
-      const presentCount=Object.values(att).filter(v=>v.includes("حاضر")).length;
+      const presentCount=Object.values(att).filter(v=>v && v.includes("حاضر")).length;
       days.push({day:d, iso, prod, out, att, presentCount});
     }
     return days;
@@ -162,273 +147,243 @@ function App(){
     e.preventDefault();
     const u=document.getElementById("u").value.trim();
     const pw=document.getElementById("pw").value.trim();
-    const savedPass=localStorage.getItem("admin_pass")||"admin123";
-    if(u==="admin" && pw===savedPass){setLogged(true); localStorage.setItem("factory_logged","1"); notify("مرحبا 👋");}
-    else document.getElementById("err").classList.remove("hidden");
+    const saved=localStorage.getItem("admin_pass")||"admin123";
+    if(u==="admin" && pw===saved){setLogged(true); localStorage.setItem("factory_logged","1"); notify("مرحبا 👋");}
+    else {document.getElementById("err").style.display="block";}
   };
-
   const handleChangePass=(e)=>{
     e.preventDefault();
     const saved=localStorage.getItem("admin_pass")||"admin123";
-    if(passForm.current!==saved) return notify("الحالية خاطئة","err");
-    if(passForm.newPass!==passForm.confirm) return notify("التأكيد غير مطابق","err");
+    if(passForm.current!==saved){notify("الحالية خاطئة","err"); return;}
+    if(passForm.newPass!==passForm.confirm){notify("التأكيد غير مطابق","err"); return;}
     localStorage.setItem("admin_pass",passForm.newPass);
     setShowPass(false); notify("تم تغيير الباسورد ✅");
   };
-
   const handleSaveProd=async(e)=>{
     e.preventDefault();
     const code=newProd.code.toUpperCase().trim();
-    if(!code) return notify("أدخل الكود","err");
+    if(!code){notify("أدخل الكود","err"); return;}
     const calcQty=Number(newProd.boxes)*Number(newProd.itemsPerBox);
     const finalQty=calcQty>0?calcQty:Number(newProd.qty)||0;
     const data={code,desc:newProd.desc,unit:newProd.unit,boxes:Number(newProd.boxes),itemsPerBox:Number(newProd.itemsPerBox),qty:finalQty,minStock:Number(newProd.minStock||10)};
     if(editProdId){await db.collection("products").doc(editProdId).update(data); notify("تم التحديث");}
-    else {await db.collection("products").add({...data,createdAt:new Date()}); notify("تمت الإضافة");}
+    else {await db.collection("products").add(Object.assign({},data,{createdAt:new Date()})); notify("تمت الإضافة");}
     setShowProd(false); setEditProdId("");
   };
-
   const handleSaveWorker=async(e)=>{
     e.preventDefault();
-    if(!newWorker.name) return notify("الاسم مطلوب","err");
+    if(!newWorker.name){notify("الاسم مطلوب","err"); return;}
     if(editWorkerId){await db.collection("workers").doc(editWorkerId).update(newWorker);}
-    else await db.collection("workers").add({...newWorker,createdAt:new Date()});
+    else {await db.collection("workers").add(Object.assign({},newWorker,{createdAt:new Date()}));}
     setShowWorker(false); notify("تم الحفظ");
   };
-
+  const handleProdMulti=async(e)=>{
+    e.preventDefault();
+    if(!formProd.worker){notify("اختر العامل","err"); return;}
+    let saved=0;
+    for(const item of prodList){
+      const code=item.productRaw.split(" - ")[0].trim().toUpperCase();
+      const p=products.find(x=>x.code===code);
+      if(!p) continue;
+      const qty=Number(item.qty)||0;
+      if(qty<=0) continue;
+      await db.collection("productionLogs").add({date:formProd.date, worker:formProd.worker, code:p.code, desc:p.desc, qty:qty, notes:prodNote, createdAt:new Date()});
+      saved++;
+    }
+    if(saved>0){notify("تم حفظ "+saved+" منتوج ✅"); setProdList([{id:Date.now(), productRaw:"", qty:""}]); setProdNote("");} else {notify("أدخل منتوج صحيح","err");}
+  };
   const handleProd=async(e)=>{
     e.preventDefault();
     const code=formProd.productRaw.split(" - ")[0].trim().toUpperCase();
     const p=products.find(x=>x.code===code);
-    if(!p) return notify("منتج غير صحيح","err");
-    await db.collection("productionLogs").add({date:formProd.date,worker:formProd.worker,code:p.code,desc:p.desc,unit:p.unit,qty:Number(formProd.qty),createdAt:new Date()});
+    if(!p){notify("منتج غير صحيح","err"); return;}
+    await db.collection("productionLogs").add({date:formProd.date,worker:formProd.worker,code:p.code,desc:p.desc,qty:Number(formProd.qty),createdAt:new Date()});
     setFormProd({worker:"",productRaw:"",qty:"",date:formProd.date}); notify("تم التسجيل");
   };
-
   const handleOut=async(e)=>{
     e.preventDefault();
     const code=formOut.productRaw.split(" - ")[0].trim().toUpperCase();
     const p=products.find(x=>x.code===code);
-    if(!p) return notify("منتج غير صحيح","err");
-    if(Number(formOut.qty)>stockOf(code)) return notify("المخزون غير كافي","err");
+    if(!p){notify("منتج غير صحيح","err"); return;}
+    if(Number(formOut.qty)>stockOf(code)){notify("المخزون غير كافي","err"); return;}
     await db.collection("stockOutLogs").add({date:formOut.date,code:p.code,desc:p.desc,qty:Number(formOut.qty),createdAt:new Date()});
-    setFormOut({productRaw:"",qty:"",date:formOut.date}); notify("تم تسجيل الخروج");
+    setFormOut({productRaw:"",qty:"",date:formOut.date}); notify("تم الخروج");
   };
-
   const handleAtt=async(e)=>{
     e.preventDefault();
     await db.collection("attendanceLogs").doc(attDate).set({date:attDate,records:attForm,updatedAt:new Date()},{merge:true});
     notify("تم حفظ الحضور");
   };
 
-  const tabs=[
-    {id:"dashboard",title:"الرئيسية",icon:"fa-house",color:"#6366f1"},
-    {id:"inventory",title:"المخزن",icon:"fa-boxes-stacked",color:"#06b6d4"},
-    {id:"stockout",title:"الخروج",icon:"fa-truck-fast",color:"#ef4444"},
-    {id:"attendance",title:"الحضور",icon:"fa-calendar-check",color:"#8b5cf6"},
-    {id:"archive",title:"الأرشيف",icon:"fa-calendar-days",color:"#f59e0b"},
-    {id:"production",title:"الإنتاج",icon:"fa-industry",color:"#10b981"},
-    {id:"workers-info",title:"العمال",icon:"fa-users",color:"#f97316"},
-  ];
-
   if(!logged){
     return (
       <div className="min-h-screen grid place-items-center p-4">
-        <div className="grid-bg"></div>
-        <div className="w-full max-w-[360px] card p-6">
+        <div className="w-full max-w-[360px] card">
           <div className="flex items-center gap-3 mb-5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-500 grid place-items-center text-white shadow-lg"><i className="fa-solid fa-database"></i></div>
-            <div><div className="font-black text-[13px]"><span className="bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">DATA BASE</span> <span className="bg-amber-400 text-white text-[9px] px-1.5 py-0.5 rounded-md">3D-NEZAR</span></div><div className="text-[10px] text-slate-500 font-bold">نظام تسيير الإنتاج</div></div>
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-500 grid place-items-center text-white"><i className="fa-solid fa-database"></i></div>
+            <div><div className="font-black text-[13px]">DATA BASE <span className="bg-amber-400 text-white text-[9px] px-1.5 py-0.5 rounded-md">3D-NEZAR</span></div><div className="text-[10px] text-slate-500 font-bold">نظام المصنع</div></div>
           </div>
-          <form onSubmit={handleLogin} className="space-y-2.5"><input id="u" className="input" placeholder="admin" required/><input id="pw" type="password" className="input" placeholder="كلمة المرور" required/><div id="err" className="hidden bg-red-500 text-white rounded-xl p-2 text-[10px] font-black text-center">خطأ</div><button className="btn btn-primary w-full h-10">دخول</button></form>
+          <form onSubmit={handleLogin} className="space-y-2.5">
+            <input id="u" className="input" placeholder="admin" required/>
+            <input id="pw" type="password" className="input" placeholder="كلمة المرور" required/>
+            <div id="err" style={{display:"none"}} className="bg-red-500 text-white rounded-xl p-2 text-[10px] font-black text-center">خطأ في الدخول</div>
+            <button className="btn btn-primary w-full h-10">دخول</button>
+          </form>
         </div>
       </div>
-    )
+    );
   }
 
   return (
-    <div data-theme={theme}>
-      <div className="grid-bg"></div>
-      <header className="sticky top-0 z-30 border-b backdrop-blur-xl" style={{background:"color-mix(in srgb, var(--card) 90%, transparent)",borderColor:"var(--border)"}}>
+    <div>
+      <header className="sticky top-0 z-30 border-b backdrop-blur-xl bg-white/90" style={{borderColor:"#e0e3ff"}}>
         <div className="mx-auto max-w-[1440px] px-3 h-[58px] flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5">
-            <button onClick={()=>setMenu(true)} className="lg:hidden w-8 h-8 grid place-items-center rounded-xl bg-slate-900 text-white"><i className="fa-solid fa-bars text-[11px]"></i></button>
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-500 grid place-items-center text-white shadow-lg shadow-blue-500/30"><i className="fa-solid fa-database text-[13px]"></i></div>
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-500 grid place-items-center text-white shadow-lg"><i className="fa-solid fa-database text-[13px]"></i></div>
             <div className="leading-none">
-              <div className="font-black text-[13px] flex items-center gap-1.5"><span className="bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent tracking-tight">DATA BASE</span><span className="px-2 py-0.5 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white text-[9px] font-black shadow">3D-NEZAR</span></div>
-              <div className="text-[9px] font-bold text-slate-500 mt-1 flex items-center gap-1"><i className="fa-solid fa-circle text-[6px] text-emerald-500 animate-pulse"></i>{tabs.find(t=>t.id===tab)?.title} • نظام متكامل</div>
+              <div className="font-black text-[13px] flex items-center gap-1.5"><span className="bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">DATA BASE</span><span className="px-2 py-0.5 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white text-[9px] font-black">3D-NEZAR</span></div>
+              <div className="text-[9px] font-bold text-slate-500 mt-1">{tab} • Live</div>
             </div>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="hidden lg:flex items-center gap-1 p-1 rounded-full border bg-white/80 backdrop-blur" style={{borderColor:"var(--border)"}}>
-              {tabs.slice(0,5).map(t=>{const a=tab===t.id; return <button key={t.id} onClick={()=>setTab(t.id)} className={`h-7 px-3 rounded-full text-[10px] font-bold flex items-center gap-1.5 transition ${a?'text-white shadow-md':'text-slate-500 hover:bg-slate-50'}`} style={{background:a?`linear-gradient(135deg, ${t.color}, ${t.color}dd)`:'transparent', color:a?'white':''}}><i className={`fa-solid ${t.icon} text-[10px]`}></i>{t.title}</button>})}
-            </div>
-            <button onClick={()=>setTheme(theme==="light"?"dark":"light")} className="toggle"><div className="toggle-dot"><i className={`fa-solid ${theme==="dark"?"fa-moon":"fa-sun"} text-[11px]`}></i></div></button>
-            <button onClick={()=>setShowPass(true)} className="w-8 h-8 grid place-items-center rounded-xl border bg-gradient-to-br from-amber-50 to-orange-50 text-amber-600 border-amber-200"><i className="fa-solid fa-key text-[11px]"></i></button>
+            <button onClick={()=>setShowPass(true)} className="w-8 h-8 grid place-items-center rounded-xl border bg-amber-50 text-amber-600"><i className="fa-solid fa-key text-[11px]"></i></button>
             <button onClick={()=>{localStorage.removeItem("factory_logged"); setLogged(false)}} className="w-8 h-8 grid place-items-center rounded-xl border bg-white text-red-500"><i className="fa-solid fa-right-from-bracket text-[11px]"></i></button>
           </div>
         </div>
       </header>
 
-      {menu && (<div className="fixed inset-0 z-40 lg:hidden"><div onClick={()=>setMenu(false)} className="absolute inset-0 bg-black/30 backdrop-blur-sm"></div><div className="absolute top-0 right-0 h-full w-[300px] card rounded-none p-3 space-y-1.5 overflow-y-auto"><div className="flex items-center gap-2 p-2 border-b mb-2"><div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-600 to-blue-600 grid place-items-center text-white"><i className="fa-solid fa-database text-[11px]"></i></div><div><div className="font-black text-[11px]">DATA BASE 3D-NEZAR</div><div className="text-[9px] text-slate-500">نظام المصنع</div></div><button onClick={()=>setMenu(false)} className="mr-auto w-7 h-7 grid place-items-center rounded-lg border"><i className="fa-solid fa-xmark"></i></button></div>{tabs.map(t=><button key={t.id} onClick={()=>{setTab(t.id); setMenu(false)}} className={`w-full h-11 flex items-center gap-3 px-3 rounded-xl font-bold text-[11px] transition ${tab===t.id?'text-white shadow-lg':'hover:bg-slate-50'}`} style={{background:tab===t.id?`linear-gradient(135deg, ${t.color}, ${t.color}bb)`:'transparent'}}><div className="w-8 h-8 rounded-lg grid place-items-center text-white" style={{background:tab===t.id?'rgba(255,255,255,.2)':t.color}}><i className={`fa-solid ${t.icon} text-[12px]`}></i></div>{t.title}</button>)}</div></div>)}
-
-      <main className="mx-auto max-w-[1440px] px-3 py-4 pb-[88px] lg:pb-4 relative z-[1]">
-
+      <main className="mx-auto max-w-[1440px] px-3 py-4 pb-[90px]">
         {tab==="dashboard" && (
           <div className="space-y-3">
+            <div className="flex justify-between items-center"><h2 className="font-black text-[13px]"><i className="fa-solid fa-gauge-high ml-1"></i>الرئيسية</h2><button onClick={()=>exportExcel([{التاريخ:new Date().toISOString().split('T')[0], المنتجات:products.length, انتاج_اليوم:todayProd.reduce((a,b)=>a+Number(b.qty),0), الاكثر_استهلاكا:mostConsumed[0]?mostConsumed[0][0]:"-", تنبيهات:critical.length}], "معلومات_الرئيسية")} className="btn btn-blue h-8 text-[10px]"><i className="fa-solid fa-download"></i>تحميل معلومات الرئيسية</button></div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-              <div className="card p-3.5" style={{background:"linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%)",borderColor:"#bfdbfe"}}>
-                <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/10 rounded-full -mr-8 -mt-8"></div>
-                <div className="relative">
-                  <div className="flex justify-between items-start mb-2"><span className="text-[10px] font-black text-blue-700 tracking-wider">📦 المخزون</span><div className="phase-icon" style={{background:"linear-gradient(135deg,#3b82f6,#2563eb)"}}><i className="fa-solid fa-boxes-stacked"></i></div></div>
-                  <div className="text-[26px] font-black text-blue-900">{products.length}</div>
-                  <div className="text-[10px] font-bold text-blue-600 mt-1 flex items-center gap-1"><i className="fa-solid fa-check"></i>{products.length-critical.length} متوفر</div>
-                  <div className="mt-2 h-1.5 bg-blue-200 rounded-full overflow-hidden"><div className="h-full bg-blue-600 rounded-full" style={{width:`${products.length?((products.length-critical.length)/products.length)*100:0}%`}}></div></div>
-                </div>
-              </div>
-              <div className="card p-3.5" style={{background:"linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%)",borderColor:"#bbf7d0"}}>
-                <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/10 rounded-full -mr-8 -mt-8"></div>
-                <div className="relative">
-                  <div className="flex justify-between items-start mb-2"><span className="text-[10px] font-black text-emerald-700 tracking-wider">🏭 الإنتاج اليوم</span><div className="phase-icon" style={{background:"linear-gradient(135deg,#10b981,#059669)"}}><i className="fa-solid fa-industry"></i></div></div>
-                  <div className="text-[26px] font-black text-emerald-900">{todayProd.reduce((a,b)=>a+Number(b.qty),0)}</div>
-                  <div className="text-[10px] font-bold text-emerald-600 mt-1 flex items-center gap-1"><i className="fa-solid fa-arrow-trend-up"></i>{todayProd.length} عملية</div>
-                  <div className="mt-2 flex gap-1">{todayProd.slice(0,5).map((_,i)=><div key={i} className="flex-1 h-1.5 bg-emerald-500 rounded-full"></div>)}</div>
-                </div>
-              </div>
-              <div className="card p-3.5" style={{background:"linear-gradient(135deg,#fef2f2 0%,#fee2e2 100%)",borderColor:"#fecaca"}}>
-                <div className="absolute top-0 right-0 w-20 h-20 bg-red-500/10 rounded-full -mr-8 -mt-8"></div>
-                <div className="relative">
-                  <div className="flex justify-between items-start mb-2"><span className="text-[10px] font-black text-red-700 tracking-wider">🔥 الأكثر استهلاكا</span><div className="phase-icon" style={{background:"linear-gradient(135deg,#ef4444,#dc2626)"}}><i className="fa-solid fa-fire"></i></div></div>
-                  <div className="text-[14px] font-black text-red-900 truncate">{mostConsumed[0]?.[0]||"—"}</div>
-                  <div className="text-[10px] font-bold text-red-600 mt-1 flex items-center gap-1"><i className="fa-solid fa-truck-fast"></i>{mostConsumed[0]?.[1]||0} وحدة خارجة</div>
-                  <div className="mt-2 h-1.5 bg-red-200 rounded-full overflow-hidden"><div className="h-full bg-red-600 rounded-full" style={{width:"85%"}}></div></div>
-                </div>
-              </div>
-              <div className="card p-3.5" style={{background:critical.length?"linear-gradient(135deg,#fef2f2 0%,#fecaca 100%)":"linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%)",borderColor:critical.length?"#fecaca":"#fde68a"}}>
-                <div className="absolute top-0 right-0 w-20 h-20 bg-amber-500/10 rounded-full -mr-8 -mt-8"></div>
-                <div className="relative">
-                  <div className="flex justify-between items-start mb-2"><span className="text-[10px] font-black tracking-wider" style={{color:critical.length?"#991b1b":"#92400e"}}>⚠️ تنبيه نفاد</span><div className={`phase-icon ${critical.length?"animate-pulse":""}`} style={{background:critical.length?"linear-gradient(135deg,#ef4444,#dc2626)":"linear-gradient(135deg,#f59e0b,#d97706)"}}><i className="fa-solid fa-triangle-exclamation"></i></div></div>
-                  <div className="text-[26px] font-black" style={{color:critical.length?"#991b1b":"#92400e"}}>{critical.length}</div>
-                  <div className="text-[10px] font-bold mt-1" style={{color:critical.length?"#dc2626":"#d97706"}}>{low.length} قريب من النفاد</div>
-                  <div className="mt-2 h-1.5 bg-amber-200 rounded-full overflow-hidden"><div className="h-full bg-amber-500 rounded-full" style={{width:`${low.length?Math.min((low.length/products.length)*100+20,100):0}%`}}></div></div>
-                </div>
-              </div>
+              <div className="card" style={{background:"linear-gradient(135deg,#eff6ff,#dbeafe)",borderColor:"#bfdbfe"}}><div className="flex justify-between"><span className="text-[10px] font-black text-blue-700">📦 المخزون</span><div className="w-8 h-8 rounded-xl bg-blue-600 text-white grid place-items-center"><i className="fa-solid fa-boxes-stacked text-[11px]"></i></div></div><div className="text-[26px] font-black text-blue-900 mt-1">{products.length}</div><div className="text-[10px] text-blue-600 font-bold">{products.length-critical.length} متوفر</div></div>
+              <div className="card" style={{background:"linear-gradient(135deg,#f0fdf4,#dcfce7)",borderColor:"#bbf7d0"}}><div className="flex justify-between"><span className="text-[10px] font-black text-emerald-700">🏭 إنتاج اليوم</span><div className="w-8 h-8 rounded-xl bg-emerald-600 text-white grid place-items-center"><i className="fa-solid fa-industry text-[11px]"></i></div></div><div className="text-[26px] font-black text-emerald-900 mt-1">{todayProd.reduce((a,b)=>a+Number(b.qty),0)}</div><div className="text-[10px] text-emerald-600 font-bold">{todayProd.length} عملية</div></div>
+              <div className="card" style={{background:"linear-gradient(135deg,#fef2f2,#fee2e2)",borderColor:"#fecaca"}}><div className="flex justify-between"><span className="text-[10px] font-black text-red-700">🔥 الأكثر استهلاكا</span><div className="w-8 h-8 rounded-xl bg-red-600 text-white grid place-items-center"><i className="fa-solid fa-fire text-[11px]"></i></div></div><div className="text-[13px] font-black text-red-900 truncate mt-1">{mostConsumed[0]?mostConsumed[0][0]:"-"}</div><div className="text-[10px] text-red-600 font-bold">{mostConsumed[0]?mostConsumed[0][1]:0} وحدة</div></div>
+              <div className="card" style={{background:critical.length?"linear-gradient(135deg,#fef2f2,#fecaca)":"linear-gradient(135deg,#fffbeb,#fef3c7)",borderColor:critical.length?"#fecaca":"#fde68a"}}><div className="flex justify-between"><span className="text-[10px] font-black" style={{color:critical.length?"#991b1b":"#92400e"}}>⚠️ تنبيه</span><div className="w-8 h-8 rounded-xl bg-red-600 text-white grid place-items-center"><i className="fa-solid fa-bell text-[11px]"></i></div></div><div className="text-[26px] font-black mt-1" style={{color:critical.length?"#991b1b":"#92400e"}}>{critical.length}</div><div className="text-[10px] font-bold" style={{color:critical.length?"#dc2626":"#d97706"}}>{low.length} قريب</div></div>
             </div>
-
             {low.length>0 && (
-              <div className="card p-3" style={{borderColor:"#fde68a",background:"linear-gradient(135deg,#fffbeb,#fefce8)"}}>
-                <div className="flex items-center justify-between mb-2.5"><h3 className="font-black text-[12px] text-amber-800 flex items-center gap-2"><div className="w-6 h-6 rounded-lg bg-amber-500 text-white grid place-items-center"><i className="fa-solid fa-bell text-[10px]"></i></div>تنبيهات المخزون الحرج</h3><span className="badge badge-warn">{low.length} منتج</span></div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                  {low.map(p=>{const cur=stockOf(p.code); const mn=getMin(p.code); const isCrit=cur<=mn; return <div key={p.id} className="p-2.5 rounded-xl border flex justify-between items-center" style={{background:isCrit?"linear-gradient(135deg,#fef2f2,#fee2e2)":"linear-gradient(135deg,#fffbeb,#fff)",borderColor:isCrit?"#fecaca":"#fde68a"}}><div className="flex items-center gap-2"><div className={`w-9 h-9 rounded-xl grid place-items-center text-white ${isCrit?'bg-red-500':'bg-amber-500'}`}><i className="fa-solid fa-box text-[12px]"></i></div><div><div className="font-mono font-black text-[11px]">{p.code}</div><div className="text-[10px] font-bold">{p.desc}</div></div></div><div className={`w-8 h-8 rounded-full grid place-items-center font-black text-white text-[11px] ${isCrit?'bg-red-600':'bg-amber-500'}`}>{cur}</div></div>})}
-                </div>
-              </div>
+              <div className="card"><h3 className="font-black text-[12px] mb-2">⚠️ تنبيهات نفاد</h3><div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">{low.map(p=>{const cur=stockOf(p.code); return <div key={p.id} className="p-2 rounded-xl border bg-white flex justify-between items-center"><div><div className="font-mono font-black text-[11px]">{p.code}</div><div className="text-[10px] font-bold">{p.desc}</div></div><div className="w-8 h-8 rounded-full bg-red-500 text-white grid place-items-center font-black text-[11px]">{cur}</div></div>})}</div></div>
             )}
           </div>
         )}
 
         {tab==="inventory" && (
-          <div className="card p-3">
-            <div className="flex flex-wrap justify-between gap-2 mb-3">
-              <h2 className="font-black text-[13px] flex items-center gap-2"><div className="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 text-white grid place-items-center"><i className="fa-solid fa-boxes-stacked text-[12px]"></i></div>المخزن • إدارة المنتجات</h2>
-              <div className="flex flex-wrap gap-1.5">
-                <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="🔍 بحث..." className="input h-8 w-[130px] text-[11px]"/>
-                <label className="btn btn-emerald h-8 text-[10px] cursor-pointer"><i className="fa-solid fa-file-excel"></i>استيراد<input type="file" accept=".xlsx,.xls" onChange={(e)=>{const f=e.target.files[0]; if(!f)return; const reader=new FileReader(); reader.onload=async(evt)=>{const wb=XLSX.read(evt.target.result); const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]); for(const r of rows){const code=(r["الكود #"]||r.code||"").toString().toUpperCase().trim(); if(!code)continue; const exist=products.find(p=>p.code===code); const data={code,desc:r["وصف المنتج"]||r.desc||"",unit:r["الوحدة"]||"550 ml",boxes:Number(r["العلب"]||0),itemsPerBox:Number(r["القطع/علبة"]||20),qty:Number(r["الكمية"]||0),minStock:Number(r["الحد الأدنى"]||10)}; if(exist)await db.collection("products").doc(exist.id).update(data); else await db.collection("products").add({...data,createdAt:new Date()});} notify("تم الاستيراد ✅");}; reader.readAsArrayBuffer(f);}} className="hidden"/></label>
-                <button onClick={()=>{const ws=XLSX.utils.json_to_sheet(products.map(p=>({الكود:p.code,الوصف:p.desc,الحالي:stockOf(p.code),الحد_الأدنى:getMin(p.code)}))); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"المخزون"); XLSX.writeFile(wb,"المخزون.xlsx");}} className="btn btn-blue h-8 text-[10px]"><i className="fa-solid fa-download"></i>Excel</button>
-                <button onClick={()=>{setEditProdId(""); setNewProd({code:"",desc:"",unit:"550 ml",boxes:0,itemsPerBox:20,minStock:10,qty:0}); setShowProd(true)}} className="btn btn-primary h-8 text-[10px]"><i className="fa-solid fa-plus"></i>جديد</button>
+          <div className="space-y-3">
+            <div className="flex flex-wrap justify-between gap-2 items-center"><h2 className="font-black text-[13px]"><i className="fa-solid fa-boxes-stacked ml-1 text-cyan-600"></i>المخزن</h2><div className="flex gap-1.5"><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="بحث..." className="input h-8 w-[110px] text-[11px]"/><button onClick={()=>exportExcel(products.map(p=>({الكود:p.code, الوصف:p.desc, الحالي:stockOf(p.code), الادنى:getMin(p.code), الحالة:stockOf(p.code)<=getMin(p.code)?"نفد":stockOf(p.code)<=getMin(p.code)*1.3?"قريب":"متوفر"})), "معلومات_المخزن")} className="btn btn-blue h-8 text-[10px]"><i className="fa-solid fa-download"></i>تحميل معلومات المخزن</button><button onClick={()=>{setEditProdId(""); setNewProd({code:"",desc:"",unit:"550 ml",boxes:0,itemsPerBox:20,minStock:10,qty:0}); setShowProd(true)}} className="btn btn-primary h-8 text-[10px]"><i className="fa-solid fa-plus"></i>جديد</button></div></div>
+            <div className="card"><div className="overflow-x-auto"><table className="w-full"><thead><tr><th className="th">الكود</th><th className="th">الوصف</th><th className="th">الحالي</th><th className="th">الأدنى</th><th className="th">الحالة</th><th className="th">إجراء</th></tr></thead><tbody>{filtProducts.map(p=>{const cur=stockOf(p.code); const mn=getMin(p.code); const isLow=cur<=mn; const isWarn=cur<=mn*1.3 && cur>mn; return <tr key={p.id}><td className="td font-mono font-black">{p.code}</td><td className="td font-bold">{p.desc}</td><td className="td"><span className={`badge ${isLow?'badge-low':isWarn?'badge-warn':'badge-ok'}`}>{cur}</span></td><td className="td">{mn}</td><td className="td"><span className={`badge ${isLow?'badge-low':isWarn?'badge-warn':'badge-ok'}`}>{isLow?'نفد':isWarn?'قريب':'متوفر'}</span></td><td className="td"><div className="flex gap-1 justify-center"><button onClick={()=>{setEditProdId(p.id); setNewProd({code:p.code,desc:p.desc,unit:p.unit,boxes:p.boxes||0,itemsPerBox:p.itemsPerBox||20,minStock:p.minStock||10,qty:p.qty}); setShowProd(true)}} className="w-7 h-7 grid place-items-center rounded-lg bg-blue-50 text-blue-600 border"><i className="fa-solid fa-pen text-[10px]"></i></button><button onClick={()=>setConfirmDel({type:'products', id:p.id, name:p.code})} className="w-7 h-7 grid place-items-center rounded-lg bg-red-50 text-red-600 border"><i className="fa-solid fa-trash text-[10px]"></i></button></div></td></tr>})}</tbody></table></div></div>
+          </div>
+        )}
+
+        {tab==="analytics" && (
+          <div className="space-y-3">
+            <div className="flex justify-between items-center"><h2 className="font-black text-[13px]"><i className="fa-solid fa-chart-line ml-1 text-pink-600"></i>التحليل الشامل</h2><button onClick={()=>exportExcel([{إجمالي_المنتجات:products.length, إجمالي_الإنتاج:production.reduce((a,b)=>a+Number(b.qty),0), إجمالي_الخروج:stockOut.reduce((a,b)=>a+Number(b.qty),0), المخزون:products.reduce((a,p)=>a+stockOf(p.code),0)}], "معلومات_التحليل")} className="btn btn-emerald h-8 text-[10px]"><i className="fa-solid fa-download"></i>تحميل معلومات التحليل</button></div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="card" style={{background:"linear-gradient(135deg,#f0fdf4,#dcfce7)"}}><div className="text-[10px] font-black text-emerald-700">إجمالي الداخل</div><div className="text-[24px] font-black text-emerald-900">+{production.reduce((a,b)=>a+Number(b.qty),0)}</div><div className="text-[10px] text-emerald-600">{production.length} عملية</div></div>
+              <div className="card" style={{background:"linear-gradient(135deg,#fef2f2,#fee2e2)"}}><div className="text-[10px] font-black text-red-700">إجمالي الخارج</div><div className="text-[24px] font-black text-red-900">-{stockOut.reduce((a,b)=>a+Number(b.qty),0)}</div><div className="text-[10px] text-red-600">{stockOut.length} عملية</div></div>
+              <div className="card" style={{background:"linear-gradient(135deg,#eff6ff,#dbeafe)"}}><div className="text-[10px] font-black text-blue-700">صافي الحركة</div><div className="text-[24px] font-black text-blue-900">{production.reduce((a,b)=>a+Number(b.qty),0)-stockOut.reduce((a,b)=>a+Number(b.qty),0)}</div></div>
+              <div className="card" style={{background:"linear-gradient(135deg,#faf5ff,#ede9fe)"}}><div className="text-[10px] font-black text-violet-700">المخزون الحالي</div><div className="text-[24px] font-black text-violet-900">{products.reduce((a,p)=>a+stockOf(p.code),0)}</div></div>
+            </div>
+            <div className="grid lg:grid-cols-2 gap-3">
+              <div className="card">
+                <div className="flex justify-between items-center mb-2"><h3 className="font-black text-[11px]">🏆 ترتيب العمال</h3><button onClick={()=>exportExcel(Object.entries(prodByWorker).sort((a,b)=>b[1]-a[1]).map(([w,t],i)=>({الترتيب:i+1, العامل:w, الإجمالي:t, العمليات:production.filter(p=>p.worker===w).length})), "ترتيب_العمال")} className="btn btn-blue h-6 text-[8px]"><i className="fa-solid fa-download"></i>Excel</button></div>
+                <div className="overflow-x-auto"><table className="w-full"><thead><tr><th className="th">الترتيب</th><th className="th">العامل</th><th className="th">الإجمالي</th><th className="th">النسبة</th></tr></thead><tbody>{Object.entries(prodByWorker).sort((a,b)=>b[1]-a[1]).map(([w,t],i)=>{const maxT=Math.max(...Object.values(prodByWorker),1); const perc=Math.round((t/maxT)*100); const medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":i+1; return <tr key={w}><td className="td font-black text-center">{medal}</td><td className="td font-bold">{w}</td><td className="td"><span className="badge badge-ok">{t}</span></td><td className="td"><div className="flex items-center gap-1"><div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-violet-500 to-blue-500 rounded-full" style={{width:perc+"%"}}></div></div><span className="text-[10px] font-bold">{perc}%</span></div></td></tr>})}</tbody></table></div>
+              </div>
+              <div className="card">
+                <div className="flex justify-between items-center mb-2"><h3 className="font-black text-[11px]">🔥 الأكثر استهلاكا</h3><button onClick={()=>exportExcel(mostConsumed.map(([code,qty],i)=>{const p=products.find(x=>x.code===code); return {الترتيب:i+1, الكود:code, الوصف:p?p.desc:"", المستهلك:qty, المتبقي:stockOf(code)}}), "الأكثر_استهلاكا")} className="btn btn-blue h-6 text-[8px]"><i className="fa-solid fa-download"></i>Excel</button></div>
+                <div className="space-y-1.5">{mostConsumed.map(([code,qty],i)=>{const p=products.find(x=>x.code===code); const maxQty=Math.max(...mostConsumed.map(m=>m[1]),1); const perc=Math.round((qty/maxQty)*100); return <div key={code} className="p-2 rounded-xl border bg-white"><div className="flex justify-between"><div className="flex items-center gap-2"><span className="w-5 h-5 rounded-full bg-slate-900 text-white grid place-items-center font-black text-[9px]">{i+1}</span><div><div className="font-black text-[10px]">{code}</div><div className="text-[8px] text-slate-500 truncate max-w-[90px]">{p?p.desc:""}</div></div></div><div className="text-right"><div className="font-black text-[11px] text-red-600">{qty}</div><div className="text-[7px]">متبقي {stockOf(code)}</div></div></div><div className="mt-1 flex items-center gap-1"><div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden"><div className="h-full rounded-full" style={{width:perc+"%", background:perc>70?"#ef4444":perc>40?"#f59e0b":"#10b981"}}></div></div><span className="text-[8px] font-bold">{perc}%</span></div></div>})}</div>
               </div>
             </div>
-            <div className="overflow-x-auto rounded-xl border"><table className="w-full"><thead><tr style={{background:"linear-gradient(90deg,#f8fafc,#eef2ff)"}}><th className="th"><i className="fa-solid fa-hashtag"></i> الكود</th><th className="th"><i className="fa-solid fa-tag"></i> الوصف</th><th className="th"><i className="fa-solid fa-cubes"></i> الحالي</th><th className="th"><i className="fa-solid fa-triangle-exclamation"></i> الأدنى</th><th className="th"><i className="fa-solid fa-signal"></i> الحالة</th><th className="th">إجراء</th></tr></thead><tbody>{filtProducts.map(p=>{const cur=stockOf(p.code); const mn=getMin(p.code); const isLow=cur<=mn; const isWarn=cur<=mn*1.3 && cur>mn; return <tr key={p.id} className="tr"><td data-label="الكود" className="td font-mono font-black text-[11px]">{p.code}</td><td data-label="الوصف" className="td font-bold text-[11px]"><i className="fa-solid fa-box text-blue-400 ml-1"></i>{p.desc}</td><td data-label="الحالي" className="td"><span className={`badge ${isLow?'badge-low':isWarn?'badge-warn':'badge-ok'}`}><i className={`fa-solid ${isLow?'fa-arrow-down':isWarn?'fa-exclamation':'fa-check'}`}></i>{cur}</span></td><td data-label="الأدنى" className="td font-bold text-[11px]">{mn}</td><td data-label="الحالة" className="td"><span className={`badge ${isLow?'badge-low':isWarn?'badge-warn':'badge-ok'}`}>{isLow?'🔴 نفد':isWarn?'🟡 قريب':'🟢 متوفر'}</span></td><td data-label="إجراء" className="td"><div className="flex gap-1 justify-center"><button onClick={()=>{setEditProdId(p.id); setNewProd({code:p.code,desc:p.desc,unit:p.unit,boxes:p.boxes||0,itemsPerBox:p.itemsPerBox||20,minStock:p.minStock||10,qty:p.qty}); setShowProd(true)}} className="w-7 h-7 grid place-items-center rounded-lg bg-blue-50 text-blue-600 border border-blue-100"><i className="fa-solid fa-pen text-[10px]"></i></button><button onClick={()=>setConfirmDel({type:'products', id:p.id, name:p.code})} className="w-7 h-7 grid place-items-center rounded-lg bg-red-50 text-red-600 border border-red-100"><i className="fa-solid fa-trash text-[10px]"></i></button></div></td></tr>})}</tbody></table></div>
+            <div className="card">
+              <div className="flex justify-between items-center mb-2"><h3 className="font-black text-[11px]">📜 سجل كل الحركات (آخر 20)</h3><button onClick={()=>exportExcel([...production.map(p=>({النوع:"دخول", التاريخ:p.date, العامل:p.worker, الكود:p.code, الكمية:p.qty})), ...stockOut.map(s=>({النوع:"خروج", التاريخ:s.date, الكود:s.code, الكمية:-Number(s.qty)}))].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,20), "سجل_كل_الحركات")} className="btn btn-blue h-6 text-[8px]"><i className="fa-solid fa-download"></i>تحميل السجل Excel</button></div>
+              <div className="overflow-x-auto"><table className="w-full"><thead><tr><th className="th">التاريخ</th><th className="th">النوع</th><th className="th">العامل</th><th className="th">الكود</th><th className="th">الكمية</th></tr></thead><tbody>{[...production.map(p=>Object.assign({},p,{_type:"دخول",_qty:Number(p.qty)})), ...stockOut.map(s=>Object.assign({},s,{_type:"خروج",_qty:-Number(s.qty),worker:"—"}))].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,20).map((r,i)=><tr key={i}><td className="td text-[10px]">{r.date}</td><td className="td"><span className={`badge ${r._type==="دخول"?"badge-ok":"badge-low"} text-[9px]`}>{r._type==="دخول"?"+ دخول":"- خروج"}</span></td><td className="td font-bold text-[11px]">{r.worker||"-"}</td><td className="td font-mono">{r.code}</td><td className={`td font-black ${r._qty>0?'text-emerald-600':'text-red-600'}`}>{r._qty>0?("+"+r._qty):r._qty}</td></tr>)}</tbody></table></div>
+            </div>
+          </div>
+        )}
+
+        {tab==="attendance" && (
+          <div className="space-y-3">
+            <div className="flex justify-between items-center"><h2 className="font-black text-[13px]"><i className="fa-solid fa-calendar-check ml-1 text-violet-600"></i>الحضور</h2><div className="flex gap-1.5"><input type="date" value={attDate} onChange={e=>setAttDate(e.target.value)} className="input h-8 w-[130px]"/><button onClick={()=>exportExcel(Object.entries(attForm).map(([name,status])=>({العامل:name, الحالة:status, التاريخ:attDate})), "معلومات_الحضور_"+attDate)} className="btn btn-blue h-8 text-[10px]"><i className="fa-solid fa-download"></i>تحميل معلومات الحضور</button></div></div>
+            <div className="card"><form onSubmit={handleAtt}><div className="space-y-1.5">{workers.map(w=><div key={w.id} className="flex justify-between items-center p-2.5 rounded-xl border bg-white"><span className="font-bold text-[12px]">{w.name}</span><select value={attForm[w.name]||"حاضر"} onChange={e=>setAttForm(Object.assign({},attForm,{[w.name]:e.target.value}))} className="input h-8 w-[130px] text-[11px]"><option>حاضر ✅</option><option>مريض 🤒</option><option>غير مبرر ⚠️</option></select></div>)}</div><button className="btn btn-primary w-full h-9 mt-3"><i className="fa-solid fa-floppy-disk"></i> حفظ الحضور</button></form></div>
           </div>
         )}
 
         {tab==="archive" && (
           <div className="space-y-3">
-            <div className="card p-3 flex flex-wrap justify-between gap-2 items-center" style={{background:"linear-gradient(135deg,#fffbeb,#fef3c7)",borderColor:"#fde68a"}}>
-              <h2 className="font-black text-[13px] flex items-center gap-2"><div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white grid place-items-center"><i className="fa-solid fa-calendar-days"></i></div>الأرشيف • {archiveMonth.toLocaleDateString('ar-MA',{month:'long', year:'numeric'})}</h2>
-              <div className="flex gap-1.5"><button onClick={()=>setArchiveMonth(new Date(archiveMonth.getFullYear(), archiveMonth.getMonth()-1,1))} className="btn btn-slate h-8 w-8 p-0"><i className="fa-solid fa-chevron-right"></i></button><button onClick={()=>setArchiveMonth(new Date())} className="btn btn-primary h-8 text-[10px]">اليوم</button><button onClick={()=>setArchiveMonth(new Date(archiveMonth.getFullYear(), archiveMonth.getMonth()+1,1))} className="btn btn-slate h-8 w-8 p-0"><i className="fa-solid fa-chevron-left"></i></button></div>
-            </div>
-            <div className="card p-3">
-              <div className="grid grid-cols-7 gap-1 mb-2 text-center">{["الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت","الأحد"].map(d=><div key={d} className="text-[10px] font-black text-slate-500 py-1">{d}</div>)}</div>
-              <div className="calendar-grid">
-                {getDaysInMonth(archiveMonth).map((d,i)=>{
-                  if(!d) return <div key={i} className="calendar-day empty"></div>;
-                  const hasData=d.prod.length>0||d.out.length>0||Object.keys(d.att).length>0;
-                  const isToday=d.iso===new Date().toISOString().split('T')[0];
-                  return <div key={d.iso} onClick={()=>setArchiveDay(d)} className={`calendar-day ${hasData?'has-data':''} ${isToday?'today':''}`}><div className="flex justify-between"><span className="font-black text-[12px]">{d.day}</span>{hasData && <i className="fa-solid fa-circle text-[6px] text-blue-500 mt-1"></i>}</div>{hasData && <div className="mt-1 space-y-0.5"><div className="text-[8px] bg-emerald-100 text-emerald-700 px-1 rounded font-bold flex items-center gap-0.5"><i className="fa-solid fa-plus text-[6px]"></i> {d.prod.reduce((a,b)=>a+Number(b.qty),0)}</div><div className="text-[8px] bg-red-100 text-red-700 px-1 rounded font-bold flex items-center gap-0.5"><i className="fa-solid fa-minus text-[6px]"></i> {d.out.reduce((a,b)=>a+Number(b.qty),0)}</div></div>}</div>
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {tab==="stockout" && (
-          <div className="card p-3" style={{borderColor:"#fecaca",background:"linear-gradient(135deg,#fff,#fef2f2)"}}>
-            <h2 className="font-black text-[13px] mb-3 flex items-center gap-2"><div className="w-8 h-8 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 text-white grid place-items-center"><i className="fa-solid fa-truck-fast"></i></div>الخروج • تسجيل خروج المنتجات</h2>
-            <form onSubmit={handleOut} className="grid grid-cols-2 gap-2"><input list="olist" value={formOut.productRaw} onChange={e=>setFormOut({...formOut,productRaw:e.target.value})} placeholder="📦 اختر المنتج" className="input col-span-2" required/><datalist id="olist">{products.map(p=><option key={p.id} value={`${p.code} - ${p.desc} | متاح: ${stockOf(p.code)}`} />)}</datalist><input type="number" value={formOut.qty} onChange={e=>setFormOut({...formOut,qty:e.target.value})} placeholder="🔢 الكمية" className="input" required/><input type="date" value={formOut.date} onChange={e=>setFormOut({...formOut,date:e.target.value})} className="input"/><button className="btn col-span-2 h-10 text-white" style={{background:"linear-gradient(135deg,#ef4444,#f97316)"}}><i className="fa-solid fa-paper-plane"></i> تأكيد الخروج</button></form>
-          </div>
-        )}
-
-        {tab==="attendance" && (
-          <div className="card p-3" style={{borderColor:"#ddd6fe",background:"linear-gradient(135deg,#fff,#f5f3ff)"}}>
-            <h2 className="font-black text-[13px] mb-3 flex items-center gap-2"><div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 text-white grid place-items-center"><i className="fa-solid fa-calendar-check"></i></div>الحضور اليومي • تتبع العمال</h2>
-            <div className="flex gap-2 mb-3"><input type="date" value={attDate} onChange={e=>setAttDate(e.target.value)} className="input h-9 flex-1"/><button onClick={handleAtt} className="btn btn-primary h-9"><i className="fa-solid fa-floppy-disk"></i> حفظ</button></div>
-            <div className="space-y-1.5">{workers.map(w=><div key={w.id} className="flex justify-between items-center p-2.5 rounded-xl border bg-white"><span className="font-bold text-[12px] flex items-center gap-2"><div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 text-white grid place-items-center text-[10px]">{w.name[0]}</div>{w.name}</span><select value={attForm[w.name]||"حاضر"} onChange={e=>setAttForm({...attForm,[w.name]:e.target.value})} className="input h-8 w-[130px] text-[11px]"><option>حاضر ✅</option><option>مريض 🤒</option><option>غير مبرر ⚠️</option></select></div>)}</div>
+            <div className="flex flex-wrap justify-between gap-2 items-center"><h2 className="font-black text-[13px]"><i className="fa-solid fa-calendar-days ml-1 text-amber-600"></i>الأرشيف • {archiveMonth.toLocaleDateString('ar-MA',{month:'long',year:'numeric'})}</h2><div className="flex gap-1.5"><button onClick={()=>setArchiveMonth(new Date(archiveMonth.getFullYear(),archiveMonth.getMonth()-1,1))} className="btn btn-slate h-8 w-8 p-0"><i className="fa-solid fa-chevron-right"></i></button><button onClick={()=>setArchiveMonth(new Date())} className="btn btn-primary h-8 text-[10px]">اليوم</button><button onClick={()=>setArchiveMonth(new Date(archiveMonth.getFullYear(),archiveMonth.getMonth()+1,1))} className="btn btn-slate h-8 w-8 p-0"><i className="fa-solid fa-chevron-left"></i></button><button onClick={()=>{const days=getDaysInMonth(archiveMonth).filter(d=>d); exportExcel(days.map(d=>({التاريخ:d.iso, إنتاج:d.prod.reduce((a,b)=>a+Number(b.qty),0), خروج:d.out.reduce((a,b)=>a+Number(b.qty),0), حاضر:Object.values(attendance[d.iso]||{}).filter(v=>v && v.includes("حاضر")).length})), "معلومات_الأرشيف_"+archiveMonth.toISOString().slice(0,7))}} className="btn btn-blue h-8 text-[10px]"><i className="fa-solid fa-download"></i>تحميل معلومات الأرشيف</button></div></div>
+            <div className="card"><div className="grid grid-cols-7 gap-1 mb-2 text-center">{["الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت","الأحد"].map(d=><div key={d} className="text-[10px] font-black text-slate-500 py-1">{d}</div>)}</div><div className="calendar-grid">{getDaysInMonth(archiveMonth).map((d,i)=>{if(!d) return <div key={i} className="calendar-day empty"></div>; const hasData=d.prod.length>0||d.out.length>0||Object.keys(d.att).length>0; const isToday=d.iso===new Date().toISOString().split('T')[0]; return <div key={d.iso} onClick={()=>setArchiveDay(d)} className={`calendar-day ${hasData?'has-data':''} ${isToday?'today':''}`}><div className="flex justify-between"><span className="font-black text-[12px]">{d.day}</span>{hasData && <i className="fa-solid fa-circle text-[6px] text-blue-500 mt-1"></i>}</div>{hasData && <div className="mt-1 space-y-0.5"><div className="text-[8px] bg-emerald-100 text-emerald-700 px-1 rounded font-bold">+{d.prod.reduce((a,b)=>a+Number(b.qty),0)}</div><div className="text-[8px] bg-red-100 text-red-700 px-1 rounded font-bold">-{d.out.reduce((a,b)=>a+Number(b.qty),0)}</div></div>}</div>})}</div></div>
           </div>
         )}
 
         {tab==="production" && (
-          <div className="card p-3" style={{borderColor:"#bbf7d0",background:"linear-gradient(135deg,#fff,#f0fdf4)"}}>
-            <h2 className="font-black text-[13px] mb-3 flex items-center gap-2"><div className="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white grid place-items-center"><i className="fa-solid fa-industry"></i></div>الإنتاج • تسجيل دخول المنتجات</h2>
-            <form onSubmit={handleProd} className="space-y-2"><select value={formProd.worker} onChange={e=>setFormProd({...formProd,worker:e.target.value})} className="input" required><option value="">👷 اختر العامل</option>{workers.map(w=><option key={w.id} value={w.name}>{w.name}</option>)}</select><input list="plist" value={formProd.productRaw} onChange={e=>setFormProd({...formProd,productRaw:e.target.value})} placeholder="📦 الكود - الوصف" className="input" required/><datalist id="plist">{products.map(p=><option key={p.id} value={`${p.code} - ${p.desc}`} />)}</datalist><div className="grid grid-cols-2 gap-2"><input type="number" value={formProd.qty} onChange={e=>setFormProd({...formProd,qty:e.target.value})} placeholder="🔢 الكمية" className="input" required/><input type="date" value={formProd.date} onChange={e=>setFormProd({...formProd,date:e.target.value})} className="input"/></div><button className="btn w-full h-10 text-white" style={{background:"linear-gradient(135deg,#10b981,#06b6d4)"}}><i className="fa-solid fa-plus"></i> حفظ الإنتاج</button></form>
+          <div className="space-y-3">
+            <div className="flex flex-wrap justify-between gap-2 items-center"><h2 className="font-black text-[13px] flex items-center gap-2"><div className="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white grid place-items-center"><i className="fa-solid fa-industry"></i></div>الإنتاج • إضافة متعددة</h2><div className="flex gap-1.5"><button onClick={()=>exportExcel(production.map(p=>({التاريخ:p.date, العامل:p.worker, الكود:p.code, الوصف:p.desc, الكمية:p.qty, الملاحظة:p.notes||""})), "معلومات_الإنتاج")} className="btn btn-blue h-8 text-[10px]"><i className="fa-solid fa-download"></i>تحميل معلومات الإنتاج</button><button onClick={()=>{setFormProd({worker:"",productRaw:"",qty:"",date:new Date().toISOString().split('T')[0]}); setProdList([{id:1, productRaw:"", qty:""}]); setProdNote("");}} className="btn btn-slate h-8 text-[10px]"><i className="fa-solid fa-rotate"></i>تفريغ</button></div></div>
+            
+            <div className="card" style={{borderColor:"#bbf7d0",background:"linear-gradient(135deg,#fff,#f0fdf4)"}}>
+              <form onSubmit={handleProdMulti} className="space-y-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div><label className="text-[10px] font-black text-slate-600 mb-1 block">👷 إسم العامل</label><select value={formProd.worker} onChange={e=>setFormProd(Object.assign({},formProd,{worker:e.target.value}))} className="input" required><option value="">-- اختر العامل --</option>{workers.map(w=><option key={w.id} value={w.name}>{w.name}</option>)}</select></div>
+                  <div><label className="text-[10px] font-black text-slate-600 mb-1 block">📅 التاريخ</label><input type="date" value={formProd.date} onChange={e=>setFormProd(Object.assign({},formProd,{date:e.target.value}))} className="input" required/></div>
+                </div>
+
+                <div><label className="text-[10px] font-black text-slate-600 mb-1 block">📦 المنتوجات • إضافة عدة منتوجات</label>
+                  <div className="space-y-2">
+                    {prodList.map((item, idx)=>(
+                      <div key={item.id} className="flex gap-1.5 items-center p-2 rounded-xl border bg-white">
+                        <span className="w-6 h-6 rounded-full bg-slate-900 text-white grid place-items-center font-black text-[10px]">{idx+1}</span>
+                        <input list="plist" value={item.productRaw} onChange={e=>{const newList=[...prodList]; newList[idx].productRaw=e.target.value; setProdList(newList);}} placeholder="الكود - الوصف" className="input h-9 flex-1 text-[11px]" required/>
+                        <input type="number" value={item.qty} onChange={e=>{const newList=[...prodList]; newList[idx].qty=e.target.value; setProdList(newList);}} placeholder="الكمية" className="input h-9 w-[90px] text-[11px]" required/>
+                        <button type="button" onClick={()=>{if(prodList.length>1){setProdList(prodList.filter(x=>x.id!==item.id))}}} className={`w-8 h-8 grid place-items-center rounded-lg border ${prodList.length>1?'bg-red-50 text-red-500':'bg-slate-50 text-slate-300'}`}><i className="fa-solid fa-trash text-[10px]"></i></button>
+                      </div>
+                    ))}
+                  </div>
+                  <button type="button" onClick={()=>setProdList([...prodList,{id:Date.now(), productRaw:"", qty:""}])} className="btn btn-emerald w-full h-9 mt-2 text-[11px]"><i className="fa-solid fa-plus"></i>إضافة منتوج آخر</button>
+                  <datalist id="plist">{products.map(p=><option key={p.id} value={p.code+" - "+p.desc+" | متاح: "+stockOf(p.code)} />)}</datalist>
+                </div>
+
+                <div><label className="text-[10px] font-black text-slate-600 mb-1 block">📝 ملاحظة</label><input value={prodNote} onChange={e=>setProdNote(e.target.value)} placeholder="ملاحظة اختيارية..." className="input h-10" /></div>
+
+                <button className="btn w-full h-11 text-white font-black" style={{background:"linear-gradient(135deg,#10b981,#06b6d4)",boxShadow:"0 6px 16px rgba(16,185,129,.3)"}}><i className="fa-solid fa-floppy-disk"></i> حفظ الإنتاج ({prodList.length} منتوج)</button>
+              </form>
+            </div>
+
+            <div className="card"><h3 className="font-black text-[11px] mb-2">📜 آخر عمليات الإنتاج</h3><div className="overflow-x-auto"><table className="w-full"><thead><tr><th className="th">التاريخ</th><th className="th">العامل</th><th className="th">الكود</th><th className="th">الكمية</th><th className="th">ملاحظة</th><th className="th">حذف</th></tr></thead><tbody>{production.slice(0,50).map(p=><tr key={p.id}><td className="td text-[10px]">{p.date}</td><td className="td font-bold text-[11px]">{p.worker}</td><td className="td font-mono font-black">{p.code}</td><td className="td"><span className="badge badge-ok">{p.qty}</span></td><td className="td text-[10px]">{p.notes||"-"}</td><td className="td"><button onClick={()=>setConfirmDel({type:'productionLogs', id:p.id, name:p.code+" - "+p.worker})} className="text-red-500"><i className="fa-solid fa-trash text-[10px]"></i></button></td></tr>)}</tbody></table></div></div>
           </div>
         )}
 
         {tab==="workers-info" && (
-          <div className="card p-3">
-            <div className="flex justify-between items-center mb-3"><h2 className="font-black text-[13px] flex items-center gap-2"><div className="w-8 h-8 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 text-white grid place-items-center"><i className="fa-solid fa-users"></i></div>العمال • معلومات</h2><button onClick={()=>{setEditWorkerId(""); setNewWorker({name:"",phone:"",address:""}); setShowWorker(true)}} className="btn btn-primary h-8 text-[10px]"><i className="fa-solid fa-plus"></i> عامل</button></div>
-            <div className="space-y-2">{workers.map(w=><div key={w.id} className="p-3 rounded-xl border bg-white flex justify-between items-center"><div className="flex items-center gap-3"><div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-400 to-amber-500 text-white grid place-items-center font-black">{w.name[0]}</div><div><div className="font-bold text-[12px]">{w.name}</div><div className="text-[10px] text-slate-500 flex items-center gap-2"><i className="fa-solid fa-phone text-blue-500"></i>{w.phone||"—"} <i className="fa-solid fa-location-dot text-red-500 mr-2"></i>{w.address||"—"}</div></div></div><button onClick={()=>setConfirmDel({type:'workers', id:w.id, name:w.name})} className="w-7 h-7 grid place-items-center rounded-lg bg-red-50 text-red-500"><i className="fa-solid fa-trash text-[10px]"></i></button></div>)}</div>
+          <div className="space-y-3">
+            <div className="flex flex-wrap justify-between gap-2 items-center"><h2 className="font-black text-[13px] flex items-center gap-2"><div className="w-8 h-8 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 text-white grid place-items-center"><i className="fa-solid fa-users"></i></div>العمال • الإسم والنسب</h2><div className="flex gap-1.5"><button onClick={()=>exportExcel(workers.map(w=>({الإسم_والنسب:w.name, رقم_الهاتف:w.phone, عنوان_السكن:w.address||"", تاريخ_الإضافة:new Date().toLocaleDateString()})), "معلومات_العمال_الإسم_النسب_الهاتف_العنوان")} className="btn btn-blue h-8 text-[10px]"><i className="fa-solid fa-download"></i>تحميل معلومات العمال</button><button onClick={()=>{setEditWorkerId(""); setNewWorker({name:"",phone:"",address:""}); setShowWorker(true)}} className="btn btn-primary h-8 text-[10px]"><i className="fa-solid fa-user-plus"></i>عامل جديد</button></div></div>
+            <div className="card"><div className="overflow-x-auto"><table className="w-full"><thead><tr><th className="th">👤 الإسم والنسب</th><th className="th">📱 رقم الهاتف</th><th className="th">🏠 عنوان السكن</th><th className="th">إجراء</th></tr></thead><tbody>{workers.map(w=><tr key={w.id}><td className="td font-bold text-[11px]"><div className="flex items-center gap-2"><div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 text-white grid place-items-center font-black text-[10px]">{w.name? w.name[0] : "?"}</div>{w.name}</div></td><td className="td font-mono text-[11px]"><i className="fa-solid fa-phone text-blue-500 ml-1"></i>{w.phone||"-"}</td><td className="td text-[11px]"><i className="fa-solid fa-location-dot text-red-500 ml-1"></i>{w.address||"-"}</td><td className="td"><div className="flex gap-1 justify-center"><button onClick={()=>{setEditWorkerId(w.id); setNewWorker({name:w.name,phone:w.phone||"",address:w.address||""}); setShowWorker(true)}} className="w-7 h-7 grid place-items-center rounded-lg bg-blue-50 text-blue-600 border"><i className="fa-solid fa-pen text-[10px]"></i></button><button onClick={()=>setConfirmDel({type:'workers', id:w.id, name:w.name})} className="w-7 h-7 grid place-items-center rounded-lg bg-red-50 text-red-600 border"><i className="fa-solid fa-trash text-[10px]"></i></button></div></td></tr>)}</tbody></table></div></div>
+          </div>
+        )}
+
+        {tab==="stockout" && (
+          <div className="space-y-3">
+            <div className="flex justify-between items-center"><h2 className="font-black text-[13px]"><i className="fa-solid fa-truck-fast ml-1 text-red-600"></i>الخروج</h2><button onClick={()=>exportExcel(stockOut.map(s=>({التاريخ:s.date, الكود:s.code, الوصف:s.desc, الكمية:s.qty})), "معلومات_الخروج")} className="btn btn-blue h-8 text-[10px]"><i className="fa-solid fa-download"></i>تحميل معلومات الخروج</button></div>
+            <div className="card"><form onSubmit={handleOut} className="grid grid-cols-2 gap-2"><input list="olist" value={formOut.productRaw} onChange={e=>setFormOut(Object.assign({},formOut,{productRaw:e.target.value}))} placeholder="📦 اختر المنتج" className="input col-span-2" required/><datalist id="olist">{products.map(p=><option key={p.id} value={p.code+" - "+p.desc+" | متاح: "+stockOf(p.code)} />)}</datalist><input type="number" value={formOut.qty} onChange={e=>setFormOut(Object.assign({},formOut,{qty:e.target.value}))} placeholder="الكمية" className="input" required/><input type="date" value={formOut.date} onChange={e=>setFormOut(Object.assign({},formOut,{date:e.target.value}))} className="input"/><button className="btn col-span-2 h-10 text-white" style={{background:"linear-gradient(135deg,#ef4444,#f97316)"}}><i className="fa-solid fa-paper-plane"></i> تأكيد الخروج</button></form></div>
           </div>
         )}
 
       </main>
 
       <div className="bottom-nav"><div className="bottom-inner">
-        {[
-          {id:"dashboard",title:"الرئيسية",icon:"fa-house",cls:"dashboard"},
-          {id:"inventory",title:"المخزن",icon:"fa-boxes-stacked",cls:"inventory"},
-          {id:"stockout",title:"الخروج",icon:"fa-truck-fast",cls:"stockout"},
-          {id:"attendance",title:"الحضور",icon:"fa-calendar-check",cls:"attendance"},
-          {id:"archive",title:"الأرشيف",icon:"fa-calendar-days",cls:"archive"},
-        ].map(t=>{const active=tab===t.id; return <button key={t.id} onClick={()=>setTab(t.id)} className={`bottom-btn ${t.cls} ${active?'active':''}`}><i className={`fa-solid ${t.icon}`}></i><span>{t.title}</span></button>})}
+        <button onClick={()=>setTab("dashboard")} className={`bottom-btn dashboard ${tab==="dashboard"?"active":""}`}><i className="fa-solid fa-house"></i><span>الرئيسية</span></button>
+        <button onClick={()=>setTab("inventory")} className={`bottom-btn inventory ${tab==="inventory"?"active":""}`}><i className="fa-solid fa-boxes-stacked"></i><span>المخزن</span></button>
+        <button onClick={()=>setTab("analytics")} className={`bottom-btn analytics ${tab==="analytics"?"active":""}`}><i className="fa-solid fa-chart-line"></i><span>التحليل</span></button>
+        <button onClick={()=>setTab("attendance")} className={`bottom-btn attendance ${tab==="attendance"?"active":""}`}><i className="fa-solid fa-calendar-check"></i><span>الحضور</span></button>
+        <button onClick={()=>setTab("archive")} className={`bottom-btn archive ${tab==="archive"?"active":""}`}><i className="fa-solid fa-calendar-days"></i><span>الأرشيف</span></button>
       </div></div>
 
-      {showProd && (<div className="fixed inset-0 z-50 modal-bg grid place-items-center p-3"><form onSubmit={handleSaveProd} className="modal p-4 w-full max-w-[420px] space-y-2.5"><h3 className="font-black text-[12px] flex items-center gap-2"><div className="w-6 h-6 rounded-lg bg-blue-600 text-white grid place-items-center"><i className="fa-solid fa-box"></i></div>{editProdId?"تعديل المنتج":"منتج جديد"}</h3><input value={newProd.code} onChange={e=>setNewProd({...newProd,code:e.target.value})} placeholder="🔢 الكود #" className="input" required/><input value={newProd.desc} onChange={e=>setNewProd({...newProd,desc:e.target.value})} placeholder="🏷️ وصف المنتج" className="input" required/><input value={newProd.unit} onChange={e=>setNewProd({...newProd,unit:e.target.value})} placeholder="📏 الوحدة" className="input"/><div className="grid grid-cols-3 gap-1.5"><input type="number" value={newProd.boxes} onChange={e=>setNewProd({...newProd,boxes:e.target.value})} placeholder="📦 العلب" className="input"/><input type="number" value={newProd.itemsPerBox} onChange={e=>setNewProd({...newProd,itemsPerBox:e.target.value})} placeholder="🔢 القطع/علبة" className="input"/><input type="number" value={newProd.minStock} onChange={e=>setNewProd({...newProd,minStock:e.target.value})} placeholder="⚠️ الحد الأدنى" className="input" style={{background:"#fffbeb"}}/></div><div className="flex gap-1.5"><button className="btn btn-primary flex-1 h-9">💾 حفظ</button><button type="button" onClick={()=>setShowProd(false)} className="btn btn-slate flex-1 h-9">إلغاء</button></div></form></div>)}
-      {showWorker && (<div className="fixed inset-0 z-50 modal-bg grid place-items-center p-3"><form onSubmit={handleSaveWorker} className="modal p-4 w-full max-w-[380px] space-y-2.5"><h3 className="font-bold text-[12px] flex items-center gap-2"><div className="w-6 h-6 rounded-lg bg-orange-500 text-white grid place-items-center"><i className="fa-solid fa-user"></i></div>بيانات العامل</h3><input value={newWorker.name} onChange={e=>setNewWorker({...newWorker,name:e.target.value})} placeholder="👤 اسم العامل" className="input" required/><input value={newWorker.phone} onChange={e=>setNewWorker({...newWorker,phone:e.target.value})} placeholder="📱 رقم الهاتف" className="input"/><input value={newWorker.address} onChange={e=>setNewWorker({...newWorker,address:e.target.value})} placeholder="🏠 عنوان السكن" className="input"/><div className="flex gap-1.5"><button className="btn btn-primary flex-1 h-9">💾 حفظ</button><button type="button" onClick={()=>setShowWorker(false)} className="btn btn-slate flex-1 h-9">إلغاء</button></div></form></div>)}
-      {showPass && (<div className="fixed inset-0 z-[60] modal-bg grid place-items-center p-3"><form onSubmit={handleChangePass} className="modal p-4 w-full max-w-[360px] space-y-2.5"><h3 className="font-bold text-[12px]">🔑 تغيير الباسورد</h3><input type="password" value={passForm.current} onChange={e=>setPassForm({...passForm,current:e.target.value})} placeholder="الحالية" className="input" required/><input type="password" value={passForm.newPass} onChange={e=>setPassForm({...passForm,newPass:e.target.value})} placeholder="الجديدة" className="input" required/><input type="password" value={passForm.confirm} onChange={e=>setPassForm({...passForm,confirm:e.target.value})} placeholder="تأكيد" className="input" required/><div className="flex gap-1.5"><button className="btn btn-primary flex-1 h-9">تغيير</button><button type="button" onClick={()=>setShowPass(false)} className="btn btn-slate flex-1 h-9">إلغاء</button></div></form></div>)}
-      {confirmDel && (<div className="fixed inset-0 z-[70] modal-bg grid place-items-center p-3"><div className="modal p-5 w-full max-w-[360px] space-y-4 text-center"><div className="w-12 h-12 rounded-full bg-red-100 text-red-600 grid place-items-center mx-auto"><i className="fa-solid fa-triangle-exclamation text-[18px]"></i></div><div><h3 className="font-black text-[13px]">تأكيد الحذف</h3><p className="text-[11px] text-slate-500 mt-2">هل أنت متأكد من حذف<br/><b style={{color:"var(--text)"}}>{confirmDel.name}</b>؟</p></div><div className="flex gap-2"><button onClick={async()=>{await db.collection(confirmDel.type).doc(confirmDel.id).delete(); notify("تم الحذف ✅"); setConfirmDel(null);}} className="btn bg-red-500 text-white flex-1 h-10"><i className="fa-solid fa-trash"></i>نعم، احذف</button><button onClick={()=>setConfirmDel(null)} className="btn btn-slate flex-1 h-10">لا، تراجع</button></div></div></div>)}
-      {archiveDay && (
-        <div className="fixed inset-0 z-[70] modal-bg grid place-items-center p-3">
-          <div className="modal w-full max-w-[540px] max-h-[85vh] overflow-y-auto p-4 space-y-3">
-            <div className="flex justify-between items-center"><h3 className="font-black text-[14px]">📅 تفاصيل يوم {archiveDay.iso}</h3><button onClick={()=>setArchiveDay(null)} className="w-8 h-8 grid place-items-center rounded-xl border"><i className="fa-solid fa-xmark"></i></button></div>
-            <div className="grid grid-cols-3 gap-2">
-              <div className="card p-2.5 text-center" style={{background:"linear-gradient(135deg,#f0fdf4,#dcfce7)"}}><div className="text-[10px] font-bold text-emerald-700">إنتاج</div><div className="text-[18px] font-black text-emerald-700">{archiveDay.prod.reduce((a,b)=>a+Number(b.qty),0)}</div></div>
-              <div className="card p-2.5 text-center" style={{background:"linear-gradient(135deg,#fef2f2,#fee2e2)"}}><div className="text-[10px] font-bold text-red-700">خروج</div><div className="text-[18px] font-black text-red-700">{archiveDay.out.reduce((a,b)=>a+Number(b.qty),0)}</div></div>
-              <div className="card p-2.5 text-center" style={{background:"linear-gradient(135deg,#eff6ff,#dbeafe)"}}><div className="text-[10px] font-bold text-blue-700">حضور</div><div className="text-[18px] font-black text-blue-700">{archiveDay.presentCount}/{Object.keys(archiveDay.att).length}</div></div>
-            </div>
-            <div className="space-y-2">
-              <h4 className="font-bold text-[11px]">👷 الحضور</h4>
-              {Object.keys(archiveDay.att).length===0?<div className="text-[11px] text-slate-400 text-center py-2">لا يوجد</div>:Object.entries(archiveDay.att).map(([n,s])=><div key={n} className="flex justify-between p-2 rounded-lg border text-[11px]"><span>{n}</span><span className="badge badge-ok">{s}</span></div>)}
-              <h4 className="font-bold text-[11px] mt-2">🏭 الإنتاج</h4>
-              {archiveDay.prod.length===0?<div className="text-[11px] text-slate-400 text-center py-2">لا يوجد</div>:archiveDay.prod.map(p=><div key={p.id} className="flex justify-between p-2 rounded-lg border text-[11px]"><span>{p.worker} - {p.code}</span><b>{p.qty}</b></div>)}
-            </div>
-            <button onClick={()=>setArchiveDay(null)} className="btn btn-slate w-full h-9">إغلاق</button>
-          </div>
-        </div>
-      )}
+      {showProd && (<div className="modal-bg"><form onSubmit={handleSaveProd} className="modal space-y-2.5"><h3 className="font-black text-[12px]"><i className="fa-solid fa-box ml-1"></i>{editProdId?"تعديل المنتج":"منتج جديد"}</h3><input value={newProd.code} onChange={e=>setNewProd(Object.assign({},newProd,{code:e.target.value}))} placeholder="الكود #" className="input" required/><input value={newProd.desc} onChange={e=>setNewProd(Object.assign({},newProd,{desc:e.target.value}))} placeholder="وصف المنتج" className="input" required/><input value={newProd.unit} onChange={e=>setNewProd(Object.assign({},newProd,{unit:e.target.value}))} placeholder="الوحدة" className="input"/><div className="grid grid-cols-3 gap-1.5"><input type="number" value={newProd.boxes} onChange={e=>setNewProd(Object.assign({},newProd,{boxes:e.target.value}))} placeholder="العلب" className="input"/><input type="number" value={newProd.itemsPerBox} onChange={e=>setNewProd(Object.assign({},newProd,{itemsPerBox:e.target.value}))} placeholder="القطع/علبة" className="input"/><input type="number" value={newProd.minStock} onChange={e=>setNewProd(Object.assign({},newProd,{minStock:e.target.value}))} placeholder="الحد الأدنى" className="input" style={{background:"#fffbeb"}}/></div><div className="flex gap-1.5"><button className="btn btn-primary flex-1 h-9">حفظ</button><button type="button" onClick={()=>setShowProd(false)} className="btn btn-slate flex-1 h-9">إلغاء</button></div></form></div>)}
+      {showWorker && (<div className="modal-bg"><form onSubmit={handleSaveWorker} className="modal space-y-2.5"><h3 className="font-black text-[12px]">بيانات العامل</h3><input value={newWorker.name} onChange={e=>setNewWorker(Object.assign({},newWorker,{name:e.target.value}))} placeholder="اسم العامل" className="input" required/><input value={newWorker.phone} onChange={e=>setNewWorker(Object.assign({},newWorker,{phone:e.target.value}))} placeholder="رقم الهاتف" className="input"/><input value={newWorker.address} onChange={e=>setNewWorker(Object.assign({},newWorker,{address:e.target.value}))} placeholder="عنوان السكن" className="input"/><div className="flex gap-1.5"><button className="btn btn-primary flex-1 h-9">حفظ</button><button type="button" onClick={()=>setShowWorker(false)} className="btn btn-slate flex-1 h-9">إلغاء</button></div></form></div>)}
+      {showPass && (<div className="modal-bg"><form onSubmit={handleChangePass} className="modal space-y-2.5"><h3 className="font-black text-[12px]">تغيير الباسورد</h3><input type="password" value={passForm.current} onChange={e=>setPassForm(Object.assign({},passForm,{current:e.target.value}))} placeholder="الحالية" className="input" required/><input type="password" value={passForm.newPass} onChange={e=>setPassForm(Object.assign({},passForm,{newPass:e.target.value}))} placeholder="الجديدة" className="input" required/><input type="password" value={passForm.confirm} onChange={e=>setPassForm(Object.assign({},passForm,{confirm:e.target.value}))} placeholder="تأكيد" className="input" required/><div className="flex gap-1.5"><button className="btn btn-primary flex-1 h-9">تغيير</button><button type="button" onClick={()=>setShowPass(false)} className="btn btn-slate flex-1 h-9">إلغاء</button></div></form></div>)}
+      {confirmDel && (<div className="modal-bg" style={{zIndex:70}}><div className="modal text-center space-y-4"><div className="w-12 h-12 rounded-full bg-red-100 text-red-600 grid place-items-center mx-auto"><i className="fa-solid fa-triangle-exclamation text-[18px]"></i></div><div><h3 className="font-black text-[13px]">تأكيد الحذف</h3><p className="text-[11px] text-slate-500 mt-2">هل أنت متأكد من حذف <b>{confirmDel.name}</b>؟</p></div><div className="flex gap-2"><button onClick={async()=>{await db.collection(confirmDel.type).doc(confirmDel.id).delete(); notify("تم الحذف ✅"); setConfirmDel(null);}} className="btn bg-red-500 text-white flex-1 h-10"><i className="fa-solid fa-trash"></i>نعم، احذف</button><button onClick={()=>setConfirmDel(null)} className="btn btn-slate flex-1 h-10">لا، تراجع</button></div></div></div>)}
+      {archiveDay && (<div className="modal-bg" style={{zIndex:70}}><div className="modal max-h-[85vh] overflow-y-auto space-y-3" style={{maxWidth:"540px"}}><div className="flex justify-between items-center"><h3 className="font-black text-[14px]">📅 تفاصيل يوم {archiveDay.iso}</h3><button onClick={()=>setArchiveDay(null)} className="w-8 h-8 grid place-items-center rounded-xl border"><i className="fa-solid fa-xmark"></i></button></div><div className="grid grid-cols-3 gap-2"><div className="card p-2.5 text-center" style={{background:"linear-gradient(135deg,#f0fdf4,#dcfce7)"}}><div className="text-[10px] font-bold text-emerald-700">إنتاج</div><div className="text-[18px] font-black text-emerald-700">{archiveDay.prod.reduce((a,b)=>a+Number(b.qty),0)}</div></div><div className="card p-2.5 text-center" style={{background:"linear-gradient(135deg,#fef2f2,#fee2e2)"}}><div className="text-[10px] font-bold text-red-700">خروج</div><div className="text-[18px] font-black text-red-700">{archiveDay.out.reduce((a,b)=>a+Number(b.qty),0)}</div></div><div className="card p-2.5 text-center" style={{background:"linear-gradient(135deg,#eff6ff,#dbeafe)"}}><div className="text-[10px] font-bold text-blue-700">حضور</div><div className="text-[18px] font-black text-blue-700">{archiveDay.presentCount}/{Object.keys(archiveDay.att).length}</div></div></div><button onClick={()=>exportExcel([...archiveDay.prod.map(p=>({النوع:"إنتاج", العامل:p.worker, الكود:p.code, الكمية:p.qty})), ...archiveDay.out.map(s=>({النوع:"خروج", الكود:s.code, الكمية:s.qty})), ...Object.entries(archiveDay.att).map(([n,s])=>({النوع:"حضور", العامل:n, الحالة:s}))], "معلومات_يوم_"+archiveDay.iso)} className="btn btn-blue w-full h-9"><i className="fa-solid fa-download"></i>تحميل معلومات هذا اليوم</button><button onClick={()=>setArchiveDay(null)} className="btn btn-slate w-full h-9">إغلاق</button></div></div>)}
 
       <div className="fixed bottom-[78px] lg:bottom-4 right-2 left-2 lg:left-auto z-[50] flex flex-col gap-1.5 max-w-[320px]">{toasts.map(t=><div key={t.id} className={`px-3 py-2 rounded-xl text-white font-bold text-[10px] shadow-lg ${t.t==="err"?"bg-red-500":"bg-slate-900"}`}>{t.m}</div>)}</div>
     </div>
-  )
+  );
 }
 const root=ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App/>);
