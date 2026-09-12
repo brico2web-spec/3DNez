@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="لوحة تحكم لتسيير الإنتاج والتخزين والعمال" />
+  <title>مصنعتي | تسيير الإنتاج والتخزين</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><div class="brand-mark">م</div><div><strong>مصنعتي</strong><span>إدارة ذكية</span></div></div>
+      <nav class="nav-links" aria-label="التنقل الرئيسي">
+        <button class="nav-item active" data-view="dashboard"><span>▦</span> نظرة عامة</button>
+        <button class="nav-item" data-view="production"><span>⚙</span> الإنتاج</button>
+        <button class="nav-item" data-view="inventory"><span>▤</span> المخزون</button>
+        <button class="nav-item" data-view="workers"><span>♙</span> العمال</button>
+        <button class="nav-item" data-view="reports"><span>◫</span> التقارير</button>
+      </nav>
+      <div class="sidebar-bottom"><div class="support-card"><div class="support-icon">?</div><div><b>تحتاج مساعدة؟</b><small>فريق الدعم جاهز</small></div><button aria-label="المساعدة">›</button></div><button class="nav-item logout"><span>⇥</span> تسجيل الخروج</button></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar"><button class="mobile-menu" id="mobileMenu" aria-label="القائمة">☰</button><div class="welcome"><span id="pageEyebrow">السبت، 12 شتنبر 2026</span><h1 id="pageTitle">صباح الخير، ياسين <span>👋</span></h1></div><div class="top-actions"><label class="search-box"><span>⌕</span><input id="globalSearch" placeholder="ابحث هنا..." /></label><button class="icon-btn" id="notificationBtn" aria-label="الإشعارات">♢<i></i></button><div class="profile"><div class="avatar">ي</div><div><b>ياسين العلوي</b><small>مدير المصنع</small></div><span>⌄</span></div></div></header>
+
+      <section id="dashboard" class="view active-view">
+        <div class="section-heading"><div><h2>نظرة عامة</h2><p>تابع أداء مصنعك واتخذ قرارات أفضل اليوم.</p></div><button class="primary-btn" id="quickAddBtn">＋ إضافة عملية</button></div>
+        <div class="stat-grid">
+          <article class="stat-card teal"><div class="stat-icon">▣</div><span>إنتاج اليوم</span><strong>2,840 <em>قطعة</em></strong><small class="up">↑ 12.5% <label>مقارنة بالأمس</label></small></article>
+          <article class="stat-card orange"><div class="stat-icon">▤</div><span>قيمة المخزون</span><strong>184,250 <em>درهم</em></strong><small class="down">↓ 3.2% <label>منذ الأسبوع الماضي</label></small></article>
+          <article class="stat-card purple"><div class="stat-icon">♙</div><span>العمال الحاضرون</span><strong>42 <em>/ 48 عامل</em></strong><small class="up">↑ 4.8% <label>مقارنة بالأمس</label></small></article>
+          <article class="stat-card blue"><div class="stat-icon">◴</div><span>كفاءة الإنتاج</span><strong>87.4 <em>%</em></strong><small class="up">↑ 2.1% <label>مقارنة بالأسبوع الماضي</label></small></article>
+        </div>
+        <div class="dashboard-grid"><article class="panel chart-panel"><div class="panel-head"><div><h3>تحليل الإنتاج</h3><span>إجمالي القطع المنتجة خلال الأسبوع</span></div><select id="chartRange"><option>هذا الأسبوع</option><option>الأسبوع الماضي</option></select></div><div class="chart-wrap"><div class="y-axis"><span>4,000</span><span>3,000</span><span>2,000</span><span>1,000</span><span>0</span></div><div class="chart-area"><div class="grid-lines"><i></i><i></i><i></i><i></i><i></i></div><svg viewBox="0 0 700 230" preserveAspectRatio="none" class="line-chart"><defs><linearGradient id="fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#14b8a6" stop-opacity=".23"/><stop offset="1" stop-color="#14b8a6" stop-opacity="0"/></linearGradient></defs><path class="area" d="M0,155 C45,145 55,100 100,118 S160,145 200,115 S255,75 300,99 S360,120 400,84 S460,105 500,70 S560,78 600,42 S660,60 700,20 L700,230 L0,230Z"/><path class="line" d="M0,155 C45,145 55,100 100,118 S160,145 200,115 S255,75 300,99 S360,120 400,84 S460,105 500,70 S560,78 600,42 S660,60 700,20"/><circle cx="600" cy="42" r="6"/><circle cx="600" cy="42" r="12" class="pulse"/></svg><div class="x-axis"><span>الإثنين</span><span>الثلاثاء</span><span>الأربعاء</span><span>الخميس</span><span>الجمعة</span><span>السبت</span><span>الأحد</span></div></div></div></article>
+          <article class="panel progress-panel"><div class="panel-head"><div><h3>أهداف الإنتاج</h3><span>التقدم اليومي</span></div><button class="more-btn">•••</button></div><div class="donut"><div><b>71%</b><span>مكتمل</span></div></div><div class="legend"><span><i class="dot teal-dot"></i>مكتمل <b>2,840</b></span><span><i class="dot pale-dot"></i>متبقي <b>1,160</b></span></div><div class="goal-footer"><span>الهدف اليومي</span><b>4,000 قطعة</b></div></article></div>
+        <div class="bottom-grid"><article class="panel table-panel"><div class="panel-head"><div><h3>آخر عمليات الإنتاج</h3><span>العمليات المسجلة مؤخراً</span></div><button class="link-btn" data-view="production">عرض الكل ←</button></div><div class="table-scroll"><table><thead><tr><th>رقم العملية</th><th>المنتج</th><th>الكمية</th><th>الوردية</th><th>الحالة</th></tr></thead><tbody id="productionTable"><tr><td><b>#PR-2408</b><small>اليوم، 10:32</small></td><td><span class="product"><i class="product-dot red"></i>عبوات بلاستيكية 1L</span></td><td>1,200 قطعة</td><td>الصباحية</td><td><span class="status done">مكتملة</span></td></tr><tr><td><b>#PR-2407</b><small>اليوم، 09:15</small></td><td><span class="product"><i class="product-dot yellow"></i>أغطية بلاستيكية</span></td><td>840 قطعة</td><td>الصباحية</td><td><span class="status progress">قيد التنفيذ</span></td></tr><tr><td><b>#PR-2406</b><small>اليوم، 08:40</small></td><td><span class="product"><i class="product-dot blue-dot"></i>علب كرتونية</span></td><td>800 قطعة</td><td>الصباحية</td><td><span class="status done">مكتملة</span></td></tr></tbody></table></div></article>
+          <article class="panel alerts-panel"><div class="panel-head"><div><h3>تنبيهات مهمة</h3><span>تحتاج إلى انتباهك</span></div><span class="alert-count">3</span></div><div class="alert-item"><div class="alert-symbol danger">!</div><div><b>مخزون منخفض</b><p>المادة الخام: حبيبات PP وصلت إلى 18%</p><small>منذ 24 دقيقة</small></div></div><div class="alert-item"><div class="alert-symbol warning">◷</div><div><b>صيانة مستحقة</b><p>آلة الحقن رقم 03 تحتاج إلى صيانة</p><small>منذ ساعتين</small></div></div><div class="alert-item"><div class="alert-symbol info">♙</div><div><b>تأخر في الحضور</b><p>عاملان لم يسجلا الدخول بعد</p><small>منذ 3 ساعات</small></div></div></article></div>
+      </section>
+
+      <section id="production" class="view"><div class="section-heading"><div><h2>إدارة الإنتاج</h2><p>سجل وتتبع جميع عمليات الإنتاج والورديات.</p></div><button class="primary-btn" id="addProductionBtn">＋ عملية إنتاج جديدة</button></div><div class="empty-like panel"><div class="big-icon teal-bg">⚙</div><h3>كل عمليات الإنتاج في مكان واحد</h3><p>استخدم زر «عملية إنتاج جديدة» لإضافة أول عملية، أو عدّل البيانات من الجدول الرئيسي.</p><button class="outline-btn" id="productionDemoBtn">إضافة عملية تجريبية</button></div></section>
+      <section id="inventory" class="view"><div class="section-heading"><div><h2>المخزون</h2><p>راقب المواد الخام والمنتجات الجاهزة.</p></div><button class="primary-btn" id="addInventoryBtn">＋ إضافة مادة</button></div><div class="inventory-cards"><div class="panel inventory-item"><div class="item-icon raw">◈</div><div><b>حبيبات PP</b><span>مواد خام</span></div><strong>18%<small>من الحد الأدنى</small></strong></div><div class="panel inventory-item"><div class="item-icon ready">▣</div><div><b>عبوات بلاستيكية 1L</b><span>منتج جاهز</span></div><strong>2,840<small>قطعة متوفرة</small></strong></div><div class="panel inventory-item"><div class="item-icon package">▤</div><div><b>علب كرتونية</b><span>مواد تغليف</span></div><strong>68%<small>من السعة</small></strong></div></div></section>
+      <section id="workers" class="view"><div class="section-heading"><div><h2>العمال والموظفون</h2><p>تابع الحضور والأداء وتوزيع الورديات.</p></div><button class="primary-btn" id="addWorkerBtn">＋ إضافة عامل</button></div><div class="workers-list panel"><div class="worker-row"><div class="avatar worker-a">م</div><div><b>محمد بنعمر</b><span>مشغل آلة • الوردية الصباحية</span></div><span class="status done">حاضر</span><b class="score">94%</b></div><div class="worker-row"><div class="avatar worker-b">س</div><div><b>سارة الإدريسي</b><span>مراقبة جودة • الوردية الصباحية</span></div><span class="status done">حاضر</span><b class="score">91%</b></div><div class="worker-row"><div class="avatar worker-c">ع</div><div><b>عمر الكتاني</b><span>مخزن • الوردية المسائية</span></div><span class="status progress">متأخر</span><b class="score">87%</b></div></div></section>
+      <section id="reports" class="view"><div class="section-heading"><div><h2>التقارير</h2><p>ملخصات واضحة تساعدك على اتخاذ القرار.</p></div><button class="primary-btn" id="exportBtn">⇩ تصدير التقرير</button></div><div class="report-grid"><div class="panel report-card"><span>تقرير الإنتاج الشهري</span><b>24,680 قطعة</b><small class="up">↑ 14.2% عن الشهر السابق</small></div><div class="panel report-card"><span>معدل الحضور</span><b>91.6%</b><small class="up">↑ 2.4% عن الشهر السابق</small></div><div class="panel report-card"><span>قيمة المواد المصروفة</span><b>72,450 درهم</b><small class="down">↓ 5.8% عن الشهر السابق</small></div></div></section>
+    </main>
+  </div>
+  <div class="toast" id="toast"><span>✓</span><div><b id="toastTitle">تم بنجاح</b><small id="toastMessage">تم حفظ العملية.</small></div></div>
+  <div class="modal-backdrop" id="modal"><div class="modal"><button class="close-modal" id="closeModal">×</button><h3>إضافة عملية إنتاج</h3><p>أدخل تفاصيل العملية الجديدة</p><form id="productionForm"><label>اسم المنتج<input name="product" required placeholder="مثال: عبوات بلاستيكية" /></label><div class="form-row"><label>الكمية<input name="quantity" type="number" required placeholder="0" /></label><label>الوردية<select name="shift"><option>الصباحية</option><option>المسائية</option><option>الليلية</option></select></label></div><button class="primary-btn full" type="submit">حفظ العملية</button></form></div></div>
+  <script src="script.js"></script>
+</body>
+</html>
