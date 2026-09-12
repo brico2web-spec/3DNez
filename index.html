@@ -113,7 +113,7 @@
                 </div>
 
                 <div class="flex items-center gap-3 flex-wrap">
-                    <span id="current-date" class="text-xs sm:text-sm bg-blue-900 px-3 py-1.5 rounded-lg border border-blue-800 text-blue-200">السبت 12/09/2026</span>
+                    <span id="current-date" class="text-xs sm:text-sm bg-blue-900 px-3 py-1.5 rounded-lg border border-blue-800 text-blue-200"></span>
                     <button onclick="openChangePasswordModal()" class="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow">
                         <i class="fa-solid fa-key"></i> تغيير كلمة المرور
                     </button>
@@ -374,7 +374,6 @@
                         <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
                             <input type="text" id="search-product" onkeyup="filterInventory()" placeholder="ابحث برمز المنتج أو الوصف..." class="w-full sm:w-60 p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                             
-                            <!-- Excel Upload Button & Clear All Products Button -->
                             <input type="file" id="excel-file-input" accept=".xlsx, .xls" class="hidden" onchange="handleExcelUpload(event)">
                             <button onclick="document.getElementById('excel-file-input').click()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow flex items-center gap-2 whitespace-nowrap">
                                 <i class="fa-solid fa-file-excel"></i> رفع ملف إكسيل
@@ -591,7 +590,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, setDoc, writeBatch, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Firebase Config (يمكنك وضع مفاتيح المشروعات الخاصة بك هنا)
+        // ⚠️ استبدل البيانات أدناه بمفاتيح مشروع Firebase الخاص بك
         const firebaseConfig = {
             apiKey: "AIzaSyDemoKeyReplaceWithYourOwnIfNeed",
             authDomain: "factory-system-demo.firebaseapp.com",
@@ -799,7 +798,7 @@
                     if (count % 400 !== 0) {
                         await batch.commit();
                     }
-                    alert("تم حذف جميع المنتجات بنجاح. يمكن الآن رفع ملف الإكسيل لجميع المنتجات.");
+                    alert("تم حذف جميع المنتجات بنجاح.");
                 } catch (e) {
                     console.error("Error deleting all products: ", e);
                     alert("حدث خطأ أثناء إفراغ المخزون: " + e.message);
@@ -807,7 +806,6 @@
             }
         };
 
-        // 🟢 FIX EXCEL IMPORT METHOD
         window.handleExcelUpload = function(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1021,8 +1019,10 @@
 
         // Window Load & Utilities
         window.onload = function() {
-            const todayStr = new Date().toISOString().split('T')[0];
-            document.getElementById('current-date').innerText = "السبت 12/09/2026";
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            const options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' };
+            document.getElementById('current-date').innerText = today.toLocaleDateString('ar-MA', options);
             document.getElementById('prod-date').value = todayStr;
             document.getElementById('out-date').value = todayStr;
             document.getElementById('filter-date').value = todayStr;
