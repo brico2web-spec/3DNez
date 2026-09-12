@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>DATA BASE 3D-NEZAR - كامل Firebase</title>
+<title>DATA BASE 3D-NEZAR - كامل </title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -46,7 +46,7 @@ td{padding:8px 6px;border-bottom:1px solid #f1f5f9;font-size:10px}
 <body>
 <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b">
 <div class="max-w-[1400px] mx-auto px-3 h-[54px] flex items-center justify-between">
-<div class="flex items-center gap-2"><div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-500 grid place-items-center text-white shadow-lg"><i class="fa-solid fa-database text-[12px]"></i></div><div class="leading-none"><div class="font-black text-[11px] flex gap-1 items-center"><span class="bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">DATA BASE</span><span class="px-1.5 py-0.5 rounded bg-gradient-to-r from-amber-400 to-orange-500 text-white text-[7px] shadow">3D-NEZAR</span></div><div id="fbStatus" class="text-[8px] font-bold text-amber-600 mt-0.5">جاري الاتصال بـ Firebase...</div></div></div>
+<div class="flex items-center gap-2"><div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-500 grid place-items-center text-white shadow-lg"><i class="fa-solid fa-database text-[12px]"></i></div><div class="leading-none"><div class="font-black text-[11px] flex gap-1 items-center"><span class="bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">DATA BASE</span><span class="px-1.5 py-0.5 rounded bg-gradient-to-r from-amber-400 to-orange-500 text-white text-[7px] shadow">3D-NEZAR</span></div><div id="fbStatus" class="text-[8px] font-bold text-amber-600 mt-0.5">جاري الاتصال...</div></div></div>
 <div class="flex items-center gap-1"><span id="fbDot" class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span><button onclick="openDrawer()" class="w-8 h-8 grid place-items-center rounded-xl bg-slate-900 text-white lg:hidden"><i class="fa-solid fa-bars text-[10px]"></i></button><button onclick="if(confirm('تسجيل خروج؟')){localStorage.removeItem('factory_logged'); location.reload()}" class="w-8 h-8 grid place-items-center rounded-xl border bg-white text-red-500"><i class="fa-solid fa-right-from-bracket text-[10px]"></i></button></div>
 </div>
 </header>
@@ -63,13 +63,13 @@ td{padding:8px 6px;border-bottom:1px solid #f1f5f9;font-size:10px}
 <button onclick="switchTab('attendance');closeDrawer()" class="w-full h-9 flex items-center gap-2 px-3 rounded-lg text-[11px] hover:bg-violet-50"><i class="fa-solid fa-calendar-check text-violet-600"></i>الحضور</button>
 <button onclick="switchTab('archive');closeDrawer()" class="w-full h-9 flex items-center gap-2 px-3 rounded-lg text-[11px] hover:bg-amber-50"><i class="fa-solid fa-calendar-days text-amber-600"></i>الأرشيف</button>
 </div>
-<div class="mt-4 p-2 rounded-xl bg-slate-50 border text-[9px]"><div class="font-black">Firebase</div><div id="fbInfo" class="text-[8px] text-slate-500 mt-1">جاري...</div></div>
+<div class="mt-4 p-2 rounded-xl bg-slate-50 border text-[9px]"><div class="font-black"></div><div id="fbInfo" class="text-[8px] text-slate-500 mt-1">جاري...</div></div>
 </div></div>
 
 <main class="max-w-[1400px] mx-auto p-3 space-y-3">
 <!-- DASHBOARD -->
 <div id="tab-dashboard" class="tab active space-y-3">
-<div class="flex justify-between items-center"><h2 class="font-black text-[13px] flex items-center gap-2"><div class="w-7 h-7 rounded-xl bg-slate-900 text-white grid place-items-center"><i class="fa-solid fa-house text-[10px]"></i></div>الرئيسية • لوحة التحكم</h2><span id="dashFb" class="badge info">Firebase...</span></div>
+<div class="flex justify-between items-center"><h2 class="font-black text-[13px] flex items-center gap-2"><div class="w-7 h-7 rounded-xl bg-slate-900 text-white grid place-items-center"><i class="fa-solid fa-house text-[10px]"></i></div>الرئيسية • لوحة التحكم</h2><span id="dashFb" class="badge info">متصل...</span></div>
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
 <div class="card" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#bfdbfe"><div class="flex justify-between"><div class="text-[9px] font-black text-blue-700">📦 المنتجات</div><div class="w-7 h-7 rounded-lg bg-blue-600 text-white grid place-items-center"><i class="fa-solid fa-boxes-stacked text-[10px]"></i></div></div><div id="d_prodCount" class="text-[22px] font-black">0</div><div id="d_stockSum" class="text-[9px] text-blue-700">0 علبة • 0 قطعة</div></div>
 <div class="card" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#bbf7d0"><div class="flex justify-between"><div class="text-[9px] font-black text-emerald-700">🏭 إنتاج اليوم</div><div class="w-7 h-7 rounded-lg bg-emerald-600 text-white grid place-items-center"><i class="fa-solid fa-industry text-[10px]"></i></div></div><div id="d_todayProd" class="text-[22px] font-black">0 علبة</div><div id="d_todayProdWorkers" class="text-[9px] text-emerald-700">-</div></div>
@@ -81,8 +81,8 @@ td{padding:8px 6px;border-bottom:1px solid #f1f5f9;font-size:10px}
 
 <!-- INVENTORY -->
 <div id="tab-inventory" class="tab space-y-2">
-<div class="flex flex-wrap justify-between gap-2 items-center"><h2 class="font-black text-[12px]">📦 المخزن • العلب والقطع • Firebase حقيقي</h2><div class="flex gap-1 flex-wrap"><input id="search" placeholder="🔍 بحث..." class="input h-7 w-[90px] text-[10px]" oninput="renderInventory()"><label class="btn btn-green h-7 text-[9px] cursor-pointer"><i class="fa-solid fa-upload"></i>رفع Excel<input type="file" id="excelFile" accept=".xlsx,.xls" style="display:none"></label><button onclick="exportInventory()" class="btn btn-blue h-7 text-[9px]"><i class="fa-solid fa-download"></i>Excel</button><button onclick="openProdModal()" class="btn btn-dark h-7 text-[9px]"><i class="fa-solid fa-plus"></i>جديد</button></div></div>
-<div class="card"><div class="overflow-x-auto"><table><thead><tr><th>الكود</th><th>الوصف</th><th>العلب الحالي</th><th>القطع/علبة</th><th>إجمالي القطع</th><th>الحد الأدنى</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody id="invBody"><tr><td colspan="8" class="text-center py-6 text-slate-400">جاري تحميل من Firebase...</td></tr></tbody></table></div></div>
+<div class="flex flex-wrap justify-between gap-2 items-center"><h2 class="font-black text-[12px]">📦 المخزن • العلب والقطع • </h2><div class="flex gap-1 flex-wrap"><input id="search" placeholder="🔍 بحث..." class="input h-7 w-[90px] text-[10px]" oninput="renderInventory()"><label class="btn btn-green h-7 text-[9px] cursor-pointer"><i class="fa-solid fa-upload"></i>رفع Excel<input type="file" id="excelFile" accept=".xlsx,.xls" style="display:none"></label><button onclick="exportInventory()" class="btn btn-blue h-7 text-[9px]"><i class="fa-solid fa-download"></i>Excel</button><button onclick="openProdModal()" class="btn btn-dark h-7 text-[9px]"><i class="fa-solid fa-plus"></i>جديد</button></div></div>
+<div class="card"><div class="overflow-x-auto"><table><thead><tr><th>الكود</th><th>الوصف</th><th>العلب الحالي</th><th>القطع/علبة</th><th>إجمالي القطع</th><th>الحد الأدنى</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody id="invBody"><tr><td colspan="8" class="text-center py-6 text-slate-400">جاري تحميل من متصل...</td></tr></tbody></table></div></div>
 </div>
 
 <!-- TOTAL ANALYTICS -->
@@ -110,35 +110,35 @@ td{padding:8px 6px;border-bottom:1px solid #f1f5f9;font-size:10px}
 
 <!-- PRODUCTION -->
 <div id="tab-production" class="tab space-y-2">
-<div class="flex justify-between items-center"><h2 class="font-black text-[12px]">🏭 تسجيل الإنتاج • Firebase</h2><button onclick="exportProduction()" class="btn btn-blue h-7 text-[9px]">Excel</button></div>
+<div class="flex justify-between items-center"><h2 class="font-black text-[12px]">🏭 تسجيل الإنتاج </h2><button onclick="exportProduction()" class="btn btn-blue h-7 text-[9px]">Excel</button></div>
 <div class="card"><form id="prodForm" class="space-y-2" onsubmit="saveProduction(event)">
 <select id="p_worker" class="input" required><option value="">👷 اختر العامل</option></select>
 <input id="p_code" list="plist" placeholder="📦 أكتب كود المنتوج - يطلع الاسم أوتوماتيك" class="input" required>
 <datalist id="plist"></datalist>
 <div id="p_info" style="display:none" class="bg-emerald-50 border border-emerald-200 text-emerald-700 p-2 rounded-lg text-[10px] font-bold"></div>
 <div class="grid grid-cols-2 gap-2"><input id="p_qty" type="number" placeholder="عدد العلب المنتجة" class="input" required><input id="p_date" type="date" class="input"></div>
-<button class="btn btn-emerald w-full h-9"><i class="fa-solid fa-plus"></i> حفظ الإنتاج • إضافة للمخزون • Firebase</button>
+<button class="btn btn-emerald w-full h-9"><i class="fa-solid fa-plus"></i> حفظ الإنتاج • إضافة للمخزون </button>
 </form></div>
 <div class="card"><h3 class="font-black text-[11px] mb-2">📜 آخر عمليات الإنتاج</h3><div class="overflow-x-auto"><table><thead><tr><th>التاريخ</th><th>العامل</th><th>الكود</th><th>الكمية</th><th>حذف</th></tr></thead><tbody id="prodLogBody"></tbody></table></div></div>
 </div>
 
 <!-- STOCKOUT -->
 <div id="tab-stockout" class="tab space-y-2">
-<div class="flex justify-between items-center"><h2 class="font-black text-[12px]">🚚 الخروج • Firebase</h2><button onclick="exportStockout()" class="btn btn-blue h-7 text-[9px]">Excel</button></div>
+<div class="flex justify-between items-center"><h2 class="font-black text-[12px]">🚚 الخروج </h2><button onclick="exportStockout()" class="btn btn-blue h-7 text-[9px]">Excel</button></div>
 <div class="card"><form id="outForm" class="space-y-2" onsubmit="saveStockout(event)">
 <input id="o_code" list="olist" placeholder="📦 أكتب كود المنتوج" class="input" required>
 <datalist id="olist"></datalist>
 <div id="o_info" style="display:none" class="bg-blue-50 border border-blue-200 text-blue-700 p-2 rounded-lg text-[10px] font-bold"></div>
 <div class="grid grid-cols-2 gap-2"><input id="o_qty" type="number" placeholder="عدد العلب الخارجة" class="input" required><input id="o_date" type="date" class="input"></div>
-<button class="btn btn-red w-full h-9"><i class="fa-solid fa-paper-plane"></i> تأكيد الخروج • طرح من المخزون • Firebase</button>
+<button class="btn btn-red w-full h-9"><i class="fa-solid fa-paper-plane"></i> تأكيد الخروج • طرح من المخزون </button>
 </form></div>
 <div class="card"><h3 class="font-black text-[11px] mb-2">📜 آخر عمليات الخروج</h3><div class="overflow-x-auto"><table><thead><tr><th>التاريخ</th><th>الكود</th><th>الكمية</th><th>حذف</th></tr></thead><tbody id="outLogBody"></tbody></table></div></div>
 </div>
 
 <!-- ATTENDANCE -->
 <div id="tab-attendance" class="tab space-y-2">
-<div class="flex justify-between items-center"><h2 class="font-black text-[12px]">📅 الحضور • Firebase</h2><div class="flex gap-1"><input id="attDate" type="date" class="input h-7 w-[120px] text-[10px]"><button onclick="exportAttendance()" class="btn btn-blue h-7 text-[9px]">Excel</button></div></div>
-<div class="card"><form id="attForm" onsubmit="saveAttendance(event)"><div id="attList" class="space-y-1"></div><button class="btn btn-dark w-full h-8 mt-2">حفظ الحضور • Firebase</button></form></div>
+<div class="flex justify-between items-center"><h2 class="font-black text-[12px]">📅 الحضور </h2><div class="flex gap-1"><input id="attDate" type="date" class="input h-7 w-[120px] text-[10px]"><button onclick="exportAttendance()" class="btn btn-blue h-7 text-[9px]">Excel</button></div></div>
+<div class="card"><form id="attForm" onsubmit="saveAttendance(event)"><div id="attList" class="space-y-1"></div><button class="btn btn-dark w-full h-8 mt-2">حفظ الحضور </button></form></div>
 </div>
 
 <!-- ARCHIVE -->
@@ -158,8 +158,8 @@ td{padding:8px 6px;border-bottom:1px solid #f1f5f9;font-size:10px}
 </div></div>
 
 <!-- MODALS -->
-<div id="prodModal" style="display:none" class="fixed inset-0 z-50 bg-black/40 grid place-items-center p-3"><div class="card w-full max-w-[360px] space-y-2"><h3 class="font-black text-[11px]">منتج جديد / تعديل • Firebase</h3><input id="m_code" placeholder="الكود" class="input"><input id="m_desc" placeholder="الوصف" class="input"><div class="grid grid-cols-3 gap-1"><input id="m_boxes" type="number" placeholder="العلب" class="input"><input id="m_per" type="number" placeholder="القطع/علبة" class="input" value="20"><input id="m_min" type="number" placeholder="الحد الأدنى" class="input" value="10"></div><div class="flex gap-1"><button onclick="saveProductModal()" class="btn btn-dark flex-1 h-8">حفظ • Firebase</button><button onclick="closeProdModal()" class="btn flex-1 h-8 border">إلغاء</button></div><div id="m_status" class="text-[9px] font-bold"></div></div></div>
-<div id="workerModal" style="display:none" class="fixed inset-0 z-50 bg-black/40 grid place-items-center p-3"><div class="card w-full max-w-[340px] space-y-2"><h3 class="font-black text-[11px]">إضافة عامل (الإسم والنسب، الهاتف، عنوان السكن) • Firebase</h3><input id="w_name" placeholder="👤 الإسم والنسب" class="input"><input id="w_phone" placeholder="📱 الهاتف" class="input"><input id="w_addr" placeholder="🏠 عنوان السكن" class="input"><div class="flex gap-1"><button onclick="saveWorkerModal()" class="btn btn-dark flex-1 h-8">حفظ • Firebase</button><button onclick="closeWorkerModal()" class="btn flex-1 h-8 border">إلغاء</button></div></div></div>
+<div id="prodModal" style="display:none" class="fixed inset-0 z-50 bg-black/40 grid place-items-center p-3"><div class="card w-full max-w-[360px] space-y-2"><h3 class="font-black text-[11px]">منتج جديد / تعديل </h3><input id="m_code" placeholder="الكود" class="input"><input id="m_desc" placeholder="الوصف" class="input"><div class="grid grid-cols-3 gap-1"><input id="m_boxes" type="number" placeholder="العلب" class="input"><input id="m_per" type="number" placeholder="القطع/علبة" class="input" value="20"><input id="m_min" type="number" placeholder="الحد الأدنى" class="input" value="10"></div><div class="flex gap-1"><button onclick="saveProductModal()" class="btn btn-dark flex-1 h-8">حفظ </button><button onclick="closeProdModal()" class="btn flex-1 h-8 border">إلغاء</button></div><div id="m_status" class="text-[9px] font-bold"></div></div></div>
+<div id="workerModal" style="display:none" class="fixed inset-0 z-50 bg-black/40 grid place-items-center p-3"><div class="card w-full max-w-[340px] space-y-2"><h3 class="font-black text-[11px]">إضافة عامل (الإسم والنسب، الهاتف، عنوان السكن) </h3><input id="w_name" placeholder="👤 الإسم والنسب" class="input"><input id="w_phone" placeholder="📱 الهاتف" class="input"><input id="w_addr" placeholder="🏠 عنوان السكن" class="input"><div class="flex gap-1"><button onclick="saveWorkerModal()" class="btn btn-dark flex-1 h-8">حفظ </button><button onclick="closeWorkerModal()" class="btn flex-1 h-8 border">إلغاء</button></div></div></div>
 <div id="workerArchiveModal" style="display:none" class="fixed inset-0 z-[70] bg-black/50 grid place-items-center p-3"><div class="card w-full max-w-[460px] max-h-[80vh] overflow-y-auto p-3 space-y-2"><div class="flex justify-between items-center"><h3 id="wa_title" class="font-black text-[12px]">أرشيف</h3><button onclick="document.getElementById('workerArchiveModal').style.display='none'" class="w-7 h-7 border rounded grid place-items-center"><i class="fa-solid fa-xmark text-[10px]"></i></button></div><div class="grid grid-cols-3 gap-2"><div class="card p-2 text-center bg-emerald-50"><div class="text-[9px] font-bold">الإجمالي</div><div id="wa_total" class="text-[16px] font-black">0 علبة</div></div><div class="card p-2 text-center bg-blue-50"><div class="text-[9px] font-bold">اليوم</div><div id="wa_today" class="text-[16px] font-black">0 علبة</div></div><div class="card p-2 text-center bg-amber-50"><div class="text-[9px] font-bold">العمليات</div><div id="wa_count" class="text-[16px] font-black">0</div></div></div><div class="overflow-x-auto max-h-[280px]"><table><thead><tr><th>التاريخ</th><th>الكود</th><th>الكمية</th></tr></thead><tbody id="wa_body"></tbody></table></div><div class="flex gap-2"><button id="wa_excel" class="btn btn-blue flex-1 h-8 text-[9px]">Excel</button><button onclick="document.getElementById('workerArchiveModal').style.display='none'" class="btn flex-1 h-8 text-[9px] border">إغلاق</button></div></div></div>
 <div id="dayModal" style="display:none" class="fixed inset-0 z-[60] bg-black/40 grid place-items-center p-3"><div class="card w-full max-w-[460px] p-3 space-y-2"><div class="flex justify-between items-center"><h3 id="dayTitle" class="font-black text-[12px]">تفاصيل اليوم</h3><button onclick="document.getElementById('dayModal').style.display='none'" class="w-7 h-7 border rounded grid place-items-center"><i class="fa-solid fa-xmark"></i></button></div><div id="dayContent"></div><button onclick="document.getElementById('dayModal').style.display='none'" class="btn w-full h-8 border">إغلاق</button></div></div>
 <div id="toastBox" class="fixed bottom-[70px] right-2 left-2 max-w-[350px] flex flex-col gap-1 z-50"></div>
@@ -182,109 +182,109 @@ function getMin(code){const p=products.find(x=>x.code===code); return p? Number(
 function todayStr(){return new Date().toISOString().split('T')[0];}
 
 function renderDashboard(){
-  document.getElementById("d_prodCount").innerText=products.length;
-  const totalBoxes=products.reduce((a,p)=>a+stockOf(p.code),0);
-  const totalPieces=products.reduce((a,p)=>a+stockOf(p.code)*Number(p.itemsPerBox||20),0);
-  document.getElementById("d_stockSum").innerText=totalBoxes+" علبة • "+totalPieces+" قطعة";
-  const today=production.filter(p=>p.date===todayStr());
-  document.getElementById("d_todayProd").innerText=today.reduce((a,b)=>a+Number(b.qty),0)+" علبة";
-  let m={}; today.forEach(p=>{m[p.worker]=(m[p.worker]||0)+Number(p.qty)}); let sorted=Object.entries(m).sort((a,b)=>b[1]-a[1]); document.getElementById("d_todayProdWorkers").innerText=sorted[0]?sorted[0][0]+": "+sorted[0][1]+" علبة":"-";
-  let use={}; stockOut.forEach(s=>{use[s.code]=(use[s.code]||0)+Number(s.qty)}); let s2=Object.entries(use).sort((a,b)=>b[1]-a[1]); document.getElementById("d_mostUsed").innerText=s2[0]?s2[0][0]:"-"; document.getElementById("d_mostUsedQty").innerText=s2[0]?s2[0][1]+" علبة مستهلكة":"-";
-  const low=products.filter(p=>stockOf(p.code)<=getMin(p.code)); document.getElementById("d_lowCount").innerText=low.length;
-  const lowDiv=document.getElementById("lowTable");
-  if(low.length===0) lowDiv.innerHTML='<div class="text-center py-3 text-emerald-600 font-bold text-[10px]">✅ لا يوجد منتجات قريبة النفاد</div>';
-  else lowDiv.innerHTML='<div class="overflow-x-auto"><table><thead><tr><th>الكود</th><th>الوصف</th><th>العلب</th><th>الحد</th></tr></thead><tbody>'+low.map(p=>`<tr><td class="font-mono font-black">${p.code}</td><td class="font-bold">${p.desc}</td><td><span class="badge low">${stockOf(p.code)} علبة</span></td><td>${getMin(p.code)} علبة</td></tr>`).join("")+'</tbody></table></div>';
-  document.getElementById("a_stockBoxes").innerText=totalBoxes+" علبة"; document.getElementById("a_stockPieces").innerText=totalPieces+" قطعة"; document.getElementById("a_prod").innerText="+"+production.reduce((a,b)=>a+Number(b.qty),0)+" علبة"; document.getElementById("a_out").innerText="-"+stockOut.reduce((a,b)=>a+Number(b.qty),0)+" علبة";
+ document.getElementById("d_prodCount").innerText=products.length;
+ const totalBoxes=products.reduce((a,p)=>a+stockOf(p.code),0);
+ const totalPieces=products.reduce((a,p)=>a+stockOf(p.code)*Number(p.itemsPerBox||20),0);
+ document.getElementById("d_stockSum").innerText=totalBoxes+" علبة • "+totalPieces+" قطعة";
+ const today=production.filter(p=>p.date===todayStr());
+ document.getElementById("d_todayProd").innerText=today.reduce((a,b)=>a+Number(b.qty),0)+" علبة";
+ let m={}; today.forEach(p=>{m[p.worker]=(m[p.worker]||0)+Number(p.qty)}); let sorted=Object.entries(m).sort((a,b)=>b[1]-a[1]); document.getElementById("d_todayProdWorkers").innerText=sorted[0]?sorted[0][0]+": "+sorted[0][1]+" علبة":"-";
+ let use={}; stockOut.forEach(s=>{use[s.code]=(use[s.code]||0)+Number(s.qty)}); let s2=Object.entries(use).sort((a,b)=>b[1]-a[1]); document.getElementById("d_mostUsed").innerText=s2[0]?s2[0][0]:"-"; document.getElementById("d_mostUsedQty").innerText=s2[0]?s2[0][1]+" علبة مستهلكة":"-";
+ const low=products.filter(p=>stockOf(p.code)<=getMin(p.code)); document.getElementById("d_lowCount").innerText=low.length;
+ const lowDiv=document.getElementById("lowTable");
+ if(low.length===0) lowDiv.innerHTML='<div class="text-center py-3 text-emerald-600 font-bold text-[10px]">✅ لا يوجد منتجات قريبة النفاد</div>';
+ else lowDiv.innerHTML='<div class="overflow-x-auto"><table><thead><tr><th>الكود</th><th>الوصف</th><th>العلب</th><th>الحد</th></tr></thead><tbody>'+low.map(p=>`<tr><td class="font-mono font-black">${p.code}</td><td class="font-bold">${p.desc}</td><td><span class="badge low">${stockOf(p.code)} علبة</span></td><td>${getMin(p.code)} علبة</td></tr>`).join("")+'</tbody></table></div>';
+ document.getElementById("a_stockBoxes").innerText=totalBoxes+" علبة"; document.getElementById("a_stockPieces").innerText=totalPieces+" قطعة"; document.getElementById("a_prod").innerText="+"+production.reduce((a,b)=>a+Number(b.qty),0)+" علبة"; document.getElementById("a_out").innerText="-"+stockOut.reduce((a,b)=>a+Number(b.qty),0)+" علبة";
 }
 
 function renderInventory(){
-  const q=document.getElementById("search").value.toLowerCase();
-  let list=products; if(q) list=list.filter(p=>p.code.toLowerCase().includes(q)||(p.desc||"").toLowerCase().includes(q));
-  const tbody=document.getElementById("invBody");
-  if(list.length===0){tbody.innerHTML='<tr><td colspan="8" class="text-center py-6 text-slate-400">لا يوجد منتجات</td></tr>'; return;}
-  tbody.innerHTML=list.map(p=>{
-    const cur=stockOf(p.code); const per=Number(p.itemsPerBox||20); const total=cur*per; const mn=getMin(p.code); const low=cur<=mn; const warn=cur<=mn*1.3&&cur>mn;
-    return `<tr class="hover:bg-blue-50/50"><td class="font-mono font-black">${p.code}</td><td class="font-bold">${p.desc}</td><td><span class="badge ${low?'low':warn?'warn':'ok'}">${cur} علبة</span></td><td class="text-center"><span class="bg-slate-100 px-1.5 py-0.5 rounded text-[9px] font-bold">${per} قطعة</span></td><td class="font-black text-blue-700">${total} قطعة</td><td>${mn} علبة</td><td><span class="badge ${low?'low':warn?'warn':'ok'}">${low?'🔴 نفد':warn?'🟡 قريب':'🟢 متوفر'}</span></td><td><div class="flex gap-1"><button onclick="editProduct('${p.id}')" class="w-6 h-6 bg-blue-50 text-blue-600 rounded border grid place-items-center"><i class="fa-solid fa-pen text-[8px]"></i></button><button onclick="deleteProduct('${p.id}','${p.code}')" class="w-6 h-6 bg-red-50 text-red-600 rounded border grid place-items-center"><i class="fa-solid fa-trash text-[8px]"></i></button></div></td></tr>`;
-  }).join("");
-  // update datalists
-  const dl=document.getElementById("plist"); const dl2=document.getElementById("olist"); const opts=products.map(p=>`<option value="${p.code}">${p.code} - ${p.desc} | متاح: ${stockOf(p.code)} علبة</option>`).join(""); if(dl) dl.innerHTML=opts; if(dl2) dl2.innerHTML=opts;
-  renderDetail();
+ const q=document.getElementById("search").value.toLowerCase();
+ let list=products; if(q) list=list.filter(p=>p.code.toLowerCase().includes(q)||(p.desc||"").toLowerCase().includes(q));
+ const tbody=document.getElementById("invBody");
+ if(list.length===0){tbody.innerHTML='<tr><td colspan="8" class="text-center py-6 text-slate-400">لا يوجد منتجات</td></tr>'; return;}
+ tbody.innerHTML=list.map(p=>{
+ const cur=stockOf(p.code); const per=Number(p.itemsPerBox||20); const total=cur*per; const mn=getMin(p.code); const low=cur<=mn; const warn=cur<=mn*1.3&&cur>mn;
+ return `<tr class="hover:bg-blue-50/50"><td class="font-mono font-black">${p.code}</td><td class="font-bold">${p.desc}</td><td><span class="badge ${low?'low':warn?'warn':'ok'}">${cur} علبة</span></td><td class="text-center"><span class="bg-slate-100 px-1.5 py-0.5 rounded text-[9px] font-bold">${per} قطعة</span></td><td class="font-black text-blue-700">${total} قطعة</td><td>${mn} علبة</td><td><span class="badge ${low?'low':warn?'warn':'ok'}">${low?'🔴 نفد':warn?'🟡 قريب':'🟢 متوفر'}</span></td><td><div class="flex gap-1"><button onclick="editProduct('${p.id}')" class="w-6 h-6 bg-blue-50 text-blue-600 rounded border grid place-items-center"><i class="fa-solid fa-pen text-[8px]"></i></button><button onclick="deleteProduct('${p.id}','${p.code}')" class="w-6 h-6 bg-red-50 text-red-600 rounded border grid place-items-center"><i class="fa-solid fa-trash text-[8px]"></i></button></div></td></tr>`;
+ }).join("");
+ // update datalists
+ const dl=document.getElementById("plist"); const dl2=document.getElementById("olist"); const opts=products.map(p=>`<option value="${p.code}">${p.code} - ${p.desc} | متاح: ${stockOf(p.code)} علبة</option>`).join(""); if(dl) dl.innerHTML=opts; if(dl2) dl2.innerHTML=opts;
+ renderDetail();
 }
 
 function renderDetail(){
-  const q=document.getElementById("detailSearch").value.toLowerCase();
-  let list=products; if(q) list=list.filter(p=>p.code.toLowerCase().includes(q)||(p.desc||"").toLowerCase().includes(q));
-  document.getElementById("detailBody").innerHTML=list.map(p=>{
-    const cur=stockOf(p.code); const per=Number(p.itemsPerBox||20);
-    return `<tr><td class="font-mono font-black">${p.code}</td><td class="font-bold text-[10px]">${p.desc}</td><td><span class="badge ok">${cur} علبة</span></td><td class="font-black text-blue-700">${cur*per} قطعة</td></tr>`;
-  }).join("");
+ const q=document.getElementById("detailSearch").value.toLowerCase();
+ let list=products; if(q) list=list.filter(p=>p.code.toLowerCase().includes(q)||(p.desc||"").toLowerCase().includes(q));
+ document.getElementById("detailBody").innerHTML=list.map(p=>{
+ const cur=stockOf(p.code); const per=Number(p.itemsPerBox||20);
+ return `<tr><td class="font-mono font-black">${p.code}</td><td class="font-bold text-[10px]">${p.desc}</td><td><span class="badge ok">${cur} علبة</span></td><td class="font-black text-blue-700">${cur*per} قطعة</td></tr>`;
+ }).join("");
 }
 
 function renderWorkers(){
-  document.getElementById("w_count").innerText=workers.length;
-  const today=production.filter(p=>p.date===todayStr());
-  document.getElementById("w_today").innerText=today.reduce((a,b)=>a+Number(b.qty),0)+" علبة";
-  let m={}; today.forEach(p=>{m[p.worker]=(m[p.worker]||0)+Number(p.qty)}); let s=Object.entries(m).sort((a,b)=>b[1]-a[1]); document.getElementById("w_most").innerText=s[0]?s[0][0]:"-";
-  const body=document.getElementById("workersBody");
-  if(workers.length===0){body.innerHTML='<tr><td colspan="7" class="text-center py-4 text-slate-400">لا يوجد عمال</td></tr>';} else {
-    body.innerHTML=workers.map(w=>{
-      const todayQty=production.filter(p=>p.worker===w.name && p.date===todayStr()).reduce((a,b)=>a+Number(b.qty),0);
-      const totalQty=production.filter(p=>p.worker===w.name).reduce((a,b)=>a+Number(b.qty),0);
-      return `<tr><td class="font-bold"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-orange-400 text-white grid place-items-center font-black text-[9px]">${w.name? w.name[0]:"?"}</div>${w.name}</div></td><td class="font-mono text-[10px]">${w.phone||"-"}</td><td class="text-[10px]">${w.address||"-"}</td><td><span class="badge ${todayQty>0?'ok':'bg-slate-100 text-slate-400 border-slate-200'}">${todayQty} علبة</span></td><td><span class="badge info">${totalQty} علبة</span></td><td><button onclick="openWorkerArchive('${w.id}')" class="btn h-6 text-[8px] bg-amber-50 border-amber-200 text-amber-700"><i class="fa-solid fa-clock-rotate-left"></i>أرشيف</button></td><td><div class="flex gap-1"><button onclick="editWorker('${w.id}')" class="w-6 h-6 bg-blue-50 text-blue-600 rounded border grid place-items-center"><i class="fa-solid fa-pen text-[8px]"></i></button><button onclick="deleteWorker('${w.id}','${w.name}')" class="w-6 h-6 bg-red-50 text-red-600 rounded border grid place-items-center"><i class="fa-solid fa-trash text-[8px]"></i></button></div></td></tr>`;
-    }).join("");
-  }
-  // today per worker cards
-  const perDiv=document.getElementById("todayPerWorker");
-  let map={}; today.forEach(p=>{map[p.worker]=(map[p.worker]||0)+Number(p.qty)});
-  perDiv.innerHTML=Object.entries(map).map(([name,qty])=>`<div class="card p-2 flex justify-between items-center"><div class="font-bold text-[11px]">${name}</div><span class="badge ok">${qty} علبة اليوم</span></div>`).join("") || '<div class="text-center py-2 text-slate-400 text-[10px]">لا يوجد إنتاج اليوم</div>';
-  // workers select for production
-  const sel=document.getElementById("p_worker");
-  sel.innerHTML='<option value="">👷 اختر العامل</option>'+workers.map(w=>`<option value="${w.name}">${w.name}</option>`).join("");
-  renderAttendanceList();
+ document.getElementById("w_count").innerText=workers.length;
+ const today=production.filter(p=>p.date===todayStr());
+ document.getElementById("w_today").innerText=today.reduce((a,b)=>a+Number(b.qty),0)+" علبة";
+ let m={}; today.forEach(p=>{m[p.worker]=(m[p.worker]||0)+Number(p.qty)}); let s=Object.entries(m).sort((a,b)=>b[1]-a[1]); document.getElementById("w_most").innerText=s[0]?s[0][0]:"-";
+ const body=document.getElementById("workersBody");
+ if(workers.length===0){body.innerHTML='<tr><td colspan="7" class="text-center py-4 text-slate-400">لا يوجد عمال</td></tr>';} else {
+ body.innerHTML=workers.map(w=>{
+  const todayQty=production.filter(p=>p.worker===w.name && p.date===todayStr()).reduce((a,b)=>a+Number(b.qty),0);
+  const totalQty=production.filter(p=>p.worker===w.name).reduce((a,b)=>a+Number(b.qty),0);
+  return `<tr><td class="font-bold"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-orange-400 text-white grid place-items-center font-black text-[9px]">${w.name? w.name[0]:"?"}</div>${w.name}</div></td><td class="font-mono text-[10px]">${w.phone||"-"}</td><td class="text-[10px]">${w.address||"-"}</td><td><span class="badge ${todayQty>0?'ok':'bg-slate-100 text-slate-400 border-slate-200'}">${todayQty} علبة</span></td><td><span class="badge info">${totalQty} علبة</span></td><td><button onclick="openWorkerArchive('${w.id}')" class="btn h-6 text-[8px] bg-amber-50 border-amber-200 text-amber-700"><i class="fa-solid fa-clock-rotate-left"></i>أرشيف</button></td><td><div class="flex gap-1"><button onclick="editWorker('${w.id}')" class="w-6 h-6 bg-blue-50 text-blue-600 rounded border grid place-items-center"><i class="fa-solid fa-pen text-[8px]"></i></button><button onclick="deleteWorker('${w.id}','${w.name}')" class="w-6 h-6 bg-red-50 text-red-600 rounded border grid place-items-center"><i class="fa-solid fa-trash text-[8px]"></i></button></div></td></tr>`;
+ }).join("");
+ }
+ // today per worker cards
+ const perDiv=document.getElementById("todayPerWorker");
+ let map={}; today.forEach(p=>{map[p.worker]=(map[p.worker]||0)+Number(p.qty)});
+ perDiv.innerHTML=Object.entries(map).map(([name,qty])=>`<div class="card p-2 flex justify-between items-center"><div class="font-bold text-[11px]">${name}</div><span class="badge ok">${qty} علبة اليوم</span></div>`).join("") || '<div class="text-center py-2 text-slate-400 text-[10px]">لا يوجد إنتاج اليوم</div>';
+ // workers select for production
+ const sel=document.getElementById("p_worker");
+ sel.innerHTML='<option value="">👷 اختر العامل</option>'+workers.map(w=>`<option value="${w.name}">${w.name}</option>`).join("");
+ renderAttendanceList();
 }
 
 function renderProductionLog(){
-  const body=document.getElementById("prodLogBody");
-  body.innerHTML=production.slice(0,30).map(p=>`<tr><td class="text-[10px]">${p.date}</td><td class="font-bold text-[10px]">${p.worker}</td><td class="font-mono font-black">${p.code}</td><td><span class="badge ok">${p.qty} علبة</span></td><td><button onclick="deleteLog('productionLogs','${p.id}','${p.code}')" class="text-red-500"><i class="fa-solid fa-trash text-[10px]"></i></button></td></tr>`).join("");
+ const body=document.getElementById("prodLogBody");
+ body.innerHTML=production.slice(0,30).map(p=>`<tr><td class="text-[10px]">${p.date}</td><td class="font-bold text-[10px]">${p.worker}</td><td class="font-mono font-black">${p.code}</td><td><span class="badge ok">${p.qty} علبة</span></td><td><button onclick="deleteLog('productionLogs','${p.id}','${p.code}')" class="text-red-500"><i class="fa-solid fa-trash text-[10px]"></i></button></td></tr>`).join("");
 }
 function renderStockoutLog(){
-  const body=document.getElementById("outLogBody");
-  body.innerHTML=stockOut.slice(0,30).map(p=>`<tr><td class="text-[10px]">${p.date}</td><td class="font-mono font-black">${p.code}</td><td><span class="badge low">${p.qty} علبة</span></td><td><button onclick="deleteLog('stockOutLogs','${p.id}','${p.code}')" class="text-red-500"><i class="fa-solid fa-trash text-[10px]"></i></button></td></tr>`).join("");
+ const body=document.getElementById("outLogBody");
+ body.innerHTML=stockOut.slice(0,30).map(p=>`<tr><td class="text-[10px]">${p.date}</td><td class="font-mono font-black">${p.code}</td><td><span class="badge low">${p.qty} علبة</span></td><td><button onclick="deleteLog('stockOutLogs','${p.id}','${p.code}')" class="text-red-500"><i class="fa-solid fa-trash text-[10px]"></i></button></td></tr>`).join("");
 }
 function renderAttendanceList(){
-  const list=document.getElementById("attList");
-  if(!list) return;
-  const date=document.getElementById("attDate").value||todayStr();
-  const rec=attendance[date]||{};
-  if(workers.length===0){list.innerHTML='<div class="text-center py-2 text-slate-400 text-[10px]">لا يوجد عمال</div>'; return;}
-  list.innerHTML=workers.map(w=>{
-    const val=rec[w.name]||"حاضر ✅";
-    return `<div class="flex justify-between items-center p-2 rounded-xl border bg-white"><span class="font-bold text-[11px]">${w.name}</span><select data-worker="${w.name}" class="input h-7 w-[110px] text-[10px]"><option ${val.includes("حاضر")?"selected":""}>حاضر ✅</option><option ${val.includes("مريض")?"selected":""}>مريض 🤒</option><option ${val.includes("غير")?"selected":""}>غير مبرر ⚠️</option></select></div>`;
-  }).join("");
+ const list=document.getElementById("attList");
+ if(!list) return;
+ const date=document.getElementById("attDate").value||todayStr();
+ const rec=attendance[date]||{};
+ if(workers.length===0){list.innerHTML='<div class="text-center py-2 text-slate-400 text-[10px]">لا يوجد عمال</div>'; return;}
+ list.innerHTML=workers.map(w=>{
+ const val=rec[w.name]||"حاضر ✅";
+ return `<div class="flex justify-between items-center p-2 rounded-xl border bg-white"><span class="font-bold text-[11px]">${w.name}</span><select data-worker="${w.name}" class="input h-7 w-[110px] text-[10px]"><option ${val.includes("حاضر")?"selected":""}>حاضر ✅</option><option ${val.includes("مريض")?"selected":""}>مريض 🤒</option><option ${val.includes("غير")?"selected":""}>غير مبرر ⚠️</option></select></div>`;
+ }).join("");
 }
 
 function renderCalendar(){
-  const y=currentMonth.getFullYear(), m=currentMonth.getMonth();
-  document.getElementById("archiveTitle").innerText=currentMonth.toLocaleDateString('ar-MA',{month:'long',year:'numeric'});
-  const first=new Date(y,m,1).getDay(); const daysIn=new Date(y,m+1,0).getDate();
-  const off=(first+6)%7; const grid=document.getElementById("calGrid"); grid.innerHTML="";
-  for(let i=0;i<off;i++){const d=document.createElement("div"); d.className="h-[64px]"; grid.appendChild(d);}
-  for(let d=1; d<=daysIn; d++){
-    const iso=y+"-"+String(m+1).padStart(2,'0')+"-"+String(d).padStart(2,'0');
-    const pr=production.filter(p=>p.date===iso); const out=stockOut.filter(p=>p.date===iso); const att=attendance[iso]||{};
-    const has=pr.length>0||out.length>0||Object.keys(att).length>0; const today=iso===todayStr();
-    const el=document.createElement("div");
-    el.className=`h-[64px] rounded-xl border p-1 cursor-pointer transition hover:shadow hover:-translate-y-0.5 ${has?'bg-blue-50 border-blue-200':'bg-white border-slate-200'} ${today?'outline outline-2 outline-blue-500':''}`;
-    el.innerHTML=`<div class="font-black text-[10px]">${d}</div>${has?`<div class="text-[7px] mt-1 space-y-0.5"><div class="bg-emerald-100 text-emerald-700 px-0.5 rounded">+${pr.reduce((a,b)=>a+Number(b.qty),0)}</div><div class="bg-red-100 text-red-700 px-0.5 rounded">-${out.reduce((a,b)=>a+Number(b.qty),0)}</div></div>`:''}`;
-    el.onclick=()=>openDay(iso,pr,out,att);
-    grid.appendChild(el);
-  }
+ const y=currentMonth.getFullYear(), m=currentMonth.getMonth();
+ document.getElementById("archiveTitle").innerText=currentMonth.toLocaleDateString('ar-MA',{month:'long',year:'numeric'});
+ const first=new Date(y,m,1).getDay(); const daysIn=new Date(y,m+1,0).getDate();
+ const off=(first+6)%7; const grid=document.getElementById("calGrid"); grid.innerHTML="";
+ for(let i=0;i<off;i++){const d=document.createElement("div"); d.className="h-[64px]"; grid.appendChild(d);}
+ for(let d=1; d<=daysIn; d++){
+ const iso=y+"-"+String(m+1).padStart(2,'0')+"-"+String(d).padStart(2,'0');
+ const pr=production.filter(p=>p.date===iso); const out=stockOut.filter(p=>p.date===iso); const att=attendance[iso]||{};
+ const has=pr.length>0||out.length>0||Object.keys(att).length>0; const today=iso===todayStr();
+ const el=document.createElement("div");
+ el.className=`h-[64px] rounded-xl border p-1 cursor-pointer transition hover:shadow hover:-translate-y-0.5 ${has?'bg-blue-50 border-blue-200':'bg-white border-slate-200'} ${today?'outline outline-2 outline-blue-500':''}`;
+ el.innerHTML=`<div class="font-black text-[10px]">${d}</div>${has?`<div class="text-[7px] mt-1 space-y-0.5"><div class="bg-emerald-100 text-emerald-700 px-0.5 rounded">+${pr.reduce((a,b)=>a+Number(b.qty),0)}</div><div class="bg-red-100 text-red-700 px-0.5 rounded">-${out.reduce((a,b)=>a+Number(b.qty),0)}</div></div>`:''}`;
+ el.onclick=()=>openDay(iso,pr,out,att);
+ grid.appendChild(el);
+ }
 }
 function openDay(iso,pr,out,att){
-  document.getElementById("dayTitle").innerText="📅 تفاصيل يوم "+iso;
-  const totalPr=pr.reduce((a,b)=>a+Number(b.qty),0); const totalOut=out.reduce((a,b)=>a+Number(b.qty),0); const present=Object.values(att).filter(v=>v.includes("حاضر")).length;
-  document.getElementById("dayContent").innerHTML=`<div class="grid grid-cols-3 gap-2 mb-2"><div class="card p-2 text-center"><div class="text-[9px]">إنتاج</div><div class="text-[16px] font-black text-emerald-600">${totalPr} علبة</div></div><div class="card p-2 text-center"><div class="text-[9px]">خروج</div><div class="text-[16px] font-black text-red-600">${totalOut} علبة</div></div><div class="card p-2 text-center"><div class="text-[9px]">حضور</div><div class="text-[16px] font-black text-blue-600">${present}</div></div></div><div class="text-[10px]">${pr.map(p=>`+ ${p.worker} - ${p.code} - ${p.qty} علبة`).join("<br>") || "لا يوجد إنتاج"}<hr class="my-2">${out.map(p=>`- ${p.code} - ${p.qty} علبة`).join("<br>") || "لا يوجد خروج"}</div>`;
-  document.getElementById("dayModal").style.display="grid";
+ document.getElementById("dayTitle").innerText="📅 تفاصيل يوم "+iso;
+ const totalPr=pr.reduce((a,b)=>a+Number(b.qty),0); const totalOut=out.reduce((a,b)=>a+Number(b.qty),0); const present=Object.values(att).filter(v=>v.includes("حاضر")).length;
+ document.getElementById("dayContent").innerHTML=`<div class="grid grid-cols-3 gap-2 mb-2"><div class="card p-2 text-center"><div class="text-[9px]">إنتاج</div><div class="text-[16px] font-black text-emerald-600">${totalPr} علبة</div></div><div class="card p-2 text-center"><div class="text-[9px]">خروج</div><div class="text-[16px] font-black text-red-600">${totalOut} علبة</div></div><div class="card p-2 text-center"><div class="text-[9px]">حضور</div><div class="text-[16px] font-black text-blue-600">${present}</div></div></div><div class="text-[10px]">${pr.map(p=>`+ ${p.worker} - ${p.code} - ${p.qty} علبة`).join("<br>") || "لا يوجد إنتاج"}<hr class="my-2">${out.map(p=>`- ${p.code} - ${p.qty} علبة`).join("<br>") || "لا يوجد خروج"}</div>`;
+ document.getElementById("dayModal").style.display="grid";
 }
 function changeMonth(d){currentMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+d,1); renderCalendar();}
 function goToday(){currentMonth=new Date(); renderCalendar(); document.getElementById("attDate").value=todayStr();}
@@ -293,13 +293,13 @@ function goToday(){currentMonth=new Date(); renderCalendar(); document.getElemen
 function openProdModal(){editingProdId=null; document.getElementById("m_code").value=""; document.getElementById("m_desc").value=""; document.getElementById("m_boxes").value=0; document.getElementById("m_per").value=20; document.getElementById("m_min").value=10; document.getElementById("prodModal").style.display="grid";}
 function closeProdModal(){document.getElementById("prodModal").style.display="none";}
 function editProduct(id){const p=products.find(x=>x.id===id); if(!p) return; editingProdId=id; document.getElementById("m_code").value=p.code; document.getElementById("m_desc").value=p.desc; document.getElementById("m_boxes").value=p.boxes||0; document.getElementById("m_per").value=p.itemsPerBox||20; document.getElementById("m_min").value=p.minStock||10; document.getElementById("prodModal").style.display="grid";}
-async function saveProductModal(){const code=document.getElementById("m_code").value.trim().toUpperCase(); const desc=document.getElementById("m_desc").value.trim(); const boxes=Number(document.getElementById("m_boxes").value||0); const per=Number(document.getElementById("m_per").value||20); const mn=Number(document.getElementById("m_min").value||10); if(!code||!desc){toast("الكود والوصف إجباريان","red"); return;} document.getElementById("m_status").innerText="جاري الحفظ في Firebase..."; try{if(editingProdId){await db.collection("products").doc(editingProdId).update({code,desc,boxes,itemsPerBox:per,qty:boxes,minStock:mn,updatedAt:new Date()});} else {await db.collection("products").add({code,desc,boxes,itemsPerBox:per,qty:boxes,minStock:mn,createdAt:new Date()});} closeProdModal(); toast("تم الحفظ • متزامن Firebase","green");}catch(err){document.getElementById("m_status").innerText="خطأ: "+err.message; toast("خطأ: "+err.message,"red");}}
-async function deleteProduct(id,code){if(!confirm("حذف "+code+" من Firebase؟")) return; try{await db.collection("products").doc(id).delete(); toast("تم الحذف","green");}catch(err){toast(err.message,"red");}}
+async function saveProductModal(){const code=document.getElementById("m_code").value.trim().toUpperCase(); const desc=document.getElementById("m_desc").value.trim(); const boxes=Number(document.getElementById("m_boxes").value||0); const per=Number(document.getElementById("m_per").value||20); const mn=Number(document.getElementById("m_min").value||10); if(!code||!desc){toast("الكود والوصف إجباريان","red"); return;} document.getElementById("m_status").innerText="جاري الحفظ في متصل..."; try{if(editingProdId){await db.collection("products").doc(editingProdId).update({code,desc,boxes,itemsPerBox:per,qty:boxes,minStock:mn,updatedAt:new Date()});} else {await db.collection("products").add({code,desc,boxes,itemsPerBox:per,qty:boxes,minStock:mn,createdAt:new Date()});} closeProdModal(); toast("تم الحفظ متزامن ","green");}catch(err){document.getElementById("m_status").innerText="خطأ: "+err.message; toast("خطأ: "+err.message,"red");}}
+async function deleteProduct(id,code){if(!confirm("حذف "+code+" من ؟")) return; try{await db.collection("products").doc(id).delete(); toast("تم الحذف","green");}catch(err){toast(err.message,"red");}}
 
 function openWorkerModal(){editingWorkerId=null; document.getElementById("w_name").value=""; document.getElementById("w_phone").value=""; document.getElementById("w_addr").value=""; document.getElementById("workerModal").style.display="grid";}
 function closeWorkerModal(){document.getElementById("workerModal").style.display="none";}
 function editWorker(id){const w=workers.find(x=>x.id===id); if(!w) return; editingWorkerId=id; document.getElementById("w_name").value=w.name; document.getElementById("w_phone").value=w.phone||""; document.getElementById("w_addr").value=w.address||""; document.getElementById("workerModal").style.display="grid";}
-async function saveWorkerModal(){const name=document.getElementById("w_name").value.trim(); const phone=document.getElementById("w_phone").value.trim(); const address=document.getElementById("w_addr").value.trim(); if(!name){toast("الإسم إجباري","red"); return;} try{if(editingWorkerId){await db.collection("workers").doc(editingWorkerId).update({name,phone,address});} else {await db.collection("workers").add({name,phone,address,createdAt:new Date()});} closeWorkerModal(); toast("تم حفظ العامل • Firebase","green");}catch(err){toast(err.message,"red");}}
+async function saveWorkerModal(){const name=document.getElementById("w_name").value.trim(); const phone=document.getElementById("w_phone").value.trim(); const address=document.getElementById("w_addr").value.trim(); if(!name){toast("الإسم إجباري","red"); return;} try{if(editingWorkerId){await db.collection("workers").doc(editingWorkerId).update({name,phone,address});} else {await db.collection("workers").add({name,phone,address,createdAt:new Date()});} closeWorkerModal(); toast("تم حفظ العامل ","green");}catch(err){toast(err.message,"red");}}
 async function deleteWorker(id,name){if(!confirm("حذف "+name+"؟")) return; try{await db.collection("workers").doc(id).delete(); toast("تم الحذف","green");}catch(err){toast(err.message,"red");}}
 function openWorkerArchive(id){const w=workers.find(x=>x.id===id); if(!w) return; const logs=production.filter(p=>p.worker===w.name); const today=logs.filter(p=>p.date===todayStr()).reduce((a,b)=>a+Number(b.qty),0); const total=logs.reduce((a,b)=>a+Number(b.qty),0); document.getElementById("wa_title").innerText="📦 أرشيف "+w.name; document.getElementById("wa_total").innerText=total+" علبة"; document.getElementById("wa_today").innerText=today+" علبة"; document.getElementById("wa_count").innerText=logs.length; document.getElementById("wa_body").innerHTML=logs.slice(0,80).map(p=>`<tr><td class="text-[10px]">${p.date}</td><td class="font-mono font-bold">${p.code}</td><td><span class="badge ok">${p.qty} علبة</span></td></tr>`).join(""); document.getElementById("wa_excel").onclick=()=>{const data=logs.map(p=>({التاريخ:p.date,الكود:p.code,الكمية:p.qty+" علبة"})); const ws=XLSX.utils.json_to_sheet(data); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"أرشيف"); XLSX.writeFile(wb,"أرشيف_"+w.name+".xlsx");}; document.getElementById("workerArchiveModal").style.display="grid";}
 
@@ -307,9 +307,9 @@ function openWorkerArchive(id){const w=workers.find(x=>x.id===id); if(!w) return
 document.getElementById("p_code").addEventListener("input", function(){const code=this.value.trim().toUpperCase(); const p=products.find(x=>x.code===code); const info=document.getElementById("p_info"); if(p){info.style.display="block"; info.innerText="✅ موجود: "+p.desc+" • متاح: "+stockOf(p.code)+" علبة • "+(Number(p.itemsPerBox||20))+" قطعة/علبة • إجمالي "+(stockOf(p.code)*Number(p.itemsPerBox||20))+" قطعة";} else {info.style.display="none";}});
 document.getElementById("o_code").addEventListener("input", function(){const code=this.value.trim().toUpperCase(); const p=products.find(x=>x.code===code); const info=document.getElementById("o_info"); if(p){info.style.display="block"; info.innerText="📦 "+p.desc+" • متاح: "+stockOf(p.code)+" علبة • "+(stockOf(p.code)*Number(p.itemsPerBox||20))+" قطعة";} else {info.style.display="none";}});
 
-async function saveProduction(e){e.preventDefault(); const worker=document.getElementById("p_worker").value; const code=document.getElementById("p_code").value.trim().toUpperCase(); const qty=Number(document.getElementById("p_qty").value); const date=document.getElementById("p_date").value||todayStr(); const p=products.find(x=>x.code===code); if(!p){toast("المنتوج غير موجود","red"); return;} if(!worker){toast("اختر العامل","red"); return;} try{await db.collection("productionLogs").add({date,worker,code:p.code,desc:p.desc,qty,createdAt:new Date()}); document.getElementById("p_code").value=""; document.getElementById("p_qty").value=""; toast("تمت إضافة "+qty+" علبة • متزامن Firebase","green");}catch(err){toast("خطأ: "+err.message,"red");}}
+async function saveProduction(e){e.preventDefault(); const worker=document.getElementById("p_worker").value; const code=document.getElementById("p_code").value.trim().toUpperCase(); const qty=Number(document.getElementById("p_qty").value); const date=document.getElementById("p_date").value||todayStr(); const p=products.find(x=>x.code===code); if(!p){toast("المنتوج غير موجود","red"); return;} if(!worker){toast("اختر العامل","red"); return;} try{await db.collection("productionLogs").add({date,worker,code:p.code,desc:p.desc,qty,createdAt:new Date()}); document.getElementById("p_code").value=""; document.getElementById("p_qty").value=""; toast("تمت إضافة "+qty+" علبة • متزامن ","green");}catch(err){toast("خطأ: "+err.message,"red");}}
 async function saveStockout(e){e.preventDefault(); const code=document.getElementById("o_code").value.trim().toUpperCase(); const qty=Number(document.getElementById("o_qty").value); const date=document.getElementById("o_date").value||todayStr(); const p=products.find(x=>x.code===code); if(!p){toast("المنتوج غير موجود","red"); return;} if(qty>stockOf(p.code)){toast("المخزون غير كافي: متاح "+stockOf(p.code)+" علبة","red"); return;} try{await db.collection("stockOutLogs").add({date,code:p.code,desc:p.desc,qty,createdAt:new Date()}); document.getElementById("o_code").value=""; document.getElementById("o_qty").value=""; toast("تم طرح "+qty+" علبة • متزامن","green");}catch(err){toast("خطأ: "+err.message,"red");}}
-async function saveAttendance(e){e.preventDefault(); const date=document.getElementById("attDate").value||todayStr(); const selects=document.querySelectorAll("#attList select"); const records={}; selects.forEach(s=>{records[s.getAttribute("data-worker")]=s.value}); try{await db.collection("attendanceLogs").doc(date).set({date,records,updatedAt:new Date()},{merge:true}); toast("تم حفظ الحضور • Firebase","green");}catch(err){toast("خطأ: "+err.message,"red");}}
+async function saveAttendance(e){e.preventDefault(); const date=document.getElementById("attDate").value||todayStr(); const selects=document.querySelectorAll("#attList select"); const records={}; selects.forEach(s=>{records[s.getAttribute("data-worker")]=s.value}); try{await db.collection("attendanceLogs").doc(date).set({date,records,updatedAt:new Date()},{merge:true}); toast("تم حفظ الحضور ","green");}catch(err){toast("خطأ: "+err.message,"red");}}
 async function deleteLog(col,id,code){if(!confirm("حذف "+code+"؟")) return; try{await db.collection(col).doc(id).delete(); toast("تم الحذف","green");}catch(err){toast(err.message,"red");}}
 
 function exportInventory(){if(products.length===0){toast("لا يوجد بيانات","red"); return;} const data=products.map(p=>{const cur=stockOf(p.code); const per=Number(p.itemsPerBox||20); return {الكود:p.code, الوصف:p.desc, العلب:cur, القطع_لكل_علبة:per, إجمالي_القطع:cur*per, الحد_الأدنى:getMin(p.code)};}); const ws=XLSX.utils.json_to_sheet(data); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"المخزون"); XLSX.writeFile(wb,"المخزون_العلب_القطع.xlsx");}
@@ -320,54 +320,54 @@ function exportAttendance(){const date=document.getElementById("attDate").value|
 
 // Excel upload
 document.getElementById("excelFile").addEventListener("change", function(e){
-  const file=e.target.files[0]; if(!file) return;
-  const reader=new FileReader();
-  reader.onload=async function(evt){
-    try{
-      const data=new Uint8Array(evt.target.result); const wb=XLSX.read(data,{type:'array'}); const ws=wb.Sheets[wb.SheetNames[0]]; const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:""});
-      if(rows.length<2){toast("الملف فارغ","red"); return;}
-      let header=rows[0].map(h=>String(h).trim()); let codeCol=0, descCol=1, boxesCol=2, itemsCol=3, minCol=-1;
-      header.forEach((h,i)=>{if(h.includes("الكود")||h.toLowerCase()==="code") codeCol=i; if(h.includes("الوصف")||h.toLowerCase().includes("desc")) descCol=i; if(h.includes("العلب")||h.toLowerCase().includes("boxes")||h.toLowerCase()==="qty") boxesCol=i; if(h.includes("القطع")||h.toLowerCase().includes("itemsperbox")) itemsCol=i; if(h.includes("الحد")||h.toLowerCase().includes("minstock")) minCol=i;});
-      if(header[1]==="" && rows[1] && rows[1][1] && isNaN(rows[1][1])) descCol=1;
-      let added=0, updated=0;
-      for(let r=1;r<rows.length;r++){
-        const row=rows[r]; if(!row||row.length===0) continue;
-        const code=String(row[codeCol]||"").trim().toUpperCase(); const desc=String(row[descCol]||"").trim(); if(!code||!desc) continue;
-        let boxes=Number(row[boxesCol]||0); if(isNaN(boxes)) boxes=0; let per=Number(row[itemsCol]||20); if(isNaN(per)||per===0) per=20; let mn=10; if(minCol>=0){mn=Number(row[minCol]||10); if(isNaN(mn)) mn=10;}
-        const ex=products.find(p=>p.code===code);
-        try{if(ex){await db.collection("products").doc(ex.id).update({desc,boxes,itemsPerBox:per,qty:boxes,minStock:mn,updatedAt:new Date()}); updated++;} else {await db.collection("products").add({code,desc,boxes,itemsPerBox:per,qty:boxes,minStock:mn,createdAt:new Date()}); added++;}}catch(err){toast("خطأ "+code+": "+err.message,"red");}
-      }
-      toast(`تم رفع ${added} جديد و تحديث ${updated} • متزامن Firebase`,"green");
-    }catch(err){toast("خطأ قراءة: "+err.message,"red");}
-    e.target.value="";
-  };
-  reader.readAsArrayBuffer(file);
+ const file=e.target.files[0]; if(!file) return;
+ const reader=new FileReader();
+ reader.onload=async function(evt){
+ try{
+  const data=new Uint8Array(evt.target.result); const wb=XLSX.read(data,{type:'array'}); const ws=wb.Sheets[wb.SheetNames[0]]; const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:""});
+  if(rows.length<2){toast("الملف فارغ","red"); return;}
+  let header=rows[0].map(h=>String(h).trim()); let codeCol=0, descCol=1, boxesCol=2, itemsCol=3, minCol=-1;
+  header.forEach((h,i)=>{if(h.includes("الكود")||h.toLowerCase()==="code") codeCol=i; if(h.includes("الوصف")||h.toLowerCase().includes("desc")) descCol=i; if(h.includes("العلب")||h.toLowerCase().includes("boxes")||h.toLowerCase()==="qty") boxesCol=i; if(h.includes("القطع")||h.toLowerCase().includes("itemsperbox")) itemsCol=i; if(h.includes("الحد")||h.toLowerCase().includes("minstock")) minCol=i;});
+  if(header[1]==="" && rows[1] && rows[1][1] && isNaN(rows[1][1])) descCol=1;
+  let added=0, updated=0;
+  for(let r=1;r<rows.length;r++){
+  const row=rows[r]; if(!row||row.length===0) continue;
+  const code=String(row[codeCol]||"").trim().toUpperCase(); const desc=String(row[descCol]||"").trim(); if(!code||!desc) continue;
+  let boxes=Number(row[boxesCol]||0); if(isNaN(boxes)) boxes=0; let per=Number(row[itemsCol]||20); if(isNaN(per)||per===0) per=20; let mn=10; if(minCol>=0){mn=Number(row[minCol]||10); if(isNaN(mn)) mn=10;}
+  const ex=products.find(p=>p.code===code);
+  try{if(ex){await db.collection("products").doc(ex.id).update({desc,boxes,itemsPerBox:per,qty:boxes,minStock:mn,updatedAt:new Date()}); updated++;} else {await db.collection("products").add({code,desc,boxes,itemsPerBox:per,qty:boxes,minStock:mn,createdAt:new Date()}); added++;}}catch(err){toast("خطأ "+code+": "+err.message,"red");}
+  }
+  toast(`تم رفع ${added} جديد و تحديث ${updated} • متزامن `,"green");
+ }catch(err){toast("خطأ قراءة: "+err.message,"red");}
+ e.target.value="";
+ };
+ reader.readAsArrayBuffer(file);
 });
 
-// Firebase listeners
+// listeners
 if(db){
-  db.collection("products").onSnapshot(s=>{
-    products=s.docs.map(d=>({id:d.id,...d.data()}));
-    document.getElementById("fbStatus").innerText="🟢 متصل بـ Firebase • "+s.size+" منتج • متزامن";
-    document.getElementById("fbStatus").className="text-[8px] font-bold text-emerald-600";
-    document.getElementById("fbDot").className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse";
-    document.getElementById("fbInfo").innerText=s.size+" منتج • متزامن بين الأجهزة";
-    document.getElementById("dashFb").innerText="🟢 "+s.size+" منتج";
-    document.getElementById("dashFb").className="badge ok";
-    renderDashboard(); renderInventory();
-  }, err=>{
-    document.getElementById("fbStatus").innerText="🔴 خطأ Firebase: "+err.message;
-    document.getElementById("fbStatus").className="text-[8px] font-bold text-red-600";
-    document.getElementById("fbDot").className="w-2.5 h-2.5 rounded-full bg-red-500";
-    document.getElementById("fbInfo").innerText=err.message;
-    document.getElementById("dashFb").innerText="🔴 خطأ: "+err.message;
-    document.getElementById("dashFb").className="badge low";
-    document.getElementById("invBody").innerHTML=`<tr><td colspan="8" class="text-center py-6 text-red-500 font-bold">🔴 خطأ Firebase<br>${err.message}<br><br>اذهب لـ Firebase Console > Firestore Database > Rules<br>وضع: allow read, write: if true;</td></tr>`;
-  });
-  db.collection("workers").onSnapshot(s=>{workers=s.docs.map(d=>({id:d.id,...d.data()})); renderWorkers();});
-  db.collection("productionLogs").orderBy("createdAt","desc").limit(500).onSnapshot(s=>{production=s.docs.map(d=>({id:d.id,...d.data()})); renderDashboard(); renderProductionLog(); renderWorkers(); renderCalendar();});
-  db.collection("stockOutLogs").orderBy("createdAt","desc").limit(500).onSnapshot(s=>{stockOut=s.docs.map(d=>({id:d.id,...d.data()})); renderDashboard(); renderStockoutLog(); renderInventory(); renderCalendar();});
-  db.collection("attendanceLogs").onSnapshot(s=>{const o={}; s.docs.forEach(d=>o[d.id]=d.data().records||{}); attendance=o; renderAttendanceList(); renderCalendar();});
+ db.collection("products").onSnapshot(s=>{
+ products=s.docs.map(d=>({id:d.id,...d.data()}));
+ document.getElementById("fbStatus").innerText="🟢 متصل • "+s.size+" منتج • متزامن";
+ document.getElementById("fbStatus").className="text-[8px] font-bold text-emerald-600";
+ document.getElementById("fbDot").className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse";
+ document.getElementById("fbInfo").innerText=s.size+" منتج • متزامن بين الأجهزة";
+ document.getElementById("dashFb").innerText="🟢 "+s.size+" منتج";
+ document.getElementById("dashFb").className="badge ok";
+ renderDashboard(); renderInventory();
+ }, err=>{
+ document.getElementById("fbStatus").innerText="🔴 خطأ : "+err.message;
+ document.getElementById("fbStatus").className="text-[8px] font-bold text-red-600";
+ document.getElementById("fbDot").className="w-2.5 h-2.5 rounded-full bg-red-500";
+ document.getElementById("fbInfo").innerText=err.message;
+ document.getElementById("dashFb").innerText="🔴 خطأ: "+err.message;
+ document.getElementById("dashFb").className="badge low";
+ document.getElementById("invBody").innerHTML=`<tr><td colspan="8" class="text-center py-6 text-red-500 font-bold">🔴 خطأ <br>${err.message}<br><br>اذهب لـ Console > Firestore Database > Rules<br>وضع: allow read, write: if true;</td></tr>`;
+ });
+ db.collection("workers").onSnapshot(s=>{workers=s.docs.map(d=>({id:d.id,...d.data()})); renderWorkers();});
+ db.collection("productionLogs").orderBy("createdAt","desc").limit(500).onSnapshot(s=>{production=s.docs.map(d=>({id:d.id,...d.data()})); renderDashboard(); renderProductionLog(); renderWorkers(); renderCalendar();});
+ db.collection("stockOutLogs").orderBy("createdAt","desc").limit(500).onSnapshot(s=>{stockOut=s.docs.map(d=>({id:d.id,...d.data()})); renderDashboard(); renderStockoutLog(); renderInventory(); renderCalendar();});
+ db.collection("attendanceLogs").onSnapshot(s=>{const o={}; s.docs.forEach(d=>o[d.id]=d.data().records||{}); attendance=o; renderAttendanceList(); renderCalendar();});
 }
 
 // init
