@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>نظام تسيير الإنتاج</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Geist:wght@500;700&display=swap" rel="stylesheet">
+<title>نظام تسيير الإنتاج - Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 const firebaseConfig={apiKey:"AIzaSyCmpOjdxAkJTL7uE9I_CazbQfh-qSbPnNQ",authDomain:"factory-system-a4db8.firebaseapp.com",projectId:"factory-system-a4db8",storageBucket:"factory-system-a4db8.firebasestorage.app",messagingSenderId:"216358094084",appId:"1:216358094084:web:500d511f7b130f23ecfc51"};
 firebase.initializeApp(firebaseConfig);
@@ -19,7 +20,7 @@ const db=firebase.firestore();
 :root{--bg:#f8fafc;--card:#ffffff;--card2:#f1f5f9;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--border2:#cbd5e1;--primary:#2563eb;--shadow:0 8px 24px rgba(15,23,42,.06);--shadow-lg:0 20px 50px rgba(15,23,42,.12);--ring:0 0 0 4px rgba(37,99,235,.14);--grid:rgba(148,163,184,.12)}
 [data-theme="dark"]{--bg:#07070a;--card:#121214;--card2:#1c1c20;--text:#fafafa;--muted:#a1a1aa;--border:#232326;--border2:#2e2e33;--primary:#3b82f6;--shadow:0 0 0 1px var(--border),0 10px 30px rgba(0,0,0,.5);--shadow-lg:0 0 0 1px var(--border),0 24px 60px rgba(0,0,0,.6);--ring:0 0 0 4px rgba(59,130,246,.25);--grid:rgba(63,63,70,.18)}
 *{font-family:'Cairo',system-ui,sans-serif;box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);transition:background .3s,color .3s}
+body{margin:0;background:var(--bg);color:var(--text);transition:.3s}
 .grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,black 40%,transparent 90%)}
 .glow{position:fixed;pointer-events:none;z-index:0;border-radius:999px;filter:blur(90px);opacity:.45}
 .card{background:var(--card);border:1px solid var(--border);border-radius:22px;box-shadow:var(--shadow);transition:.25s}
@@ -32,13 +33,11 @@ body{margin:0;background:var(--bg);color:var(--text);transition:background .3s,c
 .btn-emerald{background:#ecfdf5;color:#059669;border-color:#a7f3d0}
 .btn-amber{background:#fffbeb;color:#d97706;border-color:#fde68a}
 .btn-slate{background:var(--card2);color:var(--text);border-color:var(--border)}
-.btn-danger{background:#fef2f2;color:#dc2626;border-color:#fecaca}
 .btn-dark{background:#0f172a;color:#fff}
 [data-theme="dark"] .btn-dark{background:#fafafa;color:#0f172a}
 [data-theme="dark"] .btn-emerald{background:#022c22;color:#6ee7b7;border-color:#064e3b}
 [data-theme="dark"] .btn-amber{background:#451a03;color:#fbbf24;border-color:#78350f}
-[data-theme="dark"] .btn-slate{background:var(--card2);color:var(--text)}
-.toggle{width:58px;height:34px;border-radius:999px;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;padding:3px;cursor:pointer;transition:.3s;position:relative}
+.toggle{width:58px;height:34px;border-radius:999px;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;padding:3px;cursor:pointer;transition:.3s}
 .toggle-dot{width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--border);display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15);transition:transform .35s cubic-bezier(.34,1.56,.64,1);font-size:12px}
 [data-theme="dark"] .toggle-dot{transform:translateX(-24px)}
 .th{font-size:11px;font-weight:900;color:var(--muted);padding:13px 10px;border-bottom:1px solid var(--border);white-space:nowrap;text-align:right}
@@ -78,6 +77,7 @@ function App(){
   const [toasts,setToasts]=useState([]);
   const [showProd,setShowProd]=useState(false);
   const [showWorker,setShowWorker]=useState(false);
+  const [showPass,setShowPass]=useState(false);
   const [editProdId,setEditProdId]=useState("");
   const [editWorkerId,setEditWorkerId]=useState("");
   const [attDate,setAttDate]=useState(new Date().toISOString().split('T')[0]);
@@ -88,14 +88,15 @@ function App(){
   const [newProd,setNewProd]=useState({code:"",desc:"",unit:"550 ml",boxes:0,itemsPerBox:20,minStock:10});
   const [newWorker,setNewWorker]=useState({name:"",phone:""});
   const [attForm,setAttForm]=useState({});
+  const [passForm,setPassForm]=useState({current:"",newPass:"",confirm:""});
   const tid=useRef(0);
   const notify=(m,t="ok")=>{const id=++tid.current; setToasts(v=>[...v,{id,m,t}]); setTimeout(()=>setToasts(v=>v.filter(x=>x.id!==id)),3500)};
 
   useEffect(()=>{
     const u1=db.collection("products").onSnapshot(s=>setProducts(s.docs.map(d=>({id:d.id,...d.data()}))));
     const u2=db.collection("workers").onSnapshot(s=>setWorkers(s.docs.map(d=>({id:d.id,...d.data()}))));
-    const u3=db.collection("productionLogs").orderBy("createdAt","desc").limit(300).onSnapshot(s=>setProduction(s.docs.map(d=>({id:d.id,...d.data()}))));
-    const u4=db.collection("stockOutLogs").orderBy("createdAt","desc").limit(300).onSnapshot(s=>setStockOut(s.docs.map(d=>({id:d.id,...d.data()}))));
+    const u3=db.collection("productionLogs").orderBy("createdAt","desc").limit(500).onSnapshot(s=>setProduction(s.docs.map(d=>({id:d.id,...d.data()}))));
+    const u4=db.collection("stockOutLogs").orderBy("createdAt","desc").limit(500).onSnapshot(s=>setStockOut(s.docs.map(d=>({id:d.id,...d.data()}))));
     const u5=db.collection("attendanceLogs").onSnapshot(s=>{const o={}; s.docs.forEach(d=>o[d.id]=d.data().records||{}); setAttendance(o)});
     return ()=>{u1();u2();u3();u4();u5();};
   },[]);
@@ -119,12 +120,95 @@ function App(){
   const filtProd=filterDate?production.filter(p=>p.date===filterDate):production;
   const filtProducts=products.filter(p=>`${p.code} ${p.desc}`.toLowerCase().includes(search.toLowerCase()));
 
+  // Analytics data
+  const prodByProduct = {};
+  production.forEach(p=>{prodByProduct[p.code]=(prodByProduct[p.code]||0)+Number(p.qty)});
+  const outByProduct = {};
+  stockOut.forEach(p=>{outByProduct[p.code]=(outByProduct[p.code]||0)+Number(p.qty)});
+  const prodByWorker = {};
+  production.forEach(p=>{prodByWorker[p.worker]=(prodByWorker[p.worker]||0)+Number(p.qty)});
+
+  const mostConsumed = Object.entries(outByProduct).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const mostProduced = Object.entries(prodByProduct).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const topWorker = Object.entries(prodByWorker).sort((a,b)=>b[1]-a[1])[0];
+
+  // Charts refs
+  const chartProdRef = useRef(null);
+  const chartOutRef = useRef(null);
+  const chartWorkerRef = useRef(null);
+  const chartMonthlyRef = useRef(null);
+  const charts = useRef({});
+
+  useEffect(()=>{
+    if(tab!=="analytics") return;
+    setTimeout(()=>{
+      const isDark = theme==="dark";
+      const textColor = isDark?"#a1a1aa":"#64748b";
+      const gridColor = isDark?"#232326":"#e2e8f0";
+
+      // Destroy old
+      Object.values(charts.current).forEach(c=>{try{c.destroy()}catch{}});
+      
+      // 1. Production per product
+      if(chartProdRef.current){
+        charts.current.prod = new Chart(chartProdRef.current,{
+          type:'bar',
+          data:{labels:Object.keys(prodByProduct).slice(0,8), datasets:[{label:'الإنتاج', data:Object.values(prodByProduct).slice(0,8), backgroundColor:['#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#f97316','#84cc16'], borderRadius:8}]},
+          options:{responsive:true, plugins:{legend:{display:false}}, scales:{y:{grid:{color:gridColor}, ticks:{color:textColor}}, x:{grid:{display:false}, ticks:{color:textColor, font:{size:10}}}} }
+        });
+      }
+      // 2. Most consumed pie
+      if(chartOutRef.current){
+        charts.current.out = new Chart(chartOutRef.current,{
+          type:'doughnut',
+          data:{labels:mostConsumed.map(m=>m[0]), datasets:[{data:mostConsumed.map(m=>m[1]), backgroundColor:['#ef4444','#f59e0b','#3b82f6','#10b981','#8b5cf6'], borderWidth:0}]},
+          options:{responsive:true, plugins:{legend:{position:'bottom', labels:{color:textColor, boxWidth:12, font:{size:11, family:'Cairo'}}}}}}
+        });
+      }
+      // 3. Worker
+      if(chartWorkerRef.current){
+        charts.current.worker = new Chart(chartWorkerRef.current,{
+          type:'bar',
+          data:{labels:Object.keys(prodByWorker).slice(0,6), datasets:[{label:'إنتاج العامل', data:Object.values(prodByWorker).slice(0,6), backgroundColor:'#10b981', borderRadius:8}]},
+          options:{indexAxis:'y', responsive:true, plugins:{legend:{display:false}}, scales:{x:{grid:{color:gridColor}, ticks:{color:textColor}}, y:{grid:{display:false}, ticks:{color:textColor}}}}
+        });
+      }
+      // 4. Monthly trend (last 7 days)
+      if(chartMonthlyRef.current){
+        const days=[...Array(7)].map((_,i)=>{const d=new Date(); d.setDate(d.getDate()-6+i); return d.toISOString().split('T')[0]});
+        const prodDays=days.map(d=>production.filter(p=>p.date===d).reduce((a,b)=>a+Number(b.qty),0));
+        const outDays=days.map(d=>stockOut.filter(p=>p.date===d).reduce((a,b)=>a+Number(b.qty),0));
+        charts.current.monthly = new Chart(chartMonthlyRef.current,{
+          type:'line',
+          data:{labels:days.map(d=>d.slice(5)), datasets:[
+            {label:'إنتاج', data:prodDays, borderColor:'#3b82f6', backgroundColor:'rgba(59,130,246,.15)', tension:.4, fill:true},
+            {label:'خروج', data:outDays, borderColor:'#ef4444', backgroundColor:'rgba(239,68,68,.1)', tension:.4, fill:true}
+          ]},
+          options:{responsive:true, plugins:{legend:{labels:{color:textColor, font:{size:11}}}}, scales:{y:{grid:{color:gridColor}, ticks:{color:textColor}}, x:{grid:{display:false}, ticks:{color:textColor}}}}
+        });
+      }
+    },300);
+  },[tab, theme, production, stockOut, products]);
+
   const handleLogin=(e)=>{
     e.preventDefault();
     const u=document.getElementById("u").value.trim();
     const pw=document.getElementById("pw").value.trim();
-    if(u==="admin" && pw==="admin123"){setLogged(true); localStorage.setItem("factory_logged","1"); notify("مرحبا 👋");}
+    const savedPass=localStorage.getItem("admin_pass")||"admin123";
+    const savedUser=localStorage.getItem("admin_user")||"admin";
+    if(u===savedUser && pw===savedPass){setLogged(true); localStorage.setItem("factory_logged","1"); notify("مرحبا 👋");}
     else document.getElementById("err").classList.remove("hidden");
+  };
+
+  const handleChangePass=(e)=>{
+    e.preventDefault();
+    const saved=localStorage.getItem("admin_pass")||"admin123";
+    if(passForm.current!==saved) return notify("كلمة المرور الحالية خاطئة","err");
+    if(passForm.newPass.length<4) return notify("كلمة المرور قصيرة","err");
+    if(passForm.newPass!==passForm.confirm) return notify("التأكيد غير مطابق","err");
+    localStorage.setItem("admin_pass",passForm.newPass);
+    setShowPass(false); setPassForm({current:"",newPass:"",confirm:""});
+    notify("تم تغيير كلمة المرور ✅");
   };
 
   const handleSaveProd=async(e)=>{
@@ -133,7 +217,8 @@ function App(){
     if(!code) return notify("أدخل الكود","err");
     if(!editProdId && products.some(p=>p.code===code)) return notify("الكود موجود","err");
     const qty=Number(newProd.boxes)*Number(newProd.itemsPerBox);
-    const data={code,desc:newProd.desc,unit:newProd.unit,boxes:Number(newProd.boxes),itemsPerBox:Number(newProd.itemsPerBox),qty,minStock:Number(newProd.minStock||10)};
+    const data={code,desc:newProd.desc,unit:newProd.unit,boxes:Number(newProd.boxes),itemsPerBox:Number(newProd.itemsPerBox),qty:minStockFix(qty,newProd.qty),minStock:Number(newProd.minStock||10)};
+    function minStockFix(q,oldQ){return q>0?q:oldQ}
     if(editProdId){await db.collection("products").doc(editProdId).update(data); notify("تم التحديث");}
     else await db.collection("products").add({...data,createdAt:new Date()});
     setShowProd(false); setEditProdId(""); setNewProd({code:"",desc:"",unit:"550 ml",boxes:0,itemsPerBox:20,minStock:10});
@@ -153,7 +238,7 @@ function App(){
     const p=products.find(x=>x.code===code);
     if(!p) return notify("منتج غير صحيح","err");
     await db.collection("productionLogs").add({date:formProd.date,worker:formProd.worker,code:p.code,desc:p.desc,unit:p.unit,qty:Number(formProd.qty),notes:formProd.notes,createdAt:new Date()});
-    setFormProd({worker:"",productRaw:"",qty:"",date:formProd.date,notes:""}); notify("تم تسجيل الإنتاج");
+    setFormProd({worker:"",productRaw:"",qty:"",date:formProd.date,notes:""}); notify("تم التسجيل");
   };
 
   const handleOut=async(e)=>{
@@ -182,15 +267,14 @@ function App(){
       if(!rows.length) return notify("الملف فارغ","err");
       let count=0;
       for(const r of rows){
-        // دعم الأعمدة العربية والإنجليزية من الصورة
-        const code=(r["الكود #"]||r["الكود"]||r.code||r.Code||r["CODE"]||"").toString().toUpperCase().trim();
+        const code=(r["الكود #"]||r["الكود"]||r.code||r.Code||"").toString().toUpperCase().trim();
         if(!code) continue;
-        const desc=r["وصف المنتج"]||r["الوصف"]||r.desc||r.Desc||"";
-        const unit=r["الوحدة"]||r.unit||r.Unit||"550 ml";
-        const items=Number(r["القطع/علبة"]||r["قطع/علبة"]||r.itemsPerBox||r["Items"]||20);
+        const desc=r["وصف المنتج"]||r["الوصف"]||r.desc||"";
+        const unit=r["الوحدة"]||r.unit||"550 ml";
+        const items=Number(r["القطع/علبة"]||r["قطع/علبة"]||r.itemsPerBox||20);
         const boxes=Number(r["العلب"]||r.boxes||0);
-        const minStock=Number(r["الحد الأدنى"]||r["الادنى"]||r.minStock||10);
-        const qty=boxes?boxes*items: Number(r["الكمية"]||r.qty||0);
+        const minStock=Number(r["الحد الأدنى"]||r.minStock||10);
+        const qty=boxes?boxes*items: Number(r["الكمية"]||0);
         const exist=products.find(p=>p.code===code);
         if(exist){ await db.collection("products").doc(exist.id).update({desc,unit,boxes,itemsPerBox:items,qty: qty||exist.qty, minStock}); }
         else { await db.collection("products").add({code,desc,unit,boxes,itemsPerBox:items,qty,minStock,createdAt:new Date()}); }
@@ -206,9 +290,10 @@ function App(){
     {id:"production",title:"الإنتاج",icon:"fa-clipboard-check",color:"#10b981"},
     {id:"attendance",title:"الحضور",icon:"fa-calendar-check",color:"#0ea5e9"},
     {id:"stockout",title:"الخروج",icon:"fa-truck-fast",color:"#f43f5e"},
-    {id:"workers",title:"تقارير العمال",icon:"fa-users",color:"#8b5cf6"},
+    {id:"workers",title:"تقارير",icon:"fa-users",color:"#8b5cf6"},
     {id:"inventory",title:"المخزون",icon:"fa-boxes-stacked",color:"#06b6d4"},
-    {id:"workers-info",title:"العمال",icon:"fa-address-card",color:"#f59e0b"},
+    {id:"analytics",title:"التحليل",icon:"fa-chart-line",color:"#f59e0b"},
+    {id:"workers-info",title:"العمال",icon:"fa-address-card",color:"#6366f1"},
   ];
 
   if(!logged){
@@ -236,15 +321,14 @@ function App(){
           </div>
           <div className="flex items-center gap-2">
             <div className="hidden lg:flex items-center gap-1 p-1 rounded-full border" style={{background:"var(--card2)",borderColor:"var(--border)"}}>
-              {tabs.map(t=>{
+              {tabs.slice(0,6).map(t=>{
                 const a=tab===t.id;
                 return <button key={t.id} onClick={()=>setTab(t.id)} className={`h-7 px-3 rounded-full text-[11px] font-black flex items-center gap-1.5 transition ${a?'bg-slate-900 text-white shadow':'text-slate-500 hover:bg-white'}`} style={{background:a?`linear-gradient(135deg, ${t.color}, #7c3aed)`:'', color:a?'white':''}}><i className={`fa-solid ${t.icon} text-[10px]`}></i>{t.title}</button>
               })}
             </div>
-            <button onClick={()=>setTheme(theme==="light"?"dark":"light")} className="toggle" title="المظهر">
-              <div className="toggle-dot"><i className={`fa-solid ${theme==="dark"?"fa-moon":"fa-sun"}`}></i></div>
-            </button>
-            <button onClick={()=>{localStorage.removeItem("factory_logged"); setLogged(false)}} className="w-9 h-9 grid place-items-center rounded-xl border bg-white text-red-500" style={{borderColor:"var(--border)"}}><i className="fa-solid fa-arrow-right-from-bracket text-[12px]"></i></button>
+            <button onClick={()=>setTheme(theme==="light"?"dark":"light")} className="toggle"><div className="toggle-dot"><i className={`fa-solid ${theme==="dark"?"fa-moon":"fa-sun"}`}></i></div></button>
+            <button onClick={()=>setShowPass(true)} className="w-9 h-9 grid place-items-center rounded-xl border bg-amber-50 text-amber-600" title="تغيير الباسورد"><i className="fa-solid fa-key text-[12px]"></i></button>
+            <button onClick={()=>{localStorage.removeItem("factory_logged"); setLogged(false)}} className="w-9 h-9 grid place-items-center rounded-xl border bg-white text-red-500"><i className="fa-solid fa-arrow-right-from-bracket text-[12px]"></i></button>
           </div>
         </div>
       </header>
@@ -255,6 +339,7 @@ function App(){
           <div className="absolute top-0 right-0 h-full w-[300px] card rounded-none border-l p-3 space-y-1 overflow-y-auto" style={{borderRadius:"0"}}>
             <div className="flex justify-between items-center p-2 border-b mb-2"><b className="text-[12px]">القائمة</b><button onClick={()=>setMenu(false)} className="w-8 h-8 grid place-items-center rounded-lg border"><i className="fa-solid fa-xmark"></i></button></div>
             {tabs.map(t=><button key={t.id} onClick={()=>{setTab(t.id); setMenu(false)}} className={`w-full h-11 flex items-center gap-3 px-4 rounded-xl font-black text-[12px] transition ${tab===t.id?'bg-slate-900 text-white':'hover:bg-slate-50'}`} style={{background:tab===t.id?`linear-gradient(135deg, ${t.color}, #7c3aed)`:'', color:tab===t.id?'white':''}}><i className={`fa-solid ${t.icon}`}></i>{t.title}</button>)}
+            <button onClick={()=>{setMenu(false); setShowPass(true)}} className="w-full h-11 flex items-center gap-3 px-4 rounded-xl font-black text-[12px] bg-amber-50 text-amber-700 border border-amber-200 mt-2"><i className="fa-solid fa-key"></i>تغيير كلمة المرور</button>
           </div>
         </div>
       )}
@@ -265,46 +350,53 @@ function App(){
           <div className="space-y-3.5">
             <div className="card p-3.5 flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2 font-black text-[12.5px]"><div className="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 grid place-items-center text-white text-[12px]">⚡</div>لوحة التحكم الذكية</div>
-              <div className="flex gap-1.5">
-                <button onClick={()=>setTab("production")} className="btn btn-primary h-8 text-[11px]"><i className="fa-solid fa-plus"></i>إنتاج</button>
-                <button onClick={()=>setTab("inventory")} className="btn btn-slate h-8 text-[11px]">المخزون</button>
-              </div>
+              <div className="flex gap-1.5"><button onClick={()=>setTab("production")} className="btn btn-primary h-8 text-[11px]"><i className="fa-solid fa-plus"></i>إنتاج</button><button onClick={()=>setTab("analytics")} className="btn btn-amber h-8 text-[11px]"><i className="fa-solid fa-chart-line"></i>التحليل</button></div>
             </div>
-
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-              <div className="card p-4"><div className="flex justify-between"><div className="text-[10px] font-black text-slate-500">المنتجات</div><div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 grid place-items-center"><i className="fa-solid fa-box text-[11px]"></i></div></div><div className="text-[22px] font-black mt-2">{products.length}</div><div className="text-[10px] mt-1 flex gap-1"><span className="badge badge-ok">{products.length-low.length} متوفر</span></div></div>
+              <div className="card p-4"><div className="flex justify-between"><div className="text-[10px] font-black text-slate-500">المنتجات</div><div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 grid place-items-center"><i className="fa-solid fa-box text-[11px]"></i></div></div><div className="text-[22px] font-black mt-2">{products.length}</div><div className="text-[10px] mt-1"><span className="badge badge-ok">{products.length-critical.length} متوفر</span></div></div>
               <div className="card p-4"><div className="flex justify-between"><div className="text-[10px] font-black text-slate-500">إنتاج اليوم</div><div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 grid place-items-center"><i className="fa-solid fa-arrow-trend-up text-[11px]"></i></div></div><div className="text-[22px] font-black mt-2">{todayProd.reduce((a,b)=>a+Number(b.qty),0)}</div><div className="text-[10px] text-slate-400 mt-1">{todayProd.length} عملية</div></div>
-              <div className="card p-4"><div className="flex justify-between"><div className="text-[10px] font-black text-slate-500">خروج اليوم</div><div className="w-7 h-7 rounded-lg bg-red-50 text-red-600 grid place-items-center"><i className="fa-solid fa-truck text-[11px]"></i></div></div><div className="text-[22px] font-black mt-2">{stockOut.filter(p=>p.date===new Date().toISOString().split('T')[0]).reduce((a,b)=>a+Number(b.qty),0)}</div></div>
+              <div className="card p-4"><div className="flex justify-between"><div className="text-[10px] font-black text-slate-500">الأكثر استهلاكا</div><div className="w-7 h-7 rounded-lg bg-red-50 text-red-600 grid place-items-center"><i className="fa-solid fa-fire text-[11px]"></i></div></div><div className="text-[14px] font-black mt-2">{mostConsumed[0]?.[0]||"—"}</div><div className="text-[10px] text-red-500 mt-1">{mostConsumed[0]?.[1]||0} وحدة مستهلكة</div></div>
               <div className="card p-4" style={{background: critical.length?"#fef2f2":"var(--card)", borderColor: critical.length?"#fecaca":"var(--border)"}}><div className="flex justify-between"><div className="text-[10px] font-black text-red-600">تنبيه نفاد</div><div className="w-7 h-7 rounded-lg bg-red-500 text-white grid place-items-center animate-pulse"><i className="fa-solid fa-bell text-[11px]"></i></div></div><div className="text-[22px] font-black mt-2 text-red-600">{critical.length}</div><div className="text-[10px] text-red-400 mt-1">{low.length} قريب من النفاد</div></div>
             </div>
 
-            {/* خانة تعلمك على قرب نفاد */}
             {low.length>0 && (
               <div className="card overflow-hidden" style={{borderColor:"#fde68a"}}>
                 <div className="p-3.5 flex items-center justify-between" style={{background:"linear-gradient(90deg,#fffbeb,#fef3c7)", borderBottom:"1px solid #fde68a"}}>
-                  <h3 className="font-black text-[12px] text-amber-800 flex items-center gap-2"><div className="w-6 h-6 rounded-full bg-amber-500 text-white grid place-items-center"><i className="fa-solid fa-triangle-exclamation text-[10px]"></i></div>تنبيه: منتجات قريبة من النفاد ({low.length})</h3>
+                  <h3 className="font-black text-[12px] text-amber-800 flex items-center gap-2"><div className="w-6 h-6 rounded-full bg-amber-500 text-white grid place-items-center"><i className="fa-solid fa-triangle-exclamation text-[10px]"></i></div>تنبيه: منتجات قريبة من النفاد ({low.length}) - الحد الأدنى</h3>
                   <span className="badge badge-warn">{critical.length} حرج</span>
                 </div>
                 <div className="p-2 grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
                   {low.map(p=>{
-                    const cur=stockOf(p.code); const mn=getMin(p.code); const perc=Math.round((cur/mn)*100); const isCrit=cur<=mn;
-                    return (
-                      <div key={p.id} className="p-3 rounded-xl border flex items-center justify-between gap-2" style={{background:isCrit?"#fef2f2":"#fffbeb", borderColor:isCrit?"#fecaca":"#fde68a"}}>
-                        <div><div className="font-mono font-black text-[12px]">{p.code}</div><div className="text-[11px] font-bold mt-0.5">{p.desc}</div><div className="text-[10px] text-slate-500 mt-1">{cur} / {mn} • {perc}%</div></div>
-                        <div className="text-center"><div className={`w-10 h-10 rounded-full grid place-items-center font-black text-[11px] ${isCrit?'bg-red-500 text-white':'bg-amber-500 text-white'}`}>{cur}</div><div className="text-[9px] font-black mt-1" style={{color:isCrit?"#dc2626":"#d97706"}}>{isCrit?"نفد":"قريب"}</div></div>
-                      </div>
-                    )
+                    const cur=stockOf(p.code); const mn=getMin(p.code); const isCrit=cur<=mn;
+                    return <div key={p.id} className="p-3 rounded-xl border flex items-center justify-between gap-2" style={{background:isCrit?"#fef2f2":"#fffbeb", borderColor:isCrit?"#fecaca":"#fde68a"}}><div><div className="font-mono font-black text-[12px]">{p.code}</div><div className="text-[11px] font-bold mt-0.5">{p.desc}</div><div className="text-[10px] text-slate-500 mt-1">{cur} / {mn}</div></div><div className="text-center"><div className={`w-10 h-10 rounded-full grid place-items-center font-black text-[11px] ${isCrit?'bg-red-500 text-white':'bg-amber-500 text-white'}`}>{cur}</div><div className="text-[9px] font-black mt-1" style={{color:isCrit?"#dc2626":"#d97706"}}>{isCrit?"نفد":"قريب"}</div></div></div>
                   })}
                 </div>
               </div>
             )}
+          </div>
+        )}
 
-            <div className="grid md:grid-cols-2 gap-3">
-              <div className="card p-4"><h3 className="font-black text-[12px] mb-3 flex items-center gap-2"><div className="w-6 h-6 rounded-lg bg-emerald-500 text-white grid place-items-center"><i className="fa-solid fa-users text-[10px]"></i></div>إنتاج اليوم حسب العامل</h3>
-                {Object.keys(todayProd.reduce((a,c)=>{a[c.worker]=(a[c.worker]||0)+Number(c.qty); return a},{})).length===0?<div className="py-8 text-center text-slate-400 text-[11px]">لا يوجد إنتاج اليوم</div>:
-                Object.entries(todayProd.reduce((a,c)=>{a[c.worker]=(a[c.worker]||0)+Number(c.qty); return a},{})).map(([n,q])=><div key={n} className="flex justify-between items-center p-2.5 rounded-xl border mb-2" style={{background:"var(--card2)"}}><span className="font-black text-[12px]">{n}</span><span className="badge" style={{background:"#0f172a",color:"#fff"}}>{q} وحدة</span></div>)}
-              </div>
-              <div className="card p-4"><h3 className="font-black text-[12px] mb-3 flex items-center gap-2"><div className="w-6 h-6 rounded-lg bg-red-500 text-white grid place-items-center"><i className="fa-solid fa-clock-rotate-left text-[10px]"></i></div>آخر خروج</h3><div className="space-y-2">{stockOut.slice(0,5).map(s=><div key={s.id} className="flex justify-between items-center p-2 rounded-lg border text-[11px]"><span className="font-bold">{s.code} - {s.desc}</span><span className="font-black">{s.qty}</span></div>)}</div></div>
+        {tab==="analytics" && (
+          <div className="space-y-3">
+            <div className="card p-4 flex flex-wrap justify-between gap-3">
+              <h2 className="font-black text-[14px] flex items-center gap-2"><div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 grid place-items-center text-white"><i className="fa-solid fa-chart-line"></i></div>التحليل الإجمالي</h2>
+              <div className="flex gap-2 text-[11px]"><div className="badge badge-ok">إنتاج: {production.reduce((a,b)=>a+Number(b.qty),0)}</div><div className="badge badge-low">استهلاك: {stockOut.reduce((a,b)=>a+Number(b.qty),0)}</div><div className="badge badge-warn">منتجات: {products.length}</div></div>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-3">
+              <div className="card p-4"><h3 className="font-black text-[12px] mb-3">📊 الإنتاج حسب المنتج (Top 8)</h3><canvas ref={chartProdRef} height="220"></canvas></div>
+              <div className="card p-4"><h3 className="font-black text-[12px] mb-3">🔥 المنتجات الأكثر استهلاكاً</h3><canvas ref={chartOutRef} height="220"></canvas><div className="mt-3 space-y-1.5">{mostConsumed.map(([code,qty])=>{const p=products.find(x=>x.code===code); return <div key={code} className="flex justify-between items-center p-2 rounded-lg border text-[11px]"><span className="font-bold">{code} - {p?.desc||""}</span><span className="badge badge-low">{qty} مستهلك</span></div>})}</div></div>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-3">
+              <div className="card p-4"><h3 className="font-black text-[12px] mb-3">👷 إنتاج العمال</h3><canvas ref={chartWorkerRef} height="220"></canvas><div className="mt-3">{topWorker && <div className="p-2.5 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 flex justify-between items-center"><span className="font-black text-[12px]">🏆 أفضل عامل: {topWorker[0]}</span><span className="badge" style={{background:"#0f172a",color:"#fff"}}>{topWorker[1]} وحدة</span></div>}</div></div>
+              <div className="card p-4"><h3 className="font-black text-[12px] mb-3">📈 اتجاه الإنتاج والخروج - آخر 7 أيام</h3><canvas ref={chartMonthlyRef} height="220"></canvas></div>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-3">
+              <div className="card p-4"><div className="text-[11px] font-black text-slate-500">إجمالي الإنتاج</div><div className="text-[24px] font-black mt-1">{production.reduce((a,b)=>a+Number(b.qty),0)} وحدة</div><div className="text-[11px] text-emerald-600 mt-1">{production.length} عملية</div></div>
+              <div className="card p-4"><div className="text-[11px] font-black text-slate-500">إجمالي الاستهلاك</div><div className="text-[24px] font-black mt-1 text-red-600">{stockOut.reduce((a,b)=>a+Number(b.qty),0)} وحدة</div><div className="text-[11px] text-red-400 mt-1">{stockOut.length} عملية خروج</div></div>
+              <div className="card p-4"><div className="text-[11px] font-black text-slate-500">المخزون الحالي الإجمالي</div><div className="text-[24px] font-black mt-1">{products.reduce((a,p)=>a+stockOf(p.code),0)} وحدة</div><div className="text-[11px] text-slate-500 mt-1">من {products.length} منتج</div></div>
             </div>
           </div>
         )}
@@ -314,51 +406,45 @@ function App(){
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3.5">
               <h2 className="font-black text-[13px] flex items-center gap-2"><div className="w-7 h-7 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 grid place-items-center text-white"><i className="fa-solid fa-boxes-stacked text-[11px]"></i></div>مخزون المنتجات</h2>
               <div className="flex flex-wrap items-center gap-2">
-                <div className="relative"><i className="fa-solid fa-magnifying-glass absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[11px]"></i><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="بحث بالكود أو الوصف..." className="input h-9 pr-8 w-[190px] text-[11px]"/></div>
+                <div className="relative"><i className="fa-solid fa-magnifying-glass absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[11px]"></i><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="بحث..." className="input h-9 pr-8 w-[190px] text-[11px]"/></div>
                 <label className="btn btn-emerald h-9 text-[11px] cursor-pointer"><i className="fa-solid fa-file-excel"></i>رفع Excel<input type="file" accept=".xlsx,.xls,.csv" onChange={handleExcel} className="hidden"/></label>
                 <button onClick={()=>{setEditProdId(""); setNewProd({code:"",desc:"",unit:"550 ml",boxes:0,itemsPerBox:20,minStock:10}); setShowProd(true)}} className="btn btn-primary h-9 text-[11px]"><i className="fa-solid fa-plus"></i>منتج جديد</button>
               </div>
             </div>
-
             <div className="overflow-x-auto rounded-xl border" style={{borderColor:"var(--border)"}}>
               <table className="w-full"><thead><tr style={{background:"var(--card2)"}}><th className="th">الكود</th><th className="th">الوصف</th><th className="th">الحالي</th><th className="th">الأدنى</th><th className="th">الحالة</th><th className="th">إجراء</th></tr></thead>
               <tbody>{filtProducts.map(p=>{
                 const cur=stockOf(p.code); const mn=getMin(p.code); const isLow=cur<=mn; const isWarn=cur<=mn*1.3 && cur>mn;
-                return <tr key={p.id} className="tr"><td data-label="الكود" className="td font-mono font-black text-[12px]">{p.code}</td><td data-label="الوصف" className="td font-bold text-[12px]">{p.desc}<div className="text-[10px] text-slate-500">{p.unit}</div></td><td data-label="الحالي" className="td"><span className={`badge ${isLow?'badge-low':isWarn?'badge-warn':'badge-ok'}`}>{cur}</span></td><td data-label="الأدنى" className="td font-black text-[12px]">{mn}</td><td data-label="الحالة" className="td"><span className={`badge ${isLow?'badge-low':isWarn?'badge-warn':'badge-ok'}`}>{isLow?'نفد':isWarn?'قريب':'متوفر'}</span></td><td data-label="إجراء" className="td"><div className="flex gap-1 justify-center"><button onClick={()=>{setEditProdId(p.id); setNewProd({code:p.code,desc:p.desc,unit:p.unit,boxes:p.boxes||0,itemsPerBox:p.itemsPerBox||20,minStock:p.minStock||10}); setShowProd(true)}} className="w-7 h-7 grid place-items-center rounded-lg border bg-white hover:bg-slate-50"><i className="fa-solid fa-pen text-[10px]"></i></button><button onClick={()=>db.collection("products").doc(p.id).delete()} className="w-7 h-7 grid place-items-center rounded-lg bg-red-50 text-red-500 border border-red-100"><i className="fa-solid fa-trash text-[10px]"></i></button></div></td></tr>
+                return <tr key={p.id} className="tr"><td data-label="الكود" className="td font-mono font-black text-[12px]">{p.code}</td><td data-label="الوصف" className="td font-bold text-[12px]">{p.desc}<div className="text-[10px] text-slate-500">{p.unit}</div></td><td data-label="الحالي" className="td"><span className={`badge ${isLow?'badge-low':isWarn?'badge-warn':'badge-ok'}`}>{cur}</span></td><td data-label="الأدنى" className="td font-black text-[12px]">{mn}</td><td data-label="الحالة" className="td"><span className={`badge ${isLow?'badge-low':isWarn?'badge-warn':'badge-ok'}`}>{isLow?'نفد':isWarn?'قريب':'متوفر'}</span></td><td data-label="إجراء" className="td"><div className="flex gap-1 justify-center"><button onClick={()=>{setEditProdId(p.id); setNewProd({code:p.code,desc:p.desc,unit:p.unit,boxes:p.boxes||0,itemsPerBox:p.itemsPerBox||20,minStock:p.minStock||10}); setShowProd(true)}} className="w-7 h-7 grid place-items-center rounded-lg border bg-white"><i className="fa-solid fa-pen text-[10px]"></i></button><button onClick={()=>db.collection("products").doc(p.id).delete()} className="w-7 h-7 grid place-items-center rounded-lg bg-red-50 text-red-500 border border-red-100"><i className="fa-solid fa-trash text-[10px]"></i></button></div></td></tr>
               })}</tbody></table>
             </div>
           </div>
         )}
 
-        {tab==="production" && (
-          <div className="max-w-[520px] mx-auto card overflow-hidden">
-            <div className="p-4 border-b" style={{background:"linear-gradient(135deg,#ecfdf5,#f0fdfa)"}}><h2 className="font-black text-[13px] flex items-center gap-2"><div className="w-7 h-7 rounded-lg bg-emerald-500 text-white grid place-items-center"><i className="fa-solid fa-clipboard-check text-[11px]"></i></div>تسجيل الإنتاج</h2></div>
-            <form onSubmit={handleProd} className="p-4 space-y-3">
-              <select value={formProd.worker} onChange={e=>setFormProd({...formProd,worker:e.target.value})} className="input" required><option value="">-- اختر العامل --</option>{workers.map(w=><option key={w.id} value={w.name}>{w.name}</option>)}</select>
-              <input list="plist" value={formProd.productRaw} onChange={e=>setFormProd({...formProd,productRaw:e.target.value})} placeholder="الكود - الوصف" className="input" required/><datalist id="plist">{products.map(p=><option key={p.id} value={`${p.code} - ${p.desc} (${p.unit})`} />)}</datalist>
-              <div className="grid grid-cols-2 gap-2"><input type="number" value={formProd.qty} onChange={e=>setFormProd({...formProd,qty:e.target.value})} placeholder="الكمية" className="input" required/><input type="date" value={formProd.date} onChange={e=>setFormProd({...formProd,date:e.target.value})} className="input"/></div>
-              <input value={formProd.notes} onChange={e=>setFormProd({...formProd,notes:e.target.value})} placeholder="ملاحظات" className="input"/>
-              <button className="btn btn-primary w-full h-11">حفظ الإنتاج</button>
-            </form>
-          </div>
-        )}
-
-        {tab==="stockout" && (
-          <div className="grid lg:grid-cols-[340px_1fr] gap-3">
-            <div className="card p-4 h-fit"><h2 className="font-black text-[13px] mb-3 flex items-center gap-2"><div className="w-7 h-7 rounded-lg bg-red-500 text-white grid place-items-center"><i className="fa-solid fa-truck-fast text-[11px]"></i></div>خروج منتجات</h2><form onSubmit={handleOut} className="space-y-2.5"><input list="olist" value={formOut.productRaw} onChange={e=>setFormOut({...formOut,productRaw:e.target.value})} placeholder="اختر المنتج" className="input" required/><datalist id="olist">{products.map(p=><option key={p.id} value={`${p.code} - ${p.desc} | متاح: ${stockOf(p.code)}`} />)}</datalist><input type="number" value={formOut.qty} onChange={e=>setFormOut({...formOut,qty:e.target.value})} placeholder="الكمية" className="input" required/><input type="date" value={formOut.date} onChange={e=>setFormOut({...formOut,date:e.target.value})} className="input"/><button className="btn w-full bg-red-500 text-white h-11">تأكيد الخروج</button></form></div>
-            <div className="card p-3.5"><h2 className="font-black text-[12px] mb-3">سجل الخروج</h2><div className="overflow-x-auto"><table className="w-full"><thead><tr style={{background:"var(--card2)"}}><th className="th">التاريخ</th><th className="th">الكود</th><th className="th">الكمية</th><th className="th">حذف</th></tr></thead><tbody>{stockOut.slice(0,100).map(s=><tr key={s.id} className="tr"><td data-label="التاريخ" className="td text-[11px]">{s.date}</td><td data-label="الكود" className="td font-mono font-black text-red-500 text-[12px]">{s.code}</td><td data-label="الكمية" className="td">{s.qty}</td><td data-label="حذف" className="td"><button onClick={()=>db.collection("stockOutLogs").doc(s.id).delete()} className="text-red-500"><i className="fa-solid fa-trash text-[11px]"></i></button></td></tr>)}</tbody></table></div></div>
-          </div>
-        )}
-
+        {tab==="production" && (<div className="max-w-[520px] mx-auto card overflow-hidden"><div className="p-4 border-b" style={{background:"linear-gradient(135deg,#ecfdf5,#f0fdfa)"}}><h2 className="font-black text-[13px] flex items-center gap-2"><div className="w-7 h-7 rounded-lg bg-emerald-500 text-white grid place-items-center"><i className="fa-solid fa-clipboard-check text-[11px]"></i></div>تسجيل الإنتاج</h2></div><form onSubmit={handleProd} className="p-4 space-y-3"><select value={formProd.worker} onChange={e=>setFormProd({...formProd,worker:e.target.value})} className="input" required><option value="">-- اختر العامل --</option>{workers.map(w=><option key={w.id} value={w.name}>{w.name}</option>)}</select><input list="plist" value={formProd.productRaw} onChange={e=>setFormProd({...formProd,productRaw:e.target.value})} placeholder="الكود - الوصف" className="input" required/><datalist id="plist">{products.map(p=><option key={p.id} value={`${p.code} - ${p.desc} (${p.unit})`} />)}</datalist><div className="grid grid-cols-2 gap-2"><input type="number" value={formProd.qty} onChange={e=>setFormProd({...formProd,qty:e.target.value})} placeholder="الكمية" className="input" required/><input type="date" value={formProd.date} onChange={e=>setFormProd({...formProd,date:e.target.value})} className="input"/></div><input value={formProd.notes} onChange={e=>setFormProd({...formProd,notes:e.target.value})} placeholder="ملاحظات" className="input"/><button className="btn btn-primary w-full h-11">حفظ الإنتاج</button></form></div>)}
+        {tab==="stockout" && (<div className="grid lg:grid-cols-[340px_1fr] gap-3"><div className="card p-4 h-fit"><h2 className="font-black text-[13px] mb-3 flex items-center gap-2"><div className="w-7 h-7 rounded-lg bg-red-500 text-white grid place-items-center"><i className="fa-solid fa-truck-fast text-[11px]"></i></div>خروج منتجات</h2><form onSubmit={handleOut} className="space-y-2.5"><input list="olist" value={formOut.productRaw} onChange={e=>setFormOut({...formOut,productRaw:e.target.value})} placeholder="اختر المنتج" className="input" required/><datalist id="olist">{products.map(p=><option key={p.id} value={`${p.code} - ${p.desc} | متاح: ${stockOf(p.code)}`} />)}</datalist><input type="number" value={formOut.qty} onChange={e=>setFormOut({...formOut,qty:e.target.value})} placeholder="الكمية" className="input" required/><input type="date" value={formOut.date} onChange={e=>setFormOut({...formOut,date:e.target.value})} className="input"/><button className="btn w-full bg-red-500 text-white h-11">تأكيد الخروج</button></form></div><div className="card p-3.5"><h2 className="font-black text-[12px] mb-3">سجل الخروج</h2><div className="overflow-x-auto"><table className="w-full"><thead><tr style={{background:"var(--card2)"}}><th className="th">التاريخ</th><th className="th">الكود</th><th className="th">الكمية</th><th className="th">حذف</th></tr></thead><tbody>{stockOut.slice(0,100).map(s=><tr key={s.id} className="tr"><td data-label="التاريخ" className="td text-[11px]">{s.date}</td><td data-label="الكود" className="td font-mono font-black text-red-500 text-[12px]">{s.code}</td><td data-label="الكمية" className="td">{s.qty}</td><td data-label="حذف" className="td"><button onClick={()=>db.collection("stockOutLogs").doc(s.id).delete()} className="text-red-500"><i className="fa-solid fa-trash text-[11px]"></i></button></td></tr>)}</tbody></table></div></div></div>)}
         {tab==="attendance" && (<div className="card overflow-hidden"><div className="p-3.5 border-b flex flex-wrap justify-between gap-2" style={{background:"var(--card2)"}}><h2 className="font-black text-[12px]">الحضور اليومي</h2><input type="date" value={attDate} onChange={e=>setAttDate(e.target.value)} className="input h-9 w-[150px] text-[11px]"/></div><form onSubmit={handleAtt}><table className="w-full"><thead><tr style={{background:"var(--card2)"}}><th className="th">#</th><th className="th">العامل</th><th className="th">الحالة</th></tr></thead><tbody>{workers.map((w,i)=><tr key={w.id} className="tr"><td data-label="#" className="td text-[11px]">{i+1}</td><td data-label="العامل" className="td font-black text-[12px]">{w.name}</td><td data-label="الحالة" className="td"><select value={attForm[w.name]||"حاضر"} onChange={e=>setAttForm({...attForm,[w.name]:e.target.value})} className="input h-9 text-[11px]"><option>حاضر ✅</option><option>مريض 🤒</option><option>غير مبرر ⚠️</option><option>مسألة خاصة 📌</option><option>إستقل 🚪</option></select></td></tr>)}</tbody></table><div className="p-3 border-t flex justify-end" style={{background:"var(--card2)"}}><button className="btn btn-primary h-9 text-[11px]">حفظ الحضور</button></div></form></div>)}
         {tab==="workers" && (<div className="card p-3.5"><div className="flex justify-between gap-2 mb-3"><h2 className="font-black text-[12px]">تقارير العمال</h2><input type="date" value={filterDate} onChange={e=>setFilterDate(e.target.value)} className="input h-9 w-[150px] text-[11px]"/></div><div className="overflow-x-auto"><table className="w-full"><thead><tr style={{background:"var(--card2)"}}><th className="th">التاريخ</th><th className="th">العامل</th><th className="th">الكود</th><th className="th">الكمية</th><th className="th">حذف</th></tr></thead><tbody>{filtProd.map(p=><tr key={p.id} className="tr"><td data-label="التاريخ" className="td text-[11px]">{p.date}</td><td data-label="العامل" className="td font-black text-[12px]">{p.worker}</td><td data-label="الكود" className="td font-mono text-[12px]">{p.code}</td><td data-label="الكمية" className="td">{p.qty}</td><td data-label="حذف" className="td"><button onClick={()=>db.collection("productionLogs").doc(p.id).delete()} className="text-red-500"><i className="fa-solid fa-trash text-[11px]"></i></button></td></tr>)}</tbody></table></div></div>)}
         {tab==="workers-info" && (<div className="card p-3.5"><div className="flex justify-between mb-3"><h2 className="font-black text-[12px]">معلومات العمال</h2><button onClick={()=>{setEditWorkerId(""); setNewWorker({name:"",phone:""}); setShowWorker(true)}} className="btn btn-dark h-9 text-[11px]">+ عامل</button></div><div className="overflow-x-auto"><table className="w-full"><thead><tr style={{background:"var(--card2)"}}><th className="th">#</th><th className="th">الاسم</th><th className="th">الهاتف</th><th className="th">إجراء</th></tr></thead><tbody>{workers.map((w,i)=><tr key={w.id} className="tr"><td data-label="#" className="td">{i+1}</td><td data-label="الاسم" className="td font-black text-[12px]">{w.name}</td><td data-label="الهاتف" className="td font-mono text-blue-600 text-[12px]">{w.phone}</td><td data-label="إجراء" className="td"><div className="flex gap-1 justify-center"><button onClick={()=>{setEditWorkerId(w.id); setNewWorker({name:w.name,phone:w.phone}); setShowWorker(true)}} className="w-7 h-7 grid place-items-center rounded-lg border bg-white"><i className="fa-solid fa-pen text-[10px]"></i></button><button onClick={()=>db.collection("workers").doc(w.id).delete()} className="w-7 h-7 grid place-items-center rounded-lg bg-red-50 text-red-500 border border-red-100"><i className="fa-solid fa-trash text-[10px]"></i></button></div></td></tr>)}</tbody></table></div></div>)}
       </main>
 
-      <nav className="lg:hidden fixed bottom-3 inset-x-3 z-40"><div className="mx-auto max-w-[400px] rounded-[18px] border bg-white/95 backdrop-blur-xl shadow-lg px-1 h-[60px] grid grid-cols-4 gap-1" style={{borderColor:"var(--border)"}}>{tabs.slice(0,4).map(t=>{const a=tab===t.id; return <button key={t.id} onClick={()=>setTab(t.id)} className={`flex flex-col items-center justify-center gap-1 rounded-[12px] transition ${a?'bg-slate-900 text-white':'text-slate-400'}`}><i className={`fa-solid ${t.icon} text-[13px]`}></i><span className="text-[9px] font-black">{t.title}</span></button>})}</div></nav>
+      <nav className="lg:hidden fixed bottom-3 inset-x-3 z-40"><div className="mx-auto max-w-[440px] rounded-[18px] border bg-white/95 backdrop-blur-xl shadow-lg px-1 h-[60px] grid grid-cols-4 gap-1" style={{borderColor:"var(--border)"}}>{tabs.slice(0,4).map(t=>{const a=tab===t.id; return <button key={t.id} onClick={()=>setTab(t.id)} className={`flex flex-col items-center justify-center gap-1 rounded-[12px] transition ${a?'bg-slate-900 text-white':'text-slate-400'}`}><i className={`fa-solid ${t.icon} text-[13px]`}></i><span className="text-[9px] font-black">{t.title.split(" ")[0]}</span></button>})}</div></nav>
 
-      {showProd && (<div className="fixed inset-0 z-50 modal-bg grid place-items-center p-4"><form onSubmit={handleSaveProd} className="modal p-5 w-full max-w-[440px] space-y-3"><h3 className="font-black text-[13px]">{editProdId?"تعديل المنتج":"منتج جديد"}</h3><input value={newProd.code} onChange={e=>setNewProd({...newProd,code:e.target.value})} placeholder="الكود # - مثال AC55" className="input" required/><input value={newProd.desc} onChange={e=>setNewProd({...newProd,desc:e.target.value})} placeholder="وصف المنتج" className="input" required/><input value={newProd.unit} onChange={e=>setNewProd({...newProd,unit:e.target.value})} placeholder="الوحدة - مثال 550 ml" className="input"/><div className="grid grid-cols-3 gap-2"><input type="number" value={newProd.boxes} onChange={e=>setNewProd({...newProd,boxes:e.target.value})} placeholder="العلب" className="input"/><input type="number" value={newProd.itemsPerBox} onChange={e=>setNewProd({...newProd,itemsPerBox:e.target.value})} placeholder="القطع/علبة" className="input"/><input type="number" value={newProd.minStock} onChange={e=>setNewProd({...newProd,minStock:e.target.value})} placeholder="الحد الأدنى" className="input" style={{borderColor:"#fbbf24", background:"#fffbeb"}}/></div><div className="flex gap-2"><button className="btn btn-dark flex-1 h-10">حفظ</button><button type="button" onClick={()=>setShowProd(false)} className="btn btn-slate flex-1 h-10">إلغاء</button></div></form></div>)}
+      {showProd && (<div className="fixed inset-0 z-50 modal-bg grid place-items-center p-4"><form onSubmit={handleSaveProd} className="modal p-5 w-full max-w-[440px] space-y-3"><h3 className="font-black text-[13px]">{editProdId?"تعديل المنتج":"منتج جديد"}</h3><input value={newProd.code} onChange={e=>setNewProd({...newProd,code:e.target.value})} placeholder="الكود # - مثال AC55" className="input" required/><input value={newProd.desc} onChange={e=>setNewProd({...newProd,desc:e.target.value})} placeholder="وصف المنتج" className="input" required/><input value={newProd.unit} onChange={e=>setNewProd({...newProd,unit:e.target.value})} placeholder="الوحدة - 550 ml" className="input"/><div className="grid grid-cols-3 gap-2"><input type="number" value={newProd.boxes} onChange={e=>setNewProd({...newProd,boxes:e.target.value})} placeholder="العلب" className="input"/><input type="number" value={newProd.itemsPerBox} onChange={e=>setNewProd({...newProd,itemsPerBox:e.target.value})} placeholder="القطع/علبة" className="input"/><input type="number" value={newProd.minStock} onChange={e=>setNewProd({...newProd,minStock:e.target.value})} placeholder="الحد الأدنى" className="input" style={{borderColor:"#fbbf24", background:"#fffbeb"}}/></div><div className="flex gap-2"><button className="btn btn-dark flex-1 h-10">حفظ</button><button type="button" onClick={()=>setShowProd(false)} className="btn btn-slate flex-1 h-10">إلغاء</button></div></form></div>)}
       {showWorker && (<div className="fixed inset-0 z-50 modal-bg grid place-items-center p-4"><form onSubmit={handleSaveWorker} className="modal p-5 w-full max-w-[360px] space-y-3"><h3 className="font-black text-[13px]">عامل</h3><input value={newWorker.name} onChange={e=>setNewWorker({...newWorker,name:e.target.value})} placeholder="اسم العامل" className="input" required/><input value={newWorker.phone} onChange={e=>setNewWorker({...newWorker,phone:e.target.value})} placeholder="الهاتف" className="input"/><div className="flex gap-2"><button className="btn btn-dark flex-1 h-10">حفظ</button><button type="button" onClick={()=>setShowWorker(false)} className="btn btn-slate flex-1 h-10">إلغاء</button></div></form></div>)}
+
+      {showPass && (
+        <div className="fixed inset-0 z-[60] modal-bg grid place-items-center p-4">
+          <form onSubmit={handleChangePass} className="modal p-5 w-full max-w-[380px] space-y-3">
+            <div className="flex items-center gap-2 mb-1"><div className="w-8 h-8 rounded-lg bg-amber-500 text-white grid place-items-center"><i className="fa-solid fa-key text-[12px]"></i></div><h3 className="font-black text-[13px]">تغيير كلمة مرور الأدمن</h3></div>
+            <input type="password" value={passForm.current} onChange={e=>setPassForm({...passForm,current:e.target.value})} placeholder="كلمة المرور الحالية" className="input" required/>
+            <input type="password" value={passForm.newPass} onChange={e=>setPassForm({...passForm,newPass:e.target.value})} placeholder="كلمة المرور الجديدة" className="input" required/>
+            <input type="password" value={passForm.confirm} onChange={e=>setPassForm({...passForm,confirm:e.target.value})} placeholder="تأكيد الجديدة" className="input" required/>
+            <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-[10px] font-bold text-amber-800">الافتراضي: admin / admin123 - غيرها بعد أول دخول</div>
+            <div className="flex gap-2"><button className="btn btn-primary flex-1 h-10">تغيير</button><button type="button" onClick={()=>setShowPass(false)} className="btn btn-slate flex-1 h-10">إلغاء</button></div>
+          </form>
+        </div>
+      )}
 
       <div className="fixed bottom-[76px] lg:bottom-4 right-3 left-3 lg:left-auto z-[100] flex flex-col gap-2 max-w-[340px]">{toasts.map(t=><div key={t.id} className={`px-4 py-2.5 rounded-xl text-white font-bold text-[11px] shadow-lg ${t.t==="err"?"bg-red-500":"bg-slate-900"}`}>{t.m}</div>)}</div>
     </div>
