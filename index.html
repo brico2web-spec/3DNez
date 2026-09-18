@@ -118,11 +118,11 @@
                 </div>
             </div>
 
-            <!-- Low Stock Alerts Section -->
+            <!-- Low Stock Alerts Section (المنتجات التي اقتربت من النفاد) -->
             <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-rose-200">
                 <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
                     <h3 class="text-base sm:text-lg font-bold text-rose-700 flex items-center gap-2">
-                        <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> تنبيه المنتجات قليلة المخزون
+                        <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> تنبيه المنتجات التي اقتربت من النفاد (أقل أو تساوي الحد الأدنى)
                     </h3>
                     <div class="flex items-center gap-3">
                         <button onclick="exportLowStockExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow">
@@ -138,6 +138,7 @@
                                 <th class="p-2.5 sm:p-3">الكود</th>
                                 <th class="p-2.5 sm:p-3">وصف المنتج</th>
                                 <th class="p-2.5 sm:p-3">الوحدة</th>
+                                <th class="p-2.5 sm:p-3">الحد الأدنى</th>
                                 <th class="p-2.5 sm:p-3">المخزون الحالي</th>
                             </tr>
                         </thead>
@@ -420,7 +421,9 @@
                                 <th class="p-2.5 sm:p-3">الكود #</th>
                                 <th class="p-2.5 sm:p-3">وصف المنتج</th>
                                 <th class="p-2.5 sm:p-3">الوحدة</th>
-                                <th class="p-2.5 sm:p-3">الافتراضي</th>
+                                <th class="p-2.5 sm:p-3">الحد الأدنى</th>
+                                <th class="p-2.5 sm:p-3">قطعة/علبة</th>
+                                <th class="p-2.5 sm:p-3">عدد العلب</th>
                                 <th class="p-2.5 sm:p-3">المُنتَج</th>
                                 <th class="p-2.5 sm:p-3">المُصَرَف</th>
                                 <th class="p-2.5 sm:p-3">المخزون الحالي</th>
@@ -436,13 +439,13 @@
             </div>
         </div>
 
-        <!-- NEW TAB: Analytics Weekly/Monthly (التحليل المبياني الأسبوعي والشهري) -->
+        <!-- NEW TAB: Analytics Weekly/Monthly (التحليل المبياني الأسبوعي والشهري مع المنتجات الأكثر خروجاً) -->
         <div id="analytics" class="tab-content space-y-6">
             <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200">
                 <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 border-b pb-4">
                     <div>
                         <h2 class="text-lg sm:text-xl font-bold text-slate-800 flex items-center gap-2">
-                            <i class="fa-solid fa-chart-line text-teal-600"></i> التحليل المبياني والإحصائيات (أسبوعي / شهري)
+                            <i class="fa-solid fa-chart-line text-teal-600"></i> التحليل المبياني والإحصائيات والمنتجات الأكثر خروجاً
                         </h2>
                         <p class="text-xs text-slate-500 mt-1">متابعة دقيقة لإنتاج العمال، إجمالي الإنتاج، واستهلاك/صرف المنتجات أسبوعياً وشهرياً</p>
                     </div>
@@ -454,6 +457,29 @@
                         <button onclick="exportAnalyticsExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition shadow flex items-center gap-1.5">
                             <i class="fa-solid fa-file-excel"></i> إكسيل
                         </button>
+                    </div>
+                </div>
+
+                <!-- Frequently Exiting Products Section (المنتجات التي تخرج كثيراً مع ذكر كم تخرج في الأسبوع) -->
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5 mb-6 space-y-3">
+                    <h3 class="font-bold text-amber-900 text-sm sm:text-base flex items-center gap-2">
+                        <i class="fa-solid fa-fire text-amber-600"></i> المنتجات الأكثر خروجاً واستهلاكاً (الأسبوعية)
+                    </h3>
+                    <p class="text-xs text-amber-700">المنتجات التي تسجل أعلى معدلات خروج وصرف في الأسابيع الأخيرة مع كمية خروجها:</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right text-xs bg-white rounded-xl shadow-sm overflow-hidden">
+                            <thead class="bg-amber-100 text-amber-900">
+                                <tr>
+                                    <th class="p-2.5">الكود</th>
+                                    <th class="p-2.5">وصف المنتج</th>
+                                    <th class="p-2.5">الوحدة</th>
+                                    <th class="p-2.5">الكمية الخارجة أسبوعياً</th>
+                                </tr>
+                            </thead>
+                            <tbody id="frequent-out-weekly-tbody" class="divide-y divide-amber-50">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -526,9 +552,9 @@
         </div>
     </div>
 
-    <!-- Modal for Adding/Editing Product in Inventory -->
+    <!-- Modal for Adding/Editing Product in Inventory (Updated with Min, Pcs/Box, Boxes) -->
     <div id="product-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 max-h-[90vh] overflow-y-auto">
             <h3 class="text-lg font-bold text-slate-800 mb-4" id="product-modal-title">إضافة منتج جديد للمخزون</h3>
             <form id="product-modal-form" onsubmit="handleProductSave(event)" class="space-y-4">
                 <input type="hidden" id="product-original-code" value="">
@@ -544,8 +570,22 @@
                     <label class="block text-sm font-semibold text-slate-700 mb-1">الوحدة (مثل 1 L, 4 L, 550 ml)</label>
                     <input type="text" id="modal-product-unit" required placeholder="الوحدة..." class="w-full p-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">الحد الأدنى</label>
+                        <input type="number" id="modal-product-min" min="0" required placeholder="5" class="w-full p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">قطعة في العلبة</label>
+                        <input type="number" id="modal-product-pcs" min="1" required placeholder="30" class="w-full p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">عدد العلب</label>
+                        <input type="number" id="modal-product-boxes" min="0" required placeholder="5" class="w-full p-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                </div>
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">المخزون الافتراضي (الرصيد الأولي)</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">المخزون الافتراضي (الرصيد الأولي بالقطع)</label>
                     <input type="number" id="modal-product-qty" min="0" required placeholder="0" class="w-full p-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
                 <div class="flex justify-end gap-3 pt-3">
@@ -563,100 +603,100 @@
 
     <!-- JavaScript Logic -->
     <script>
-        // Product Catalog stored in LocalStorage
+        // Product Catalog stored in LocalStorage (Updated with minLimit, pcsPerBox, boxes)
         let productsCatalog = JSON.parse(localStorage.getItem('factory_products_catalog')) || [
-            { code: "AC55", desc: "Acide Chlorithrique 17°", unit: "550 ml", qty: 30 },
-            { code: "AC75", desc: "Acide Chlorithrique 17°", unit: "750 ml", qty: 20 },
-            { code: "AC90", desc: "Acide Chlorithrique 17°", unit: "900 ml", qty: 20 },
-            { code: "AC40", desc: "Acide Chlorithrique 17°", unit: "4 L", qty: 5 },
-            { code: "DS1000", desc: "Detatrent Surpuissant FOX 90 CL", unit: "90 CL", qty: 20 },
-            { code: "GZ1000", desc: "Grezyl 5%", unit: "1 L", qty: 20 },
-            { code: "SCL1000", desc: "Saude Costique Liquide 1L", unit: "1 L", qty: 20 },
-            { code: "ED1000", desc: "Eau Dèminéralisée - Special Batterie", unit: "1 L", qty: 20 },
-            { code: "AS1000", desc: "Acide Chlorithrique 28°", unit: "1 L", qty: 20 },
-            { code: "DL1000", desc: "Deboucheur Liquide 1L", unit: "1 L", qty: 20 },
-            { code: "GR200", desc: "Garisse industriel", unit: "200 gm", qty: 24 },
-            { code: "GR2500", desc: "Garisse industriel", unit: "2500 gm", qty: 1 },
-            { code: "HL60", desc: "Huile de L'in", unit: "600 ml", qty: 30 },
-            { code: "VB600", desc: "Vaseline de bois", unit: "600 ml", qty: 30 },
+            { code: "AC55", desc: "Acide Chlorithrique 17°", unit: "550 ml", qty: 30, minLimit: 5, pcsPerBox: 30, boxes: 1 },
+            { code: "AC75", desc: "Acide Chlorithrique 17°", unit: "750 ml", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "AC90", desc: "Acide Chlorithrique 17°", unit: "900 ml", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "AC40", desc: "Acide Chlorithrique 17°", unit: "4 L", qty: 5, minLimit: 2, pcsPerBox: 4, boxes: 1 },
+            { code: "DS1000", desc: "Detatrent Surpuissant FOX 90 CL", unit: "90 CL", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "GZ1000", desc: "Grezyl 5%", unit: "1 L", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "SCL1000", desc: "Saude Costique Liquide 1L", unit: "1 L", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "ED1000", desc: "Eau Dèminéralisée - Special Batterie", unit: "1 L", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "AS1000", desc: "Acide Chlorithrique 28°", unit: "1 L", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "DL1000", desc: "Deboucheur Liquide 1L", unit: "1 L", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "GR200", desc: "Garisse industriel", unit: "200 gm", qty: 24, minLimit: 5, pcsPerBox: 24, boxes: 1 },
+            { code: "GR2500", desc: "Garisse industriel", unit: "2500 gm", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "HL60", desc: "Huile de L'in", unit: "600 ml", qty: 30, minLimit: 5, pcsPerBox: 30, boxes: 1 },
+            { code: "VB600", desc: "Vaseline de bois", unit: "600 ml", qty: 30, minLimit: 5, pcsPerBox: 30, boxes: 1 },
 
-            { code: "W252", desc: "Essence SP 25 Cc", unit: "250 ml", qty: 60 },
-            { code: "W552", desc: "Essence SP 55 Cc", unit: "550 ml", qty: 30 },
-            { code: "W102", desc: "Essence AXA 90 Cc", unit: "1 L", qty: 20 },
-            { code: "W202", desc: "Essence AXA 2L", unit: "2 L", qty: 11 },
-            { code: "W402", desc: "Essence AXA 4L", unit: "4 L", qty: 5 },
-            { code: "W251", desc: "Essence City 25 Cc", unit: "250 ml", qty: 60 },
-            { code: "W551", desc: "Essence City 55 Cc", unit: "550 ml", qty: 30 },
-            { code: "W101", desc: "Essence City 90 Cc", unit: "1 L", qty: 20 },
-            { code: "W201", desc: "Essence City 2L", unit: "2 L", qty: 11 },
-            { code: "W401", desc: "Essence City 4L", unit: "4 L", qty: 5 },
-            { code: "J25", desc: "Jupiter 25 Cc", unit: "250 ml", qty: 60 },
-            { code: "J55", desc: "Jupiter 55 Cc", unit: "550 ml", qty: 30 },
+            { code: "W252", desc: "Essence SP 25 Cc", unit: "250 ml", qty: 60, minLimit: 5, pcsPerBox: 30, boxes: 2 },
+            { code: "W552", desc: "Essence SP 55 Cc", unit: "550 ml", qty: 30, minLimit: 5, pcsPerBox: 30, boxes: 1 },
+            { code: "W102", desc: "Essence AXA 90 Cc", unit: "1 L", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "W202", desc: "Essence AXA 2L", unit: "2 L", qty: 11, minLimit: 3, pcsPerBox: 10, boxes: 1 },
+            { code: "W402", desc: "Essence AXA 4L", unit: "4 L", qty: 5, minLimit: 2, pcsPerBox: 5, boxes: 1 },
+            { code: "W251", desc: "Essence City 25 Cc", unit: "250 ml", qty: 60, minLimit: 5, pcsPerBox: 30, boxes: 2 },
+            { code: "W551", desc: "Essence City 55 Cc", unit: "550 ml", qty: 30, minLimit: 5, pcsPerBox: 30, boxes: 1 },
+            { code: "W101", desc: "Essence City 90 Cc", unit: "1 L", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "W201", desc: "Essence City 2L", unit: "2 L", qty: 11, minLimit: 3, pcsPerBox: 10, boxes: 1 },
+            { code: "W401", desc: "Essence City 4L", unit: "4 L", qty: 5, minLimit: 2, pcsPerBox: 5, boxes: 1 },
+            { code: "J25", desc: "Jupiter 25 Cc", unit: "250 ml", qty: 60, minLimit: 5, pcsPerBox: 30, boxes: 2 },
+            { code: "J55", desc: "Jupiter 55 Cc", unit: "550 ml", qty: 30, minLimit: 5, pcsPerBox: 30, boxes: 1 },
 
-            { code: "D252", desc: "Diluant SP 25 Cc", unit: "250 ml", qty: 60 },
-            { code: "D552", desc: "Diluant SP 55 Cc", unit: "550 ml", qty: 30 },
-            { code: "D602", desc: "Diluant SP 60 CL", unit: "600 ml", qty: 30 },
-            { code: "D102", desc: "Diluant AXA 90 Cc", unit: "1 L", qty: 20 },
-            { code: "D202", desc: "Diluant AXA 2L", unit: "2 L", qty: 11 },
-            { code: "D402", desc: "Diluant AXA 4L", unit: "4 L", qty: 5 },
-            { code: "D251", desc: "Diluant City 25 Cc", unit: "250 ml", qty: 60 },
-            { code: "D551", desc: "Diluant City 1éme 3/4", unit: "550 ml", qty: 30 },
-            { code: "D601", desc: "Diluant City 1éme 60 CL", unit: "600 ml", qty: 30 },
-            { code: "D101", desc: "Diluant City 90 Cc", unit: "1 L", qty: 20 },
-            { code: "D201", desc: "Diluant City 2L", unit: "2 L", qty: 11 },
-            { code: "D401", desc: "Diluant City 4L", unit: "4 L", qty: 5 },
-            { code: "D603", desc: "Diluant XTRA 60 CL", unit: "600 ml", qty: 30 },
-            { code: "D103", desc: "Diluant XTRA 90 CC", unit: "1 L", qty: 20 },
-            { code: "D203", desc: "Diluant XTRA 2L", unit: "2 L", qty: 11 },
-            { code: "D403", desc: "Diluant XTRA 4L", unit: "4 L", qty: 5 },
-            { code: "DP600", desc: "Diluant PRO 600ml", unit: "600 ml", qty: 30 },
-            { code: "DPMP900", desc: "Diluant PRO MAX 90cc", unit: "90 CL", qty: 20 },
-            { code: "DPMP45", desc: "Diluant PRO MAX 4.5L", unit: "4.5 L", qty: 5 },
-            { code: "D752-Z", desc: "Diluant SP 75 Cc Z", unit: "75 ml", qty: 25 },
-            { code: "D752-P", desc: "Diluant SP 75 Cc P", unit: "75 ml", qty: 25 },
-            { code: "D751-Z", desc: "Diluant CITY 75 Cc Z", unit: "75 ml", qty: 25 },
-            { code: "D751-P", desc: "Diluant CITY 75 Cc P", unit: "75 ml", qty: 25 },
-            { code: "D405", desc: "Diluant VOX Paint 4L", unit: "4 L", qty: 1 },
+            { code: "D252", desc: "Diluant SP 25 Cc", unit: "250 ml", qty: 60, minLimit: 5, pcsPerBox: 30, boxes: 2 },
+            { code: "D552", desc: "Diluant SP 55 Cc", unit: "550 ml", qty: 30, minLimit: 5, pcsPerBox: 30, boxes: 1 },
+            { code: "D602", desc: "Diluant SP 60 CL", unit: "600 ml", qty: 30, minLimit: 5, pcsPerBox: 30, boxes: 1 },
+            { code: "D102", desc: "Diluant AXA 90 Cc", unit: "1 L", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "D202", desc: "Diluant AXA 2L", unit: "2 L", qty: 11, minLimit: 3, pcsPerBox: 10, boxes: 1 },
+            { code: "D402", desc: "Diluant AXA 4L", unit: "4 L", qty: 5, minLimit: 2, pcsPerBox: 5, boxes: 1 },
+            { code: "D251", desc: "Diluant City 25 Cc", unit: "250 ml", qty: 60, minLimit: 5, pcsPerBox: 30, boxes: 2 },
+            { code: "D551", desc: "Diluant City 1éme 3/4", unit: "550 ml", qty: 30, minLimit: 5, pcsPerBox: 30, boxes: 1 },
+            { code: "D601", desc: "Diluant City 1éme 60 CL", unit: "600 ml", qty: 30, minLimit: 5, pcsPerBox: 30, boxes: 1 },
+            { code: "D101", desc: "Diluant City 90 Cc", unit: "1 L", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "D201", desc: "Diluant City 2L", unit: "2 L", qty: 11, minLimit: 3, pcsPerBox: 10, boxes: 1 },
+            { code: "D401", desc: "Diluant City 4L", unit: "4 L", qty: 5, minLimit: 2, pcsPerBox: 5, boxes: 1 },
+            { code: "D603", desc: "Diluant XTRA 60 CL", unit: "600 ml", qty: 30, minLimit: 5, pcsPerBox: 30, boxes: 1 },
+            { code: "D103", desc: "Diluant XTRA 90 CC", unit: "1 L", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "D203", desc: "Diluant XTRA 2L", unit: "2 L", qty: 11, minLimit: 3, pcsPerBox: 10, boxes: 1 },
+            { code: "D403", desc: "Diluant XTRA 4L", unit: "4 L", qty: 5, minLimit: 2, pcsPerBox: 5, boxes: 1 },
+            { code: "DP600", desc: "Diluant PRO 600ml", unit: "600 ml", qty: 30, minLimit: 5, pcsPerBox: 30, boxes: 1 },
+            { code: "DPMP900", desc: "Diluant PRO MAX 90cc", unit: "90 CL", qty: 20, minLimit: 5, pcsPerBox: 20, boxes: 1 },
+            { code: "DPMP45", desc: "Diluant PRO MAX 4.5L", unit: "4.5 L", qty: 5, minLimit: 2, pcsPerBox: 5, boxes: 1 },
+            { code: "D752-Z", desc: "Diluant SP 75 Cc Z", unit: "75 ml", qty: 25, minLimit: 5, pcsPerBox: 25, boxes: 1 },
+            { code: "D752-P", desc: "Diluant SP 75 Cc P", unit: "75 ml", qty: 25, minLimit: 5, pcsPerBox: 25, boxes: 1 },
+            { code: "D751-Z", desc: "Diluant CITY 75 Cc Z", unit: "75 ml", qty: 25, minLimit: 5, pcsPerBox: 25, boxes: 1 },
+            { code: "D751-P", desc: "Diluant CITY 75 Cc P", unit: "75 ml", qty: 25, minLimit: 5, pcsPerBox: 25, boxes: 1 },
+            { code: "D405", desc: "Diluant VOX Paint 4L", unit: "4 L", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
 
-            { code: "CB250", desc: "Colle a Bois", unit: "250 gm", qty: 24 },
-            { code: "CB500", desc: "Colle a Bois", unit: "550 gm", qty: 24 },
-            { code: "CB4000", desc: "Colle a Bois", unit: "4 Kg", qty: 1 },
-            { code: "CB20000", desc: "Colle a Bois", unit: "20 Kg", qty: 1 },
-            { code: "FR1000", desc: "Colle FLIX Rouge", unit: "1 Kg", qty: 24 },
-            { code: "FR5000", desc: "Colle FLIX Rouge", unit: "5 Kg", qty: 1 },
-            { code: "FR20000", desc: "Colle FLIX Rouge", unit: "20 Kg", qty: 1 },
-            { code: "FB1000", desc: "Colle FLIX Blanc", unit: "1 Kg", qty: 24 },
-            { code: "FB5000", desc: "Colle FLIX Blanc", unit: "5 Kg", qty: 1 },
-            { code: "FB20000", desc: "Colle FLIX Blanc", unit: "20 Kg", qty: 1 },
-            { code: "SL500", desc: "Colle Grifi Sofalit", unit: "500 gm", qty: 24 },
-            { code: "SL850", desc: "Colle Grifi Sofalit", unit: "850 gm", qty: 6 },
-            { code: "CC250", desc: "Colle Grifi Sofalit", unit: "250 gm", qty: 1 },
-            { code: "CC500", desc: "Colle Grifi Sofalit", unit: "500 gm", qty: 1 },
-            { code: "CC1000", desc: "Colle Grifi Sofalit", unit: "1 Kg", qty: 1 },
-            { code: "VF500", desc: "Colle Vit Fit", unit: "500 gm", qty: 24 },
+            { code: "CB250", desc: "Colle a Bois", unit: "250 gm", qty: 24, minLimit: 5, pcsPerBox: 24, boxes: 1 },
+            { code: "CB500", desc: "Colle a Bois", unit: "550 gm", qty: 24, minLimit: 5, pcsPerBox: 24, boxes: 1 },
+            { code: "CB4000", desc: "Colle a Bois", unit: "4 Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "CB20000", desc: "Colle a Bois", unit: "20 Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "FR1000", desc: "Colle FLIX Rouge", unit: "1 Kg", qty: 24, minLimit: 5, pcsPerBox: 24, boxes: 1 },
+            { code: "FR5000", desc: "Colle FLIX Rouge", unit: "5 Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "FR20000", desc: "Colle FLIX Rouge", unit: "20 Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "FB1000", desc: "Colle FLIX Blanc", unit: "1 Kg", qty: 24, minLimit: 5, pcsPerBox: 24, boxes: 1 },
+            { code: "FB5000", desc: "Colle FLIX Blanc", unit: "5 Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "FB20000", desc: "Colle FLIX Blanc", unit: "20 Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "SL500", desc: "Colle Grifi Sofalit", unit: "500 gm", qty: 24, minLimit: 5, pcsPerBox: 24, boxes: 1 },
+            { code: "SL850", desc: "Colle Grifi Sofalit", unit: "850 gm", qty: 6, minLimit: 2, pcsPerBox: 6, boxes: 1 },
+            { code: "CC250", desc: "Colle Grifi Sofalit", unit: "250 gm", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "CC500", desc: "Colle Grifi Sofalit", unit: "500 gm", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "CC1000", desc: "Colle Grifi Sofalit", unit: "1 Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "VF500", desc: "Colle Vit Fit", unit: "500 gm", qty: 24, minLimit: 5, pcsPerBox: 24, boxes: 1 },
 
-            { code: "AP1000", desc: "Vinylique AXA Plast", unit: "1 Kg", qty: 24 },
-            { code: "PVP1", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24 },
-            { code: "PVP10", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24 },
-            { code: "PVP100", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24 },
-            { code: "PVP1000", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24 },
-            { code: "SP5000", desc: "SOLTAN Plast", unit: "5 kg", qty: 1 },
-            { code: "AP5000", desc: "Vinylique AXA Plast", unit: "5 Kg", qty: 1 },
-            { code: "PVV1", desc: "Vinylique PVV Plast", unit: "5 kg", qty: 1 },
-            { code: "PVV10", desc: "Vinylique PVV Plast", unit: "5 kg", qty: 1 },
-            { code: "PVV100", desc: "Vinylique PVV Plast", unit: "5 kg", qty: 1 },
-            { code: "PVV1000", desc: "Vinylique PVV Plast", unit: "5 kg", qty: 1 },
-            { code: "PVC1", desc: "Vinylique PVC Plast", unit: "10 Kg", qty: 1 },
-            { code: "PVC10", desc: "Vinylique PVC Plast", unit: "10 Kg", qty: 1 },
-            { code: "PVC100", desc: "Vinylique PVC Plast", unit: "10 Kg", qty: 1 },
-            { code: "PVC1000", desc: "Vinylique PVC Plast", unit: "10 Kg", qty: 1 },
-            { code: "MP3000", desc: "MIMOSA AXA Plast", unit: "30Kg", qty: 1 },
-            { code: "VL3000", desc: "VOX LATIX", unit: "30Kg", qty: 1 },
-            { code: "CP3000", desc: "CITY PLAST", unit: "30Kg", qty: 1 },
-            { code: "MP50000", desc: "MIMOSA AXA Plast", unit: "50 Kg", qty: 1 },
-            { code: "SLBL4500", desc: "LACKY", unit: "4.5Kg", qty: 1 },
-            { code: "AFG5000", desc: "LANTIROUI", unit: "5Kg", qty: 1 },
-            { code: "AFR5000", desc: "LANTIROUI", unit: "5Kg", qty: 1 }
+            { code: "AP1000", desc: "Vinylique AXA Plast", unit: "1 Kg", qty: 24, minLimit: 5, pcsPerBox: 24, boxes: 1 },
+            { code: "PVP1", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24, minLimit: 5, pcsPerBox: 24, boxes: 1 },
+            { code: "PVP10", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24, minLimit: 5, pcsPerBox: 24, boxes: 1 },
+            { code: "PVP100", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24, minLimit: 5, pcsPerBox: 24, boxes: 1 },
+            { code: "PVP1000", desc: "Vinylique PVP Plast", unit: "1 Kg", qty: 24, minLimit: 5, pcsPerBox: 24, boxes: 1 },
+            { code: "SP5000", desc: "SOLTAN Plast", unit: "5 kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "AP5000", desc: "Vinylique AXA Plast", unit: "5 Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "PVV1", desc: "Vinylique PVV Plast", unit: "5 kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "PVV10", desc: "Vinylique PVV Plast", unit: "5 kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "PVV100", desc: "Vinylique PVV Plast", unit: "5 kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "PVV1000", desc: "Vinylique PVV Plast", unit: "5 kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "PVC1", desc: "Vinylique PVC Plast", unit: "10 Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "PVC10", desc: "Vinylique PVC Plast", unit: "10 Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "PVC100", desc: "Vinylique PVC Plast", unit: "10 Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "PVC1000", desc: "Vinylique PVC Plast", unit: "10 Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "MP3000", desc: "MIMOSA AXA Plast", unit: "30Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "VL3000", desc: "VOX LATIX", unit: "30Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "CP3000", desc: "CITY PLAST", unit: "30Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "MP50000", desc: "MIMOSA AXA Plast", unit: "50 Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "SLBL4500", desc: "LACKY", unit: "4.5Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "AFG5000", desc: "LANTIROUI", unit: "5Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 },
+            { code: "AFR5000", desc: "LANTIROUI", unit: "5Kg", qty: 1, minLimit: 1, pcsPerBox: 1, boxes: 1 }
         ];
 
         let productionLogs = JSON.parse(localStorage.getItem('factory_production')) || [
@@ -677,7 +717,6 @@
             { name: "مصطفى بوكري", phone: "0667890123" }
         ];
 
-        // Attendance Logs Storage: { "YYYY-MM-DD": { "Worker Name": "حاضر" | "مريض" | ... } }
         let attendanceLogs = JSON.parse(localStorage.getItem('factory_attendance_logs')) || {};
         let currentAnalyticsMode = 'weekly';
 
@@ -694,7 +733,6 @@
             renderAll();
         };
 
-        // Dropdown Menu Functions
         function toggleMenu() {
             const menu = document.getElementById('dropdown-menu');
             menu.classList.toggle('hidden');
@@ -759,7 +797,6 @@
             return initial + produced - out;
         }
 
-        // Production Form Submit
         function handleProductionSubmit(event) {
             event.preventDefault();
             const worker = document.getElementById('worker-name').value;
@@ -797,7 +834,6 @@
             alert('تم تسجيل الإنتاج بنجاح وإضافته للمخزون!');
         }
 
-        // Attendance Management Functions
         function renderAttendanceTable() {
             const dateStr = document.getElementById('attendance-date').value;
             const tbody = document.getElementById('attendance-tbody');
@@ -854,7 +890,6 @@
             alert('تم حفظ سجل حضور العمال بنجاح لتاريخ: ' + dateStr);
         }
 
-        // Stock Out Submit
         function handleStockOutSubmit(event) {
             event.preventDefault();
             const rawProductVal = document.getElementById('out-product-search-input').value;
@@ -927,7 +962,6 @@
             }
         }
 
-        // Inventory Catalog Management Functions (Add, Edit, Delete)
         function openAddProductModal() {
             document.getElementById('product-modal-title').innerText = "إضافة منتج جديد للمخزون";
             document.getElementById('product-original-code').value = "";
@@ -935,6 +969,9 @@
             document.getElementById('modal-product-code').disabled = false;
             document.getElementById('modal-product-desc').value = "";
             document.getElementById('modal-product-unit').value = "";
+            document.getElementById('modal-product-min').value = "5";
+            document.getElementById('modal-product-pcs').value = "30";
+            document.getElementById('modal-product-boxes').value = "1";
             document.getElementById('modal-product-qty').value = "";
             document.getElementById('product-modal').classList.remove('hidden');
         }
@@ -948,6 +985,9 @@
             document.getElementById('modal-product-code').value = product.code;
             document.getElementById('modal-product-desc').value = product.desc;
             document.getElementById('modal-product-unit').value = product.unit;
+            document.getElementById('modal-product-min').value = product.minLimit !== undefined ? product.minLimit : 5;
+            document.getElementById('modal-product-pcs').value = product.pcsPerBox !== undefined ? product.pcsPerBox : 30;
+            document.getElementById('modal-product-boxes').value = product.boxes !== undefined ? product.boxes : 1;
             document.getElementById('modal-product-qty').value = product.qty;
             document.getElementById('product-modal').classList.remove('hidden');
         }
@@ -962,26 +1002,26 @@
             const newCode = document.getElementById('modal-product-code').value.trim();
             const desc = document.getElementById('modal-product-desc').value.trim();
             const unit = document.getElementById('modal-product-unit').value.trim();
+            const minLimit = parseInt(document.getElementById('modal-product-min').value) || 0;
+            const pcsPerBox = parseInt(document.getElementById('modal-product-pcs').value) || 1;
+            const boxes = parseInt(document.getElementById('modal-product-boxes').value) || 0;
             const qty = parseInt(document.getElementById('modal-product-qty').value);
 
             if (originalCode === "") {
-                // Adding new product
                 const exists = productsCatalog.some(p => p.code === newCode);
                 if (exists) {
-                    alert('كود المنتج موجود مسبقاً! يجيب استخدام كود فريد.');
+                    alert('كود المنتج موجود مسبقاً! يجب استخدام كود فريد.');
                     return;
                 }
-                productsCatalog.push({ code: newCode, desc, unit, qty });
+                productsCatalog.push({ code: newCode, desc, unit, minLimit, pcsPerBox, boxes, qty });
             } else {
-                // Editing existing product
                 const index = productsCatalog.findIndex(p => p.code === originalCode);
                 if (index !== -1) {
-                    // Check if code changed and conflicts with another
                     if (originalCode !== newCode && productsCatalog.some(p => p.code === newCode)) {
                         alert('كود المنتج الجديد مستخدم بالفعل من قبل منتج آخر!');
                         return;
                     }
-                    productsCatalog[index] = { code: newCode, desc, unit, qty };
+                    productsCatalog[index] = { code: newCode, desc, unit, minLimit, pcsPerBox, boxes, qty };
                 }
             }
 
@@ -1001,7 +1041,6 @@
             }
         }
 
-        // Workers Directory Management Functions
         function openAddWorkerModal() {
             document.getElementById('modal-title').innerText = "إضافة عامل جديد";
             document.getElementById('worker-edit-index').value = "-1";
@@ -1051,7 +1090,6 @@
             }
         }
 
-        // Helper date grouping functions for Analytics
         function getWeekIdentifier(dateStr) {
             const d = new Date(dateStr);
             d.setHours(0, 0, 0, 0);
@@ -1080,7 +1118,41 @@
             renderAnalytics();
         }
 
+        function renderFrequentOutWeekly() {
+            const tbody = document.getElementById('frequent-out-weekly-tbody');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            const weeklyOutMap = {};
+            stockOutLogs.forEach(item => {
+                const weekKey = getWeekIdentifier(item.date);
+                if(!weeklyOutMap[item.code]) {
+                    weeklyOutMap[item.code] = { code: item.code, desc: item.desc, unit: item.unit, totalWeeklyQty: 0 };
+                }
+                weeklyOutMap[item.code].totalWeeklyQty += item.qty;
+            });
+
+            const sortedFrequent = Object.values(weeklyOutMap).sort((a, b) => b.totalWeeklyQty - a.totalWeeklyQty);
+
+            if(sortedFrequent.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-slate-400">لا توجد حركات خروج مسجلة لحساب الأكثر خروجاً</td></tr>`;
+                return;
+            }
+
+            sortedFrequent.forEach(item => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-amber-50">
+                        <td class="p-2.5 font-mono font-bold text-amber-900">${item.code}</td>
+                        <td class="p-2.5 text-slate-700">${item.desc}</td>
+                        <td class="p-2.5 text-slate-500">${item.unit}</td>
+                        <td class="p-2.5"><span class="bg-amber-200 text-amber-900 px-2.5 py-1 rounded-lg font-bold">${item.totalWeeklyQty} وحدة أسبوعياً</span></td>
+                    </tr>
+                `;
+            });
+        }
+
         function renderAnalytics() {
+            renderFrequentOutWeekly();
             const container = document.getElementById('analytics-content');
             container.innerHTML = '';
 
@@ -1187,7 +1259,6 @@
             });
         }
 
-        // Render All Tables
         function renderAll() {
             renderDashboardStats();
             renderLowStockTable();
@@ -1243,21 +1314,28 @@
             const tbody = document.getElementById('low-stock-table');
             tbody.innerHTML = '';
 
-            const lowStockItems = productsCatalog.filter(p => getCurrentStock(p.code) <= 5);
+            const lowStockItems = productsCatalog.filter(p => {
+                const current = getCurrentStock(p.code);
+                const limit = p.minLimit !== undefined ? p.minLimit : 5;
+                return current <= limit;
+            });
+
             document.getElementById('low-stock-count').innerText = `${lowStockItems.length} منتج`;
 
             if (lowStockItems.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-emerald-600 font-semibold text-xs sm:text-sm">ممتاز! لا توجد منتجات منخفضة المخزون حالياً.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-emerald-600 font-semibold text-xs sm:text-sm">ممتاز! لا توجد منتجات اقتربت من النفاد حالياً.</td></tr>`;
                 return;
             }
 
             lowStockItems.forEach(p => {
                 const current = getCurrentStock(p.code);
+                const limit = p.minLimit !== undefined ? p.minLimit : 5;
                 tbody.innerHTML += `
                     <tr class="hover:bg-rose-50/50">
                         <td class="p-2.5 sm:p-3 font-mono font-bold text-slate-800">${p.code}</td>
                         <td class="p-2.5 sm:p-3 text-slate-700 font-medium">${p.desc}</td>
                         <td class="p-2.5 sm:p-3 text-slate-500">${p.unit}</td>
+                        <td class="p-2.5 sm:p-3 font-bold text-amber-700">${limit}</td>
                         <td class="p-2.5 sm:p-3"><span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">${current}</span></td>
                     </tr>
                 `;
@@ -1340,7 +1418,7 @@
             });
 
             if (productsCatalog.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400 text-sm">لا توجد منتجات مسجلة في المخزون</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="11" class="p-6 text-center text-slate-400 text-sm">لا توجد منتجات مسجلة في المخزون</td></tr>`;
                 return;
             }
 
@@ -1348,9 +1426,12 @@
                 const produced = prodTotals[p.code] || 0;
                 const out = outTotals[p.code] || 0;
                 const currentStock = p.qty + produced - out;
+                const minLimit = p.minLimit !== undefined ? p.minLimit : 5;
+                const pcsPerBox = p.pcsPerBox !== undefined ? p.pcsPerBox : 30;
+                const boxes = p.boxes !== undefined ? p.boxes : 1;
                 
                 let statusBadge = `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full text-[11px] sm:text-xs font-bold">متوفر</span>`;
-                if (currentStock <= 5) {
+                if (currentStock <= minLimit) {
                     statusBadge = `<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full text-[11px] sm:text-xs font-bold">منخفض</span>`;
                 }
 
@@ -1359,7 +1440,9 @@
                         <td class="p-2.5 sm:p-3 font-mono font-bold text-slate-800">${p.code}</td>
                         <td class="p-2.5 sm:p-3 text-slate-700 font-medium">${p.desc}</td>
                         <td class="p-2.5 sm:p-3 text-slate-500">${p.unit}</td>
-                        <td class="p-2.5 sm:p-3 font-semibold text-slate-600">${p.qty}</td>
+                        <td class="p-2.5 sm:p-3 font-semibold text-amber-700">${minLimit}</td>
+                        <td class="p-2.5 sm:p-3 font-semibold text-blue-700">${pcsPerBox}</td>
+                        <td class="p-2.5 sm:p-3 font-semibold text-indigo-700">${boxes}</td>
                         <td class="p-2.5 sm:p-3"><span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-lg font-bold">${produced}</span></td>
                         <td class="p-2.5 sm:p-3"><span class="bg-rose-50 text-rose-700 px-2 py-0.5 rounded-lg font-bold">${out}</span></td>
                         <td class="p-2.5 sm:p-3"><span class="bg-slate-900 text-white px-2.5 py-1 rounded-lg font-black">${currentStock}</span></td>
@@ -1418,7 +1501,6 @@
             });
         }
 
-        // ================= EXCEL EXPORT FUNCTIONS =================
         function downloadCSV(csvContent, filename) {
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
@@ -1439,89 +1521,7 @@
             stockOutLogs.forEach(row => {
                 csvContent += `StockOut,${row.date},"${row.code}","${row.desc}","${row.unit}",${row.qty},"${row.notes || ''}"\n`;
             });
-            downloadCSV(csvContent, "factory_complete_report.csv");
-        }
-
-        function exportLowStockExcel() {
-            let csvContent = "\uFEFFالكود,وصف المنتج,الوحدة,المخزون الحالي\n";
-            const lowStockItems = productsCatalog.filter(p => getCurrentStock(p.code) <= 5);
-            lowStockItems.forEach(p => {
-                csvContent += `"${p.code}","${p.desc}","${p.unit}",${getCurrentStock(p.code)}\n`;
-            });
-            downloadCSV(csvContent, "low_stock_report.csv");
-        }
-
-        function exportAttendanceExcel() {
-            const dateStr = document.getElementById('attendance-date').value;
-            const dayRecords = attendanceLogs[dateStr] || {};
-            let csvContent = "\uFEFFرقم,اسم العامل,رقم الهاتف,الحالة اليومية\n";
-            workersList.forEach((w, index) => {
-                const status = dayRecords[w.name] || 'حاضر';
-                csvContent += `${index + 1},"${w.name}","${w.phone}","${status}"\n`;
-            });
-            downloadCSV(csvContent, `attendance_${dateStr}.csv`);
-        }
-
-        function exportStockOutExcel() {
-            let csvContent = "\uFEFFالتاريخ,كود المنتج,الوصف,الوحدة,الكمية,الملاحظات / الوارد الخام\n";
-            stockOutLogs.forEach(item => {
-                csvContent += `${item.date},"${item.code}","${item.desc}","${item.unit}",${item.qty},"${item.notes || ''}"\n`;
-            });
-            downloadCSV(csvContent, "stock_out_report.csv");
-        }
-
-        function exportProductionExcel() {
-            const filterDate = document.getElementById('filter-date').value;
-            const filteredLogs = filterDate ? productionLogs.filter(item => item.date === filterDate) : productionLogs;
-            let csvContent = "\uFEFFالتاريخ,اسم العامل,كود المنتج,الوصف,الوحدة,الكمية,ملاحظات\n";
-            filteredLogs.forEach(item => {
-                csvContent += `${item.date},"${item.worker}","${item.code}","${item.desc}","${item.unit}",${item.qty},"${item.notes || ''}"\n`;
-            });
-            downloadCSV(csvContent, `workers_production_${filterDate || 'all'}.csv`);
-        }
-
-        function exportInventoryExcel() {
-            let csvContent = "\uFEFFالكود,وصف المنتج,الوحدة,الافتراضي,المُنتَج,المُصَرَف,المخزون الحالي,الحالة\n";
-            const prodTotals = {};
-            productionLogs.forEach(item => {
-                if (!prodTotals[item.code]) prodTotals[item.code] = 0;
-                prodTotals[item.code] += item.qty;
-            });
-            const outTotals = {};
-            stockOutLogs.forEach(item => {
-                if (!outTotals[item.code]) outTotals[item.code] = 0;
-                outTotals[item.code] += item.qty;
-            });
-            productsCatalog.forEach(p => {
-                const produced = prodTotals[p.code] || 0;
-                const out = outTotals[p.code] || 0;
-                const currentStock = p.qty + produced - out;
-                const status = currentStock <= 5 ? "منخفض" : "متوفر";
-                csvContent += `"${p.code}","${p.desc}","${p.unit}",${p.qty},${produced},${out},${currentStock},"${status}"\n`;
-            });
-            downloadCSV(csvContent, "inventory_report.csv");
-        }
-
-        function exportAnalyticsExcel() {
-            let csvContent = `\uFEFFفترة التقرير (${currentAnalyticsMode === 'weekly' ? 'أسبوعي' : 'شهري'}),إجمالي الإنتاج\n`;
-            const prodGroups = {};
-            productionLogs.forEach(item => {
-                const key = currentAnalyticsMode === 'weekly' ? getWeekIdentifier(item.date) : getMonthIdentifier(item.date);
-                if (!prodGroups[key]) prodGroups[key] = 0;
-                prodGroups[key] += item.qty;
-            });
-            for (const [period, total] of Object.entries(prodGroups)) {
-                csvContent += `"${period}",${total}\n`;
-            }
-            downloadCSV(csvContent, `analytics_report_${currentAnalyticsMode}.csv`);
-        }
-
-        function exportWorkersExcel() {
-            let csvContent = "\uFEFFرقم,اسم العامل,رقم الهاتف\n";
-            workersList.forEach((w, index) => {
-                csvContent += `${index + 1},"${w.name}","${w.phone}"\n`;
-            });
-            downloadCSV(csvContent, "workers_directory.csv");
+            downloadCSV(csvContent, "factory_comprehensive_export.csv");
         }
     </script>
 </body>
